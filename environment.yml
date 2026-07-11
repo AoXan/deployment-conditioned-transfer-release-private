@@ -1,0 +1,8 @@
+name: deployment-conditioned-transfer
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - numpy
+  - pandas
+  - pytest

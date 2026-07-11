@@ -1,0 +1,6 @@
+route,lambda_prediction,lambda_representation,lambda_consistency,teacher_required,target_adaptation
+supervised,0.0,0.0,0.0,False,supervised_fine_tuning_only
+prediction_kd,0.5,0.0,0.0,True,supervised_fine_tuning_only
+representation_kd,0.0,0.25,0.0,True,supervised_fine_tuning_only
+combined_kd,0.5,0.25,0.0,True,supervised_fine_tuning_only
+missing_aware,0.25,0.0,0.25,True,supervised_fine_tuning_only

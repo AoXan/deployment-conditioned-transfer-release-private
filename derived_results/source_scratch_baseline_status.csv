@@ -1,0 +1,2 @@
+contract,route,classification,metric_rows,replay_pass_rows,prediction_files_identical,public_display
+SPATIAL,Scratch,fixed_reference_reused,3,3,True,1.204 (fixed baseline)

@@ -1,0 +1,24 @@
+study: deployment-conditioned-transfer
+source: US-maize
+target: Australian-wheat
+contracts:
+  - GROUP
+  - SPATIAL
+runs:
+  - S1
+  - S2
+  - S3
+routes:
+  - scratch
+  - supervised
+  - prediction_kd
+  - combined_kd
+  - representation_kd
+  - missing_aware
+teacher_inputs:
+  - weather
+  - soil
+student_inputs:
+  - weather
+target_adaptation: supervised-only
+raw_data_distributed: false
