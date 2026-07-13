@@ -1,0 +1,64 @@
+schema_version: publication_inputs_v1
+datasets:
+  cybench:
+    formal_name: CY-Bench
+    source: https://doi.org/10.5281/zenodo.17279151
+    expected_path: cybench/raw/
+    expected_raw_files:
+      - yield_maize_US.csv
+      - meteo_maize_US.csv
+      - crop_calendar_maize_US.csv
+      - soil_maize_US.csv
+      - location_maize_US.csv
+      - crop_mask_maize_US.csv
+      - yield_wheat_AU.csv
+      - meteo_wheat_AU.csv
+      - crop_calendar_wheat_AU.csv
+      - soil_wheat_AU.csv
+      - location_wheat_AU.csv
+      - crop_mask_wheat_AU.csv
+    harmonised_outputs:
+      - cybench/PRIMARY_CYBENCH_MAIZE_US.csv.gz
+      - cybench/CY-Bench_wheat_AU.csv.gz
+    paper_role: US maize source and Australian wheat regional target
+    sample_unit: administrative-region harvest-year
+    redistribution: follow Zenodo record terms
+    acquisition: python3 scripts/acquire_publication_data.py --dataset cybench --download
+  g2f:
+    formal_name: Genomes to Fields
+    source: https://doi.org/10.1186/s13104-020-4922-8
+    expected_path: g2f/
+    paper_role: supplementary hybrid-by-environment diagnostic
+    sample_unit: hybrid-by-environment
+    redistribution: confirm file-specific G2F terms before packaging
+    acquisition: manual; see docs/reproducibility/data_access.md
+  roseworthy:
+    formal_name: Roseworthy E5
+    source: https://doi.org/10.25909/19158419.v2
+    expected_path: roseworthy/roseworthy_e5_point_yield.csv.gz
+    paper_role: within-paddock complete-input/no-soil comparison
+    sample_unit: yield-monitor point-year
+    redistribution: cleaned analysis file is not redistributed because correspondence and licence remain unresolved
+    acquisition: obtain an authorised source copy and reproduce the documented preprocessing
+  waite:
+    formal_name: Waite Permanent Rotation Trial
+    source: https://doi.org/10.4225/08/55E5165EC0D29
+    expected_path: waite/waite_full_environment_proxy.csv.gz
+    paper_role: historical temporal-forward/plot-group comparison
+    sample_unit: trial plot-year
+    redistribution: source workbook is not redistributed
+    acquisition: obtain from the custodian under the source terms
+  apsim:
+    formal_name: APSIM Next Generation
+    source: https://github.com/APSIMInitiative/ApsimX.git
+    pinned_commit: 2c3639e456746e16ab9ae95a4c492dbfbe6e567f
+    expected_path: experiments/apsim_comparison/runtime/ApsimX
+    redistribution: do not vendor; bootstrap from the pinned upstream revision
+    acquisition: python3 experiments/apsim_comparison/bootstrap_apsim.py
+restricted_assets:
+  frozen_predictions:
+    expected_environment: AGRITECH_PREDICTION_ROOT
+    reason: exact replay bundle may contain restricted source-derived rows and is distributed separately when permitted
+  checkpoints:
+    expected_environment: AGRITECH_CHECKPOINT_ROOT
+    reason: checkpoint redistribution depends on source-data and anonymous-release terms

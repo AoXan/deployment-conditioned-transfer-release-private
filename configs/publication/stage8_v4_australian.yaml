@@ -1,0 +1,84 @@
+schema_version: stage8_v4_australian_validation_v1
+campaign_id: PUBLICATION_STAGE8_V4_AUSTRALIAN
+matrix_mode: full
+output_root: outputs/publication_repro/primary
+formal_root: ${AGRITECH_FORMAL_ROOT}
+runtime:
+  interpreter: ${PYTHON_EXECUTABLE}
+  deterministic_seeds: [101]
+  stochastic_seeds: [101, 202, 303]
+datasets:
+  waite:
+    view: ${AGRITECH_DATA_ROOT}/waite/waite_full_environment_proxy.csv.gz
+    id_column: sample_id
+    year_column: year
+    crop_column: crop
+    target_column: observed_yield_t_ha
+    target_unit: t_ha
+    sample_unit: trial_plot_year
+    crop: wheat
+    split_builder: waite
+    feature_include_tokens: [early_deployable, weather, silo, slga, apsoil, soil]
+    blocked_columns: [grain_yield_kg_ha, latitude, longitude, plot]
+    protocols: [ADAPTED, TRANSFER, DIAGNOSTIC]
+    target_available: true
+    adapted_training_supported: true
+  roseworthy:
+    view: ${AGRITECH_DATA_ROOT}/roseworthy/roseworthy_e5_point_yield.csv.gz
+    id_column: sample_id
+    year_column: year
+    crop_column: crop_product
+    target_column: target_value
+    target_unit: tonne_ha
+    sample_unit: yield_monitor_point_year
+    split_builder: roseworthy
+    feature_include_tokens: [elevation, eastings_utm, northings_utm, slga, apsoil, soil]
+    blocked_columns: [moisture_pct, latitude, longitude]
+    protocols: [ADAPTED, TRANSFER, DIAGNOSTIC]
+    target_available: true
+    adapted_training_supported: true
+    licence_status: REQUIRES_AUTHORISED_LOCAL_COPY
+  regional_stage6:
+    view: ${AGRITECH_DATA_ROOT}/regional/regional_abs_wheat_weather_apsoil.csv
+    id_column: sample_id
+    year_column: year
+    crop_column: crop
+    target_column: target_value
+    target_unit: t_ha
+    sample_unit: state_crop_year
+    split_builder: regional
+    feature_include_tokens: [weather, silo, slga, apsoil, soil, early_deployable]
+    blocked_columns: [production_t, area_ha, latitude, longitude, location_proxy_flag]
+    fold_glob: ${AGRITECH_DATA_ROOT}/regional/folds/regional_abs_wheat_weather_apsoil__*.csv
+    protocols: [EXACT, ADAPTED, TRANSFER]
+    target_available: true
+    adapted_training_supported: true
+  regional_stage7:
+    view: ${AGRITECH_DATA_ROOT}/regional/regional_modern_enriched_full_environment.csv.gz
+    id_column: sample_id
+    year_column: year
+    crop_column: crop
+    target_column: yield_t_ha
+    target_unit: t_ha
+    sample_unit: state_crop_year
+    split_builder: regional
+    feature_include_tokens: [weather, silo, slga, apsoil, soil, early_deployable]
+    blocked_columns: [latitude, longitude, location_id, year_feature]
+    protocols: [EXACT, ADAPTED, TRANSFER]
+    target_available: true
+    adapted_training_supported: true
+assets:
+  silo: {role: WEATHER_RECOVERY, status: USER_SUPPLIED}
+  bom: {role: WEATHER_SOURCE_COMPARISON, status: EXTERNALLY_ACQUIRABLE}
+  open_meteo: {role: WEATHER_RECOVERY, status: OPTIONAL_CACHE}
+  slga: {role: SOIL_COVARIATE, status: USER_SUPPLIED}
+  apsoil: {role: SOIL_COVARIATE, status: USER_SUPPLIED}
+  abares: {role: REGION_YEAR_CONTEXT, status: JOIN_KEY_AUDIT_REQUIRED}
+execution:
+  minimum_train: 12
+  minimum_validation: 4
+  minimum_test: 4
+  maximum_retry: 1
+  formal_requires_explicit_flag: true
+  smoke_rows: 96
+forbidden_paths: [NVT, g2f_2024_observed]

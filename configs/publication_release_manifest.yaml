@@ -1,0 +1,81 @@
+schema_version: publication_release_manifest_v1
+include:
+  - src/agritech_repro
+  - src/distillation_v4
+  - src/distillation_program
+  - src/stage8
+  - src/stage8_phase3b
+  - scripts/run_stage8_v4_australian.py
+  - scripts/run_stage8_formal_adapter.py
+  - scripts/run_universal_weather_v2_remediation.py
+  - scripts/run_privileged_ablation.py
+  - scripts/run_publication_evaluation.py
+  - scripts/run_stage7_unified_nursery_experiments.py
+  - configs/stage7_all_experiments.yaml
+  - scripts/materialize_publication_config.py
+  - scripts/prepare_publication_views.py
+  - scripts/render_publication_tables.py
+  - scripts/verify_publication_numbers.py
+  - scripts/acquire_publication_data.py
+  - scripts/verify_input_checksums.py
+  - scripts/sanitize_checkpoint_manifest.py
+  - scripts/build_publication_release.py
+  - src/phase3/run_g2f_route1_pilot_fixed.py
+  - scripts/analysis/common_sample_attribution_v1
+  - scripts/analysis/common_sample_attribution_validation_v1
+  - scripts/analysis/exact_raw_weather_shap_taylor_v3
+  - scripts/analysis/pathwise_taylor_shapley_v1
+  - scripts/analysis/final_codex_synthesis/build_evidence_v4_4.py
+  - scripts/analysis/final_codex_synthesis/validate_final_package_v4_4.py
+  - configs/publication
+  - configs/publication_repro.yaml
+  - configs/publication_release_manifest.yaml
+  - schemas/universal_weather_full_campaign_v2_remediation_v1.schema.json
+  - experiments/apsim_comparison
+  - figures/final_publication_v4_18/build_final_figures.py
+  - figures/final_publication_v4_18/source_*.csv
+  - figures/final_publication_v4_18/*manifest*.json
+  - figures/final_publication_v4_18/figure_0[1-5].pdf
+  - figures/final_publication_v4_18/figure_0[1-5].svg
+  - figures/final_publication_v4_18/figure_0[1-5].png
+  - outputs/apsim_comparison/run_summary.csv
+  - outputs/apsim_comparison/metrics.csv
+  - outputs/apsim_comparison/paired_bootstrap.csv
+  - outputs/apsim_comparison/sensitivity_range.csv
+  - outputs/apsim_comparison/analysis_integrity.json
+  - outputs/stage8_claim_resolution_v1/analysis/claim_gate_seed_results.csv
+  - outputs/common_sample_attribution_v1/run_20260708_212657/*summary.csv
+  - outputs/common_sample_attribution_v1/run_20260708_212657/statistical_tests.csv
+  - outputs/common_sample_attribution_validation_v1/run_20260709_090144/linkage_*.csv
+  - outputs/common_sample_attribution_validation_v1/run_20260709_090144/paired_support_*.csv
+  - outputs/common_sample_attribution_validation_v1/run_20260709_090144/perturbation_agreement_revised.csv
+  - paper/final_ajcai_manuscript_v4_18_4_apsim_anonymous.tex
+  - paper/final_ajcai_supplement_v4_18_4_apsim_anonymous.tex
+  - paper/final_references_v4_18_4_apsim.bib
+  - paper/generated_tables/apsim_*.tex
+  - data_manifest
+  - docs/reproducibility
+  - tests/test_publication_repro_cli.py
+  - tests/fixtures/publication
+  - Makefile
+  - pyproject.toml
+  - LICENSE
+  - README.md
+exclude:
+  - experiments/apsim_comparison/runtime
+  - experiments/apsim_comparison/configs/generated
+  - figures/final_publication_v4_18/source_lineage_validation.csv
+  - data/raw
+  - data/derived
+  - artifacts/checkpoints
+  - outputs/**/checkpoints
+  - outputs/**/predictions
+  - scratch
+  - .git
+  - '**/__pycache__'
+  - '*.pyc'
+  - '*.log'
+notes:
+  - Restricted source data and checkpoints are never included.
+  - The APSIM runtime is fetched from its pinned upstream source by the bootstrap command.
+  - Derived publication source tables are included only where redistribution is permitted.

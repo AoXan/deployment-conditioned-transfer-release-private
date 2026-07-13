@@ -1,0 +1,28 @@
+\begin{landscape}
+\begin{table}[tb]
+\centering
+\caption{Common-sample predictive comparison between APSIM and data-driven models. Values are mean (SD) across S1--S3; MAE, RMSE, and bias are in t/ha. The $n$ column gives the per-run range. GROUP runs use different held-out regions, whereas SPATIAL runs share the same 31 rows. APSIM is deterministic for a given sample and configuration. ``Zero'' is the mean per-run count of simulations with a valid report but zero end-of-season grain.}
+\label{tab:apsim-comparison}
+\small
+\setlength{\tabcolsep}{2.6pt}
+\begin{tabular}{lrrrrrrr}
+\toprule
+Model & $n$ & MAE & RMSE & $R^2$ & Bias & Coverage & Zero\\
+\midrule
+\multicolumn{8}{l}{\textbf{GROUP}}\\
+Local scratch & 93--115 & 0.729 (0.075) & 0.919 (0.073) & 0.045 (0.556) & -0.056 (0.239) & 1.000 & --\\
+Supervised transfer & 93--115 & 0.908 (0.211) & 1.093 (0.236) & -0.207 (0.271) & 0.013 (0.216) & 1.000 & --\\
+Validation-selected transfer & 93--115 & 0.837 (0.172) & 1.023 (0.163) & -0.105 (0.429) & 0.028 (0.147) & 1.000 & --\\
+APSIM constrained & 93--115 & 0.948 (0.145) & 1.181 (0.148) & -0.501 (0.659) & -0.275 (0.183) & 1.000 & 6.0\\
+APSIM available & 93--115 & 1.060 (0.039) & 1.274 (0.058) & -0.873 (1.170) & -0.078 (0.038) & 1.000 & 11.7\\
+\addlinespace
+\multicolumn{8}{l}{\textbf{SPATIAL}}\\
+Local scratch & 31 & 1.204 (0.000) & 1.594 (0.000) & -0.970 (0.000) & -0.172 (0.000) & 1.000 & --\\
+Supervised transfer & 31 & 1.024 (0.127) & 1.214 (0.174) & -0.158 (0.342) & 0.180 (0.553) & 1.000 & --\\
+Validation-selected transfer & 31 & 0.990 (0.117) & 1.133 (0.124) & -0.003 (0.224) & -0.130 (0.175) & 1.000 & --\\
+APSIM constrained & 31 & 1.057 (0.000) & 1.301 (0.000) & -0.312 (0.000) & -0.576 (0.000) & 1.000 & 3.0\\
+APSIM available & 31 & 1.143 (0.000) & 1.388 (0.000) & -0.494 (0.000) & -0.141 (0.000) & 1.000 & 4.0\\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{landscape}

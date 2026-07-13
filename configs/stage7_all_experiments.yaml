@@ -1,0 +1,206 @@
+schema_version: stage7_all_experiments_v1
+generated_at: "2026-06-25"
+story_boundary: validation-conditioned expert and ensemble benchmarking for crop-yield prediction
+release:
+  release_id: data_nursery_v1_stage7_waite_slga_final_20260625
+  release_root: data/derived/data_nursery_v1_stage7_waite_slga_final_20260625
+inputs:
+  nursery_release: data/derived/data_nursery_v1_stage7_waite_slga_final_20260625
+  registry: data/derived/data_nursery_v1_stage7_waite_slga_final_20260625/manifests/unified_nursery_view_registry.csv
+  frozen_experiment_matrix: data/derived/data_nursery_v1_stage7_waite_slga_final_20260625/experiments/stage7_frozen_experiment_matrix.csv
+  folds: data/derived/data_nursery_v1_stage7_waite_slga_final_20260625/manifests/fold_manifest.csv
+  feature_groups: data/derived/data_nursery_v1_stage7_waite_slga_final_20260625/manifests/feature_group_manifest.csv
+  modality_views: data/derived/data_nursery_v1_stage7_waite_slga_final_20260625/manifests/modality_ablation_view_matrix.csv
+  statistical_protocol: data/derived/data_nursery_v1_stage7_waite_slga_final_20260625/reports/stage7_statistical_protocol.md
+  track_roles_source: docs/stage7_story_alignment_audit.md
+  stage6_closure_source: docs/stage6_final_closure_audit.md
+outputs:
+  root: outputs/stage7_formal_v2
+  results_dir: outputs/stage7_formal_v2/results
+  temp_dir: outputs/stage7_formal_v2/tmp
+  resume_dir: outputs/stage7_formal_v2/resume
+  log_dir: outputs/stage7_formal_v2/logs
+  status_dir: outputs/stage7_formal_v2/status
+  job_manifest_csv: outputs/tables/stage7_formal_v2_job_manifest.csv
+  preexecution_check_csv: outputs/tables/stage7_v2_preexecution_check.csv
+  progress_csv: outputs/stage7_formal_v2/logs/progress.csv
+  progress_jsonl: outputs/stage7_formal_v2/logs/progress.jsonl
+  failure_ledger_csv: outputs/stage7_formal_v2/logs/failure_ledger.csv
+  status_json: outputs/stage7_formal_v2/status/stage7_status.json
+  heartbeat_file: outputs/stage7_formal_v2/status/heartbeat.json
+  heartbeat_dir: outputs/stage7_formal_v2/status/heartbeats
+  per_job_log_dir: outputs/stage7_formal_v2/logs/jobs
+  completion_marker_dir: outputs/stage7_formal_v2/completed
+  invalidation_ledger_csv: outputs/stage7_formal_v2/logs/invalidation_ledger.csv
+formal_authorization:
+  formal_execution_enabled: true
+  require_explicit_run_formal_flag: true
+  authorized_stage_default: all
+  authorized_stages:
+    - 7a
+    - 7b
+    - 7c
+    - all
+  forbidden_expansions:
+    - MoE method development
+    - transfer learning branch
+    - missing-modality method development
+    - soil prediction paper
+    - digital twin claim
+    - official leaderboard reproduction
+stage_ordering:
+  all:
+    - 7a
+    - 7b
+    - 7c
+models:
+  frozen_family:
+    - official_average_yield
+    - official_linear_trend
+    - naive_mean
+    - ridge
+    - random_forest
+    - random_forest_light
+    - hist_gradient_boosting
+    - hist_gradient_boosting_light
+    - mean_ensemble
+    - validation_weighted_ensemble
+    - stacking
+    - oracle_best_expert_diagnostic
+    - learned_gate_diagnostic
+seeds:
+  formal:
+    - 101
+    - 202
+    - 303
+validation_axes:
+  source: frozen_experiment_matrix.validation_axis
+feature_groups_modalities:
+  source: frozen_experiment_matrix.allowed_feature_groups plus manifests/feature_group_manifest.csv and manifests/modality_ablation_view_matrix.csv
+metrics:
+  source: frozen_experiment_matrix.primary_metrics and frozen_experiment_matrix.secondary_metrics
+  primary:
+    - MAE
+    - MAE_t_ha
+    - MAE_Mg_ha
+  secondary:
+    - RMSE
+    - R2
+    - normalized_MAE
+    - strict_minus_random_degradation
+    - runtime_seconds
+    - coverage
+execution:
+  default_seeds:
+    - 101
+  existing_prediction_axis_seeds:
+    CY-Bench:
+      random: [101, 202, 303]
+      unseen_location: [700, 701, 702]
+      temporal_forward: [2921, 2922, 2923]
+      spatiotemporal: [1200, 1201, 1202]
+  max_workers: 2
+  timeout_per_job_seconds: 1800
+  max_retries: 1
+  resume_completed_jobs: true
+  accepted_equivalent_yaml_sha256:
+    - e2979f64037e2232639f8b9ff2bda97987cfd7e37a6c3625a1cfca988e71b873
+    - a387a271458e85ea97d1c8df29cef1c191bae4e068ddbcd19d4b3b92acadaae0
+  accepted_equivalent_runner_code_sha256:
+    - 01a6d7a2f45e2e547ea3a0612bbe1059469a163ac157b04f8a98b2db854c8226
+  atomic_job_writes: true
+  subprocess_isolation: true
+  flush_progress_every_job: true
+  default_log_level: INFO
+  min_train_rows: 20
+  min_test_rows: 5
+resource_limits:
+  omp_num_threads: 1
+  mkl_num_threads: 1
+  openblas_num_threads: 1
+  veclib_maximum_threads: 1
+  joblib_inner_threads: 1
+  xgboost_nthread: 1
+  lightgbm_num_threads: 1
+  torch_num_threads: 1
+safety:
+  disk_free_warning_gib: 50
+  disk_free_hard_stop_gib: 30
+  output_must_remain_under_repo_root: true
+  no_external_disk_outputs: true
+  no_git_add_outputs: true
+  stop_on_nonfinite_metrics: true
+  stop_starting_new_jobs_below_hard_stop: true
+failure_policy:
+  timeout: record_failure_and_continue
+  missing_heartbeat: record_failure_and_continue
+  exception: record_traceback_and_continue
+  empty_data: record_failure_and_continue
+  too_small_fold: record_failure_and_continue
+  nonfinite_metric: record_failure_and_continue
+  retries: 1
+stop_rules:
+  critical:
+    - stage_preflight_blocker
+    - disk_free_below_hard_stop
+    - formal_authorization_missing
+    - frozen_matrix_or_registry_missing
+    - fold_manifest_missing
+    - genotype_leakage_detected
+    - modality_row_loss_detected
+  noncritical_job_failure: record_and_continue
+stages:
+  7a:
+    label: baseline sanity
+    enabled: true
+    formal_authorized: true
+    classification: baseline_sanity_non_ensemble
+    seeds: [101]
+    fold_tokens: [fold_001]
+    timeout_per_job_seconds: 1200
+    include_execution_stages:
+      - dry_run_smoke_only
+    experiment_ids:
+      - S7-WAITE-SMOKE-010
+      - S7-CYB-WHEAT-AXIS-001
+      - S7-CYB-MAIZE-AXIS-002
+      - S7-G2F-NATIVE-004
+      - S7-AUS-REG-007
+      - S7-AUS-MODALITY-008
+      - S7-WAITE-LONG-009
+    model_overrides:
+      S7-WAITE-SMOKE-010: [ridge_smoke]
+      S7-CYB-WHEAT-AXIS-001: [official_average_yield, ridge]
+      S7-CYB-MAIZE-AXIS-002: [official_average_yield, ridge]
+      S7-G2F-NATIVE-004: [ridge]
+      S7-AUS-REG-007: [naive_mean, ridge]
+      S7-AUS-MODALITY-008: [ridge]
+      S7-WAITE-LONG-009: [naive_mean, ridge]
+  7b:
+    label: formal baselines and ablations
+    enabled: true
+    formal_authorized: true
+    classification: formal_baseline_and_modality_ablation
+    seeds: [101, 202, 303]
+    fold_tokens: [fold_001]
+    include_status: [confirmatory, supportive]
+    exclude_experiment_ids:
+      - S7-CYB-STACK-003
+      - S7-FOLD-QA-014
+      - S7-WAITE-SMOKE-010
+  7c:
+    label: ensemble and diagnostics
+    enabled: true
+    formal_authorized: true
+    classification: ensemble_oracle_routing_diagnostic
+    seeds: [101, 202, 303]
+    fold_tokens: [fold_001]
+    experiment_ids:
+      - S7-CYB-STACK-003
+      - S7-G2F-NATIVE-004
+      - S7-LEGACY-COMP-013
+    diagnostic_only:
+      - oracle_best_expert_diagnostic
+      - learned_gate_diagnostic
+      - routing_regret
+    forbidden_interpretation: oracle and routing diagnostics are not new method contributions

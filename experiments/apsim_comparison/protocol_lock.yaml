@@ -1,0 +1,58 @@
+protocol_id: apsim_available_inputs_v1
+locked_at: 2026-07-13
+dataset: CY-Bench_wheat_AU
+evaluation_unit: region_year
+contracts:
+  - GROUP
+  - SPATIAL
+data_driven_selection:
+  checkpoint_metric: validation_mse
+  include_all_runs: true
+  required_references:
+    - target_scratch
+    - supervised
+  transfer_route_rule: minimum recorded validation MSE among eligible weather-only transfer routes within contract and seed
+apsim:
+  family: APSIM Next Generation
+  crop_module: Wheat
+  central_configuration: constrained_central
+  constrained_input:
+    weather: CY-Bench daily tmin, tmax, precipitation, and radiation
+    sowing_date: rounded regional crop-calendar start of season
+    soil: one fixed unmodified APSIM example soil
+    cultivar: one fixed APSIM example wheat cultivar
+    initial_water_fraction: 0.50
+    initial_no3_kg_ha: 50
+    initial_nh4_kg_ha: 10
+    fertiliser_n_kg_ha: 50
+  available_input:
+    weather: same as constrained input
+    sowing_date: same as constrained input
+    soil: fixed profile geometry with DUL minus LL15 set from CY-Bench AWC and bulk density set from CY-Bench bulk_density
+    initial_water: nearest pre-sowing CY-Bench root-zone soil moisture, clipped to LL15--DUL
+    initial_nitrogen: same fixed values as constrained input
+    fertiliser_n_kg_ha: 50
+  sensitivity:
+    sowing_offset_days: [-14, 0, 14]
+    initial_water_fraction: [0.25, 0.50, 0.75]
+    fertiliser_n_kg_ha: [0, 50, 100]
+    initial_no3_kg_ha: [25, 50, 100]
+    cultivar_name: [Janz, Hartog, Mace]
+    analysis: one_factor_at_a_time_around_central
+  training_calibration: disabled
+statistics:
+  metrics: [mae, rmse, r2, bias]
+  paired_difference: absolute_error_data_driven_minus_absolute_error_apsim
+  bootstrap_replicates: 10000
+  bootstrap_seed: 20260713
+  bootstrap_unit: region_year
+  confidence_level: 0.95
+  equivalence_claim: disabled
+coverage:
+  eligibility_rule: sample ID has observed target, frozen model prediction, complete daily weather for the simulation window, location, and crop calendar
+  failure_handling: report and retain every failed simulation; common-sample metrics use the intersection and report coverage
+leakage_controls:
+  - no test yield is read by APSIM configuration generation
+  - no APSIM test result is used for dataset, route, or parameter selection
+  - sensitivity configurations are all reported and never substituted for the central result
+  - immutable sample manifest and hashes are written before simulation

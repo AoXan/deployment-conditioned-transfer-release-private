@@ -1,0 +1,21 @@
+\begin{table}[tb]
+\centering
+\caption{Input conditions and provenance for APSIM and data-driven models. Both data-driven routes deploy with the ten weather summaries. APSIM uses the underlying daily weather and the regional crop calendar because these are required to run the process model.}
+\label{tab:apsim-inputs}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{p{.19\textwidth}p{.24\textwidth}p{.24\textwidth}p{.23\textwidth}}
+\toprule
+Input & Weather-only models & APSIM constrained-input & APSIM available-input\\
+\midrule
+Weather & Ten seasonal summaries & Daily CY-Bench minimum/maximum temperature, precipitation, and radiation & Same daily weather\\
+Crop timing & Implicit in the seasonal window & Regional start/end of season; sowing at rounded start day & Same regional calendar\\
+Soil & Not used at deployment & Fixed APSIM example soil & CY-Bench AWC, bulk density, and drainage mapped to a fixed 1.8-m profile\\
+Initial water & Not used & 50\% of plant-available water & Pre-sowing root-zone moisture proxy; 50\% fallback when unavailable\\
+Initial N & Not used & 50 kg NO$_3$-N/ha and 10 kg NH$_4$-N/ha & Same fixed initial N\\
+Fertiliser & Not used & 50 kg N/ha at sowing & Same fixed fertiliser\\
+Cultivar & Not used & Hartog & Hartog\\
+Selection & Validation MSE & Fixed before simulation & Fixed mapping without yield\\
+\bottomrule
+\end{tabular}
+\end{table}

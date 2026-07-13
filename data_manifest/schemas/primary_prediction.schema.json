@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Stage 8 publication prediction row",
+  "type": "object",
+  "required": ["sample_id", "y_true", "y_pred"],
+  "properties": {
+    "sample_id": {"type": "string"},
+    "y_true": {"type": "number"},
+    "y_pred": {"type": "number"},
+    "split_id": {"type": "string", "enum": ["GROUP", "SPATIAL"]},
+    "seed": {"type": "integer"}
+  },
+  "additionalProperties": true
+}

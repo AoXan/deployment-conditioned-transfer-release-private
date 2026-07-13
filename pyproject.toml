@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "seabrook-stage1"
+version = "0.1.0"
+description = "Seabrook Stage-1 public-data modelling pipeline"
+requires-python = ">=3.10"
+dependencies = [
+  "matplotlib",
+  "numpy",
+  "openpyxl",
+  "pandas",
+  "PyYAML",
+  "scikit-learn",
+  "seaborn",
+]
+
+[project.optional-dependencies]
+boosting = ["xgboost", "lightgbm"]
+interpretability = ["shap"]
+publication = ["captum", "jsonschema", "pyarrow", "scipy", "shap", "torch"]
+dev = ["pytest", "ruff", "black"]
+
+[project.scripts]
+agritech-repro = "agritech_repro.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.black]
+line-length = 120
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+norecursedirs = [
+  ".git",
+  ".mypy_cache",
+  ".pytest_cache",
+  "__pycache__",
+  "version_with_data",
+]

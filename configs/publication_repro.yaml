@@ -1,0 +1,76 @@
+schema_version: publication_repro_v1
+datasets:
+  cybench:
+    relative_path: cybench
+    redistribution: allowed_by_source_terms
+    required_for: [preprocess, reproduce-primary]
+  g2f:
+    relative_path: g2f
+    redistribution: check_release_terms_before_packaging
+    required_for: [reproduce-primary, reproduce-cases]
+  roseworthy:
+    relative_path: roseworthy
+    redistribution: prohibited_until_cleaned-file_licence_is_confirmed
+    required_for: [reproduce-primary, reproduce-cases]
+  waite:
+    relative_path: waite
+    redistribution: do_not_redistribute_source_workbook
+    required_for: [reproduce-primary, reproduce-cases]
+publication_assets:
+  required_files:
+    - paper/final_ajcai_manuscript_v4_18_4_apsim_anonymous.tex
+    - paper/final_ajcai_supplement_v4_18_4_apsim_anonymous.tex
+    - scripts/run_stage8_v4_australian.py
+    - scripts/run_stage8_formal_adapter.py
+    - scripts/run_universal_weather_v2_remediation.py
+    - scripts/analysis/common_sample_attribution_v1/run_analysis.py
+    - scripts/analysis/final_codex_synthesis/build_evidence_v4_4.py
+    - figures/final_publication_v4_18/build_final_figures.py
+    - experiments/apsim_comparison/build_experiment.py
+    - experiments/apsim_comparison/analyse_results.py
+    - configs/publication/stage8_v4_australian.yaml
+    - configs/publication/universal_weather_full_campaign_v2_remediation_v1.yaml
+    - schemas/universal_weather_full_campaign_v2_remediation_v1.schema.json
+    - scripts/render_publication_tables.py
+    - scripts/verify_publication_numbers.py
+  verification_files:
+    - figures/final_publication_v4_18/panel_integrity_manifest.json
+    - outputs/apsim_comparison/analysis_integrity.json
+    - data_manifest/checkpoints/prediction_replay_validation.csv
+    - outputs/stage8_claim_resolution_v1/analysis/claim_gate_seed_results.csv
+workflows:
+  validate: {entrypoint: python -m agritech_repro validate}
+  data-audit: {entrypoint: python -m agritech_repro data-audit}
+  preprocess: {entrypoint: scripts/prepare_publication_views.py}
+  reproduce-primary:
+    entrypoint: scripts/run_universal_weather_v2_remediation.py
+    native_config: configs/publication/universal_weather_full_campaign_v2_remediation_v1.yaml
+  evaluate-checkpoints:
+    entrypoint: python -m agritech_repro evaluate-checkpoints
+    lineage: data_manifest/checkpoints/checkpoint_lineage.csv
+    replay_validation: data_manifest/checkpoints/prediction_replay_validation.csv
+  reproduce-diagnostics:
+    entrypoint: scripts/analysis/common_sample_attribution_v1/run_analysis.py
+    validation_assets:
+      - figures/final_publication_v4_18/source_support_delta_samples.csv
+      - figures/final_publication_v4_18/source_signed_feature_delta_summary.csv
+      - figures/final_publication_v4_18/source_shap_ig_agreement_summary.csv
+      - figures/final_publication_v4_18/source_perturbation_normalized_sensitivity.csv
+      - figures/final_publication_v4_18/source_linkage_summary.csv
+  reproduce-cases: {entrypoint: scripts/run_stage7_unified_nursery_experiments.py}
+  reproduce-apsim:
+    entrypoint: experiments/apsim_comparison/README.md
+    commands:
+      - experiments/apsim_comparison/build_experiment.py
+      - experiments/apsim_comparison/run_apsim.sh
+      - experiments/apsim_comparison/analyse_results.py
+      - experiments/apsim_comparison/render_supplement_tables.py
+    required_outputs:
+      - outputs/apsim_comparison/run_summary.csv
+      - outputs/apsim_comparison/paired_bootstrap.csv
+      - outputs/apsim_comparison/sensitivity_range.csv
+      - outputs/apsim_comparison/analysis_integrity.json
+  render-paper-assets: {entrypoint: figures/final_publication_v4_18/build_final_figures.py}
+  render-paper-tables: {entrypoint: scripts/render_publication_tables.py}
+  numeric-integrity: {entrypoint: scripts/verify_publication_numbers.py}
+  verify-publication: {entrypoint: python -m agritech_repro verify-publication}

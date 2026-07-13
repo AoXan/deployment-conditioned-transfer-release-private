@@ -1,0 +1,9 @@
+contract,route,permutation_p,wilcoxon_p,wilcoxon_stat
+GROUP_complete,prediction_kd,0.0,3.536269131016027e-22,8169.0
+GROUP_complete,combined_kd,0.0,1.0137801228890771e-27,6304.0
+GROUP_complete,representation_kd,0.0,3.0884943200461736e-22,8148.0
+GROUP_complete,missing_aware,0.0,5.222584357791655e-23,7875.0
+SPATIAL_complete,prediction_kd,0.89896,0.7115696948647758,2089.0
+SPATIAL_complete,combined_kd,8e-05,0.00014526652450227388,1194.0
+SPATIAL_complete,representation_kd,0.69534,0.8585901814747144,2139.0
+SPATIAL_complete,missing_aware,0.0292,0.03660574629395062,1640.0

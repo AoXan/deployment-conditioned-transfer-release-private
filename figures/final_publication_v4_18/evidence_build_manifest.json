@@ -1,0 +1,109 @@
+{
+  "holm_family": "8 route-by-contract hypotheses",
+  "inputs": {
+    "outputs/common_sample_attribution_v1/run_20260708_212657/attribution_concentration.csv": {
+      "sha256": "83a210a5a74598b44522f2ec452b7dc2ae41111ec29535257622549282464b1b",
+      "size_bytes": 273581
+    },
+    "outputs/common_sample_attribution_v1/run_20260708_212657/attribution_error_linkage.csv": {
+      "sha256": "4ad753dffd32d295d0f0657f23930d9302a3a6d831caf032369a5547c876766a",
+      "size_bytes": 500132
+    },
+    "outputs/common_sample_attribution_v1/run_20260708_212657/common_sample_registry.csv": {
+      "sha256": "b45e3da4997eca60546aea1ec2d74b26951ef01db65ec77f33ccbf4120297675",
+      "size_bytes": 49073
+    },
+    "outputs/common_sample_attribution_v1/run_20260708_212657/ig_quality.csv": {
+      "sha256": "2af50d3f307079693efa5c563800e0cc38145ae6b05cd5d4817dcfdbf16db057",
+      "size_bytes": 178602
+    },
+    "outputs/common_sample_attribution_v1/run_20260708_212657/sample_level_common_ig.csv": {
+      "sha256": "83ed807a2b33bac354ff993c573d80c6b403c297084158c082424755acbde007",
+      "size_bytes": 3284876
+    },
+    "outputs/common_sample_attribution_v1/run_20260708_212657/sample_level_common_shap.csv": {
+      "sha256": "eda237ef725aadbd1fdddbe0efec992db967e9054ebb7ef36f27c5b3859b53ad",
+      "size_bytes": 3551368
+    },
+    "outputs/common_sample_attribution_v1/run_20260708_212657/support_physical_reliance.csv": {
+      "sha256": "332c80289efd8b62e9e6d62880861b13ac15521d9e89495f76a73790cb8be15f",
+      "size_bytes": 239448
+    },
+    "outputs/common_sample_attribution_validation_v1/run_20260709_090144/perturbation_normalized_sensitivity.csv": {
+      "sha256": "aad7a9c90320f0ed3104056c5d9e129c0a330493e03d7b8eaec9ceb2128e177a",
+      "size_bytes": 22406
+    },
+    "outputs/pathwise_taylor_shapley_v1/run_20260708_183055/pathwise_quality.csv": {
+      "sha256": "269d757352324f49e9febcc77c96295676ba075228370fc19663953bb19c45d3",
+      "size_bytes": 37084
+    },
+    "outputs/pathwise_taylor_shapley_v1/run_20260708_183055/sample_level_pathwise_taylor_shapley.csv": {
+      "sha256": "8ae38a54d921726a5943f53d8a06c64c80418219f67b5cffe7955900b2829e91",
+      "size_bytes": 522554
+    },
+    "outputs/stage8_claim_resolution_v1/analysis/source_transfer_matched_error_audit.csv": {
+      "sha256": "6303b69d846b0e10f2cc8a9e3f48e113696d0d63513456a3d0fcd75207f34d7c",
+      "size_bytes": 8613
+    },
+    "outputs/tables/stage7_6_random_selected_model_regret.csv": {
+      "sha256": "15d6aaecba8040497ccda8a8dd51eaf7cbb9db911f6cf634d916c0c6111643fb",
+      "size_bytes": 3272
+    },
+    "outputs/tables/stage7_trusted_result_index.csv": {
+      "sha256": "b0c207e112b61dd3aebd7793f590112ec2024d37997e5f7364d0ce968172292a",
+      "size_bytes": 547988
+    }
+  },
+  "perturbation_groups": [
+    "observation_support",
+    "temperature",
+    "water_balance",
+    "radiation"
+  ],
+  "schema_version": "final_codex_synthesis_evidence_v4_4",
+  "statistical_unit": "sample_id clusters after contract-route-seed matching",
+  "summary": {
+    "agreement_cell_rows": 44,
+    "agreement_rows": 30,
+    "beeswarm_rows": 3100,
+    "counts": {
+      "GROUP_complete_unique_samples": 279,
+      "SPATIAL_complete_unique_samples": 31,
+      "contract_seed_rows": 395,
+      "cross_contract_overlap": 23,
+      "unique_samples": 287
+    },
+    "early_split_reversals": 9,
+    "early_split_rows": 14,
+    "entropy_summary_rows": 8,
+    "experiment_map_rows": 9,
+    "ig_pass_rate": 0.9893670886075949,
+    "lineage_status_counts": {
+      "NOT_APPLICABLE": 15,
+      "PASS": 75
+    },
+    "linkage_point_rows": 1240,
+    "linkage_rows": 8,
+    "ood_dimensions": [
+      9
+    ],
+    "ood_rows": 24,
+    "performance_landscape_rows": 36,
+    "performance_rows": 10,
+    "profile": "v4_4",
+    "route_coefficient_rows": 5,
+    "shap_background_test_rows": 0,
+    "shap_ig_summary_rows": 10,
+    "signed_feature_summary_rows": 80,
+    "source_protocol_rows": 9,
+    "spatial_scratch_baseline": "fixed_reference_reused",
+    "support_point_rows": 1240,
+    "support_rows": 8,
+    "taylor_gate": {
+      "n_eligible": 180,
+      "n_pass": 28,
+      "pass_rate": 0.15555555555555556,
+      "threshold": 0.05
+    }
+  }
+}

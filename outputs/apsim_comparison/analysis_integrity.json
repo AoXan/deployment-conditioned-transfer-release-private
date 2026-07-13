@@ -1,0 +1,10 @@
+{
+  "expected_samples_per_scenario": 287,
+  "apsim_scenarios": 12,
+  "apsim_prediction_rows": 3444,
+  "missing_apsim_rows": 0,
+  "common_prediction_rows": 14220,
+  "bootstrap_replicates": 10000,
+  "test_yield_used_for_parameter_selection": false,
+  "equivalence_test_performed": false
+}

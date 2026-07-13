@@ -1,0 +1,20 @@
+\begin{table}[tb]
+\centering
+\refstepcounter{table}
+\parbox{.96\textwidth}{\centering\textbf{Table \thetable.} APSIM one-factor sensitivity across sowing date, initial water, initial nitrate, fertiliser, cultivar, and the available-input soil mapping. Ranges include the two central configurations and all ten prespecified variants; they are descriptive and are not used to select the reported central result.}\par\medskip
+\label{tab:apsim-sensitivity}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{llrrrrr}
+\toprule
+Contract & Run & Scenarios & MAE range & RMSE range & $R^2$ range & Bias range\\
+\midrule
+GROUP & S1 & 12 & 0.947--1.239 & 1.178--1.511 & -0.935---0.177 & -1.127--0.545\\
+GROUP & S2 & 12 & 0.781--1.053 & 1.000--1.296 & -2.549---1.112 & -0.773--0.779\\
+GROUP & S3 & 12 & 1.032--1.425 & 1.295--1.708 & -0.758---0.011 & -1.205--0.324\\
+SPATIAL & S1 & 12 & 1.041--1.425 & 1.265--1.695 & -1.228---0.241 & -1.234--0.270\\
+SPATIAL & S2 & 12 & 1.041--1.425 & 1.265--1.695 & -1.228---0.241 & -1.234--0.270\\
+SPATIAL & S3 & 12 & 1.041--1.425 & 1.265--1.695 & -1.228---0.241 & -1.234--0.270\\
+\bottomrule
+\end{tabular}
+\end{table}

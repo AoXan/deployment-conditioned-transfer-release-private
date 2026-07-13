@@ -1,0 +1,143 @@
+schema_version: universal_weather_v2_remediation_v1
+output_root: outputs/distillation_program/stage8_v4_australian_narrative_v1/universal_weather_full_campaign_v2_remediation_v1
+sources:
+  - PRIMARY_CYBENCH_MAIZE_US
+  - PRIMARY_G2F_MAIZE
+source_routes:
+  - supervised
+  - prediction_kd
+  - representation_kd
+  - combined_kd
+  - missing_aware
+transfer_strategies:
+  - source_only
+  - ordinary_transfer
+  - harmonised_transfer
+  - pooled_source_target
+  - target_scratch
+adaptation_modes:
+  - no_adaptation
+  - full_adaptation
+  - few_shot_adaptation
+adaptation_fractions: [0.01, 0.05, 0.10, 0.20]
+missing_modality_methods:
+  - imputation
+  - missing_indicators
+  - late_fusion
+  - teacher_student_m2
+  - missing_aware
+deployment_conditions:
+  - complete
+  - natural
+  - synthetic_no_soil
+  - synthetic_no_weather
+  - synthetic_random_0_15
+seeds: [101, 202, 303]
+model_contract: UNIVERSAL_WEATHER_V2_REMEDIATION
+eligibility:
+  minimum_train_rows: 20
+  minimum_validation_rows: 5
+  minimum_test_rows: 5
+  minimum_adaptation_rows: 5
+  minimum_unique_train_targets: 3
+source_datasets:
+  PRIMARY_CYBENCH_MAIZE_US:
+    path: ${AGRITECH_DATA_ROOT}/cybench/PRIMARY_CYBENCH_MAIZE_US.csv.gz
+    sample_id_column: sample_id
+    sample_unit: ADMIN_REGION_HARVEST_YEAR
+    target_column: target_yield
+    target_unit: tonne_ha
+    year_column: year
+    modalities: [weather, soil]
+    natural_missingness: true
+    weather_columns: [weather_observed_days, weather_expected_days, weather_coverage, weather_tmin_mean, weather_tmax_mean, weather_prec_sum, weather_rad_sum, weather_et0_sum, weather_vpd_mean, weather_cwb_sum]
+    soil_columns: [privileged_soil_awc, privileged_soil_bulk_density, privileged_soil_drainage_class]
+    splits: [EXISTING_STAGE8_SPLIT]
+  PRIMARY_G2F_MAIZE:
+    path: ${AGRITECH_DATA_ROOT}/g2f/g2f_native_hybrid_env.csv.gz
+    sample_id_column: sample_id
+    sample_unit: HYBRID_ENVIRONMENT
+    target_column: target_yield
+    target_unit: bushel_acre
+    year_column: Year
+    modalities: [weather, soil]
+    natural_missingness: true
+    weather_columns: [weather_RH2M_mean, weather_T2M_MAX_mean, weather_ALLSKY_SFC_SW_DWN_mean, weather_T2MWET_mean, weather_GWETTOP_mean]
+    soil_columns: [soil_E Depth, "soil_1:1 Soil pH", "soil_Organic Matter LOI %", "soil_Nitrate-N ppm N"]
+    splits: [EXISTING_STAGE8_SPLIT]
+datasets:
+  CY-Bench_wheat_AU:
+    path: ${AGRITECH_DATA_ROOT}/cybench/CY-Bench_wheat_AU.csv.gz
+    sample_id_column: sample_id
+    sample_unit: ADMIN_REGION_HARVEST_YEAR
+    target_column: target_yield
+    target_unit: tonne_ha
+    year_column: year
+    years: 23
+    group_column: adm_id
+    latitude_column: context_latitude
+    longitude_column: context_longitude
+    modalities: [weather, soil]
+    natural_missingness: true
+    weather_columns: [weather_observed_days, weather_expected_days, weather_coverage, weather_tmin_mean, weather_tmax_mean, weather_prec_sum, weather_rad_sum, weather_et0_sum, weather_vpd_mean, weather_cwb_sum]
+    soil_columns: [privileged_soil_awc, privileged_soil_bulk_density, privileged_soil_drainage_class]
+    splits: [RANDOM, GROUP, SPATIAL]
+  waite:
+    path: ${AGRITECH_DATA_ROOT}/waite/waite_full_environment_proxy.csv.gz
+    sample_id_column: sample_id
+    sample_unit: REGIONAL_ENVIRONMENT_YEAR
+    target_column: observed_yield_t_ha
+    target_unit: tonne_ha
+    year_column: year
+    years: 69
+    modalities: [weather, soil]
+    natural_missingness: true
+    weather_columns: [silo_mean_daily_air_temperature_mean_apr_oct, silo_monthly_rain_sum_apr_oct, silo_monthly_open_pan_evaporation_sum_apr_oct, silo_monthly_rain_mean_apr_oct, silo_monthly_open_pan_evaporation_mean_apr_oct]
+    soil_columns: [slga_awc_000_005cm, slga_bdw_000_005cm, slga_cly_000_005cm, slga_snd_000_005cm]
+    splits: [EXISTING_STAGE8_SPLIT, ROLLING_1991, ROLLING_1992, ROLLING_1993]
+  ROSEWORTHY_E5_POINT:
+    path: ${AGRITECH_DATA_ROOT}/roseworthy/roseworthy_e5_point_yield.csv.gz
+    sample_id_column: sample_id
+    sample_unit: yield_monitor_point_year
+    target_column: target_value
+    target_unit: tonne_ha
+    year_column: year
+    years: 2
+    crop_column: crop_product
+    latitude_column: latitude
+    longitude_column: longitude
+    modalities: [weather, soil, terrain]
+    natural_missingness: false
+    weather_columns: [weather_rain_sum_mm, weather_rain_days, weather_max_temp_mean_c, weather_min_temp_mean_c, weather_heat_days_gt35, weather_frost_days_lt0, weather_evap_pan_sum_mm, weather_water_balance_proxy_mm]
+    soil_columns: [apsoil_pawc_mm, apsoil_bd_top, apsoil_ll15_top, apsoil_dul_top, apsoil_sat_top, apsoil_depth_total_mm]
+    splits: [SPATIAL]
+  ROSEWORTHY_HISTORICAL_FARM:
+    path: ${AGRITECH_DATA_ROOT}/roseworthy/roseworthy_historical_farm_grain_yield.csv
+    sample_id_column: sample_id
+    sample_id_template: "{crop}|{year}"
+    sample_unit: crop_year
+    target_column: yield_t_ha
+    target_unit: tonne_ha
+    year_column: year
+    years: 21
+    crop_column: crop
+    modalities: [weather]
+    natural_missingness: false
+    weather_columns: [weather_rain_sum_mm, weather_rain_days, weather_max_temp_mean_c, weather_min_temp_mean_c, weather_heat_days_gt35, weather_frost_days_lt0, weather_evap_pan_sum_mm, weather_water_balance_proxy_mm]
+    soil_columns: []
+    splits: [ROLLING_2018, ROLLING_2019, ROLLING_2020, ROLLING_2021, ROLLING_2022, ROLLING_2023, ROLLING_2024]
+  ROSEWORTHY_HISTORICAL_BIOMASS:
+    path: ${AGRITECH_DATA_ROOT}/roseworthy/roseworthy_historical_farm_biomass.csv
+    sample_id_column: sample_id
+    sample_id_template: "{crop}|{year}"
+    sample_unit: crop_year
+    target_column: yield_t_ha
+    target_unit: tonne_ha
+    year_column: year
+    years: 21
+    crop_column: crop
+    modalities: [weather]
+    natural_missingness: false
+    weather_columns: [weather_rain_sum_mm, weather_rain_days, weather_max_temp_mean_c, weather_min_temp_mean_c, weather_heat_days_gt35, weather_frost_days_lt0, weather_evap_pan_sum_mm, weather_water_balance_proxy_mm]
+    soil_columns: []
+    splits: [ROLLING_2018, ROLLING_2019, ROLLING_2020, ROLLING_2021, ROLLING_2022, ROLLING_2023, ROLLING_2024]

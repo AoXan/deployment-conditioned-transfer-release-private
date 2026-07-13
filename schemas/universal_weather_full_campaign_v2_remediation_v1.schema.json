@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Universal Weather V2 remediation campaign",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "output_root", "sources", "source_routes",
+    "transfer_strategies", "adaptation_modes", "adaptation_fractions",
+    "missing_modality_methods", "deployment_conditions", "seeds",
+    "model_contract", "source_datasets", "datasets"
+  ],
+  "properties": {
+    "schema_version": {"const": "universal_weather_v2_remediation_v1"},
+    "output_root": {"type": "string", "minLength": 1},
+    "sources": {
+      "type": "array", "minItems": 1, "uniqueItems": true,
+      "items": {"enum": ["PRIMARY_CYBENCH_MAIZE_US", "PRIMARY_G2F_MAIZE"]}
+    },
+    "source_routes": {
+      "type": "array", "minItems": 5, "uniqueItems": true,
+      "items": {"enum": ["supervised", "prediction_kd", "representation_kd", "combined_kd", "missing_aware"]}
+    },
+    "transfer_strategies": {
+      "type": "array", "minItems": 5, "uniqueItems": true,
+      "items": {"enum": ["source_only", "ordinary_transfer", "harmonised_transfer", "pooled_source_target", "target_scratch"]}
+    },
+    "adaptation_modes": {
+      "type": "array", "minItems": 3, "uniqueItems": true,
+      "items": {"enum": ["no_adaptation", "full_adaptation", "few_shot_adaptation"]}
+    },
+    "adaptation_fractions": {
+      "type": "array", "minItems": 4, "maxItems": 4, "uniqueItems": true,
+      "items": {"enum": [0.01, 0.05, 0.1, 0.2]}
+    },
+    "missing_modality_methods": {
+      "type": "array", "minItems": 5, "uniqueItems": true,
+      "items": {"enum": ["imputation", "missing_indicators", "late_fusion", "teacher_student_m2", "missing_aware"]}
+    },
+    "deployment_conditions": {
+      "type": "array", "minItems": 4, "uniqueItems": true,
+      "items": {"enum": ["complete", "natural", "synthetic_no_soil", "synthetic_no_weather", "synthetic_random_0_15"]}
+    },
+    "seeds": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "integer"}},
+    "model_contract": {"type": "string", "minLength": 1},
+    "eligibility": {
+      "type": "object",
+      "required": ["minimum_train_rows", "minimum_validation_rows", "minimum_test_rows", "minimum_adaptation_rows", "minimum_unique_train_targets"],
+      "properties": {
+        "minimum_train_rows": {"type": "integer", "minimum": 1},
+        "minimum_validation_rows": {"type": "integer", "minimum": 1},
+        "minimum_test_rows": {"type": "integer", "minimum": 1},
+        "minimum_adaptation_rows": {"type": "integer", "minimum": 1},
+        "minimum_unique_train_targets": {"type": "integer", "minimum": 2}
+      }
+    },
+    "source_datasets": {
+      "type": "object", "minProperties": 2,
+      "additionalProperties": {"$ref": "#/$defs/dataset"}
+    },
+    "datasets": {
+      "type": "object",
+      "minProperties": 4,
+      "additionalProperties": {"$ref": "#/$defs/dataset"}
+    }
+  },
+  "$defs": {
+    "dataset": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["path", "sample_id_column", "sample_unit", "target_column", "target_unit", "year_column", "modalities", "splits"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sample_id_column": {"type": "string", "minLength": 1},
+        "sample_id_template": {"type": "string"},
+        "sample_unit": {"type": "string", "minLength": 1},
+        "target_column": {"type": "string", "minLength": 1},
+        "target_unit": {"type": "string", "minLength": 1},
+        "year_column": {"type": "string", "minLength": 1},
+        "crop_column": {"type": "string"},
+        "modalities": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "weather_columns": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "soil_columns": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "splits": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}}
+      }
+    }
+  }
+}

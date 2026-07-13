@@ -1,0 +1,10 @@
+item,contract,run,background_rows,training_rows,validation_rows,test_rows,description
+source_train_rows,SOURCE,all,35282,,,,Fixed temporal source split
+source_validation_rows,SOURCE,all,1512,,,,Fixed temporal source split
+source_test_rows,SOURCE,all,1430,,,,Fixed temporal source split
+shap_background,GROUP_complete,S1,32,23,9,0,First 32 non-test development rows in dataset order
+shap_background,GROUP_complete,S2,32,32,0,0,First 32 non-test development rows in dataset order
+shap_background,GROUP_complete,S3,32,9,23,0,First 32 non-test development rows in dataset order
+shap_background,SPATIAL_complete,S1,32,23,9,0,First 32 non-test development rows in dataset order
+shap_background,SPATIAL_complete,S2,32,23,9,0,First 32 non-test development rows in dataset order
+shap_background,SPATIAL_complete,S3,32,23,9,0,First 32 non-test development rows in dataset order
