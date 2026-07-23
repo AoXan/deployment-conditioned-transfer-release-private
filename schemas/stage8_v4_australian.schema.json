@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["schema_version", "campaign_id", "matrix_mode", "output_root", "formal_root", "runtime", "datasets", "execution"],
+  "properties": {
+    "schema_version": {"const": "stage8_v4_australian_validation_v1"},
+    "matrix_mode": {"enum": ["full", "exhaustive"]},
+    "output_root": {"type": "string"},
+    "formal_root": {"type": "string"},
+    "datasets": {"type": "object", "minProperties": 4},
+    "execution": {"type": "object"}
+  },
+  "additionalProperties": true
+}

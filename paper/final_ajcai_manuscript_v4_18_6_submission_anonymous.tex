@@ -64,7 +64,7 @@ We write a deployment contract as
 \label{eq:contract}
 \mathcal{C}=(\mathcal{D}_{s},\mathcal{D}_{t},\mathcal{S},\mathcal{M}_{\mathrm{train}},\mathcal{M}_{\mathrm{deploy}},\mathcal{A}),
 \end{equation}
-where source and target domains are $\mathcal{D}_{s}$ and $\mathcal{D}_{t}$, $\mathcal{S}$ defines the held-out target population, $\mathcal{M}$ specifies available inputs, and $\mathcal{A}$ is supervised target adaptation. The contract determines both the target support and the question a measured error can answer.
+where $\mathcal{D}_{s}$ and $\mathcal{D}_{t}$ are the source and target domains, $\mathcal{S}$ defines the held-out target population, $\mathcal{M}_{\mathrm{train}}$ and $\mathcal{M}_{\mathrm{deploy}}$ are the available inputs, and $\mathcal{A}$ is supervised target adaptation. The contract determines both the target support and the question a measured error can answer.
 
 For route $r$, contract $c$, run $s$, target sample $i$, feature $j$, and feature group $G$, $f_{r,c,s}$ is the adapted target model. Source routes differ only before target adaptation. With frozen teacher $f_T$, student $f_\theta$, and representations $h_T,h_\theta$, the four mean squared error (MSE) terms are
 \begin{equation}
@@ -114,11 +114,11 @@ Thus $d_\phi$ measures the magnitude of attribution movement, whereas $\Delta e$
 
 \section{Experimental Setup}
 
-CY-Bench US maize (38,224 region--year observations; 2,307 regions) and Australian wheat (490; 25 regions) form the primary regional transfer study \cite{Kallenberg2026CYBench}. Both span 2001--2023 and use ten weather features with yield in t/ha. Training, validation, and testing use 2001--2021, 2022, and 2023, respectively; preprocessing is fitted to source-training data.
+CY-Bench US maize (38,224 region--year observations; 2,307 regions) and Australian wheat (490; 25 regions) form the primary regional transfer study \cite{Kallenberg2026CYBench}. Both span 2001--2023 and use ten weather features with yield in t/ha. Source pretraining uses 2001--2021 for training, 2022 for validation, and 2023 for source testing; target folds follow the GROUP and SPATIAL contracts described below. Preprocessing is fitted to source-training data.
 
 The 2022 competition release of Genomes to Fields (G2F) contributes a native Hybrid~$\times$~Environment view; its 11,838-observation temporal test partition screens representations under unseen-year generalisation \cite{McFarland2020G2F}. Roseworthy E5 provides 43,311 within-paddock points from 2007--2008 for the complete-input and no-soil comparison \cite{David2022RoseworthyDataset}. The historical single-station Waite Permanent Rotation Trial contains 2,415 plot--year observations \cite{Sanderman2015WaiteDataset}; its analysed 1940--1993 view compares temporal-forward ($n=272$ test) and plot-group ($n=256$) protocols.
 
-Each non-supervised route trains a weather-and-soil teacher on source yield. During source training, this frozen teacher provides prediction or representation supervision to a weather-only student. The selected student checkpoint then initialises supervised, weather-only target fine-tuning; deployment is also weather-only. Teacher, source-student, and target checkpoints minimise validation MSE. Target-fold imputation and scaling use target training rows, and test rows are evaluated only after selection. All neural routes share a two-layer weather Transformer and AdamW optimisation \cite{Loshchilov2019AdamW,Vaswani2017Transformer}; architecture and optimisation details are supplementary.
+Each non-supervised route first trains a weather-and-soil teacher on source yield. After checkpoint selection, the teacher is frozen and provides prediction or representation supervision to a weather-only student. The selected student checkpoint then initialises supervised, weather-only target fine-tuning; deployment is also weather-only. Teacher, source-student, and target checkpoints minimise validation MSE. Target-fold imputation and scaling use target training rows, and test rows are evaluated only after selection. All neural routes share a two-layer weather Transformer and AdamW optimisation \cite{Loshchilov2019AdamW,Vaswani2017Transformer}; architecture and optimisation details are supplementary.
 
 \group{} holds out whole administrative groups through nested group shuffles. \spatial{} withholds occupied blocks from a $4\times4$ latitude--longitude grid. Both splits are exhaustive and mutually exclusive. Routes are matched by contract, run, and test rows; SPATIAL comparisons share one fixed local scratch reference.
 
@@ -294,7 +294,7 @@ Error, attribution, and stress response measure different objects; correlated we
 
 In a supplementary common-sample comparison with APSIM Next Generation \cite{Holzworth2018APSIMNextGen}, validation-selected weather-only transfer had mean MAE of 0.837 versus 0.948~t/ha under GROUP and 0.990 versus 1.057~t/ha under SPATIAL for the prespecified constrained-input configuration. All paired bootstrap intervals included zero, and sensitivity settings changed the ordering, supporting a complementary prediction role under limited deployment inputs rather than equivalence or general superiority.
 
-These findings motivate local validation and contract-aligned model selection because geography, scale, and input availability can alter the preferred strategy. Preliminary US-to-Brazil observations also indicate effective cross-country transfer under compatible Southern Hemisphere conditions.
+These findings motivate local validation and contract-aligned model selection because geography, scale, and input availability can alter the preferred strategy.
 
 \section{Related Work}
 
@@ -311,7 +311,7 @@ SHAP and IG describe local contributions \cite{Lundberg2017SHAP,Sundararajan2017
 
 \section{Conclusion}
 
-\paragraph{Limitations.} The primary study covers one cross-crop pair, two contracts, three runs, and a 31-observation SPATIAL test with fixed scratch. Attribution depends on its background, stress on the intervention distribution, and Roseworthy has unresolved public-file correspondence and upstream source identity.
+\paragraph{Limitations.} The regional GROUP/SPATIAL study covers one cross-crop pair, two contracts, three runs, and 31 SPATIAL observations with fixed scratch. Attribution and stress depend on their reference distributions; Roseworthy spans one within-paddock site and two crop-years.
 
 Prediction KD improves SPATIAL transfer but produces negative transfer under GROUP. Error, attribution, and stress are not interchangeable. Realised transfer depends on the model, target, adaptation, and deployment relation, not on a checkpoint alone.
 
@@ -319,7 +319,9 @@ Prediction KD improves SPATIAL transfer but produces negative transfer under GRO
 
 \noindent\textbf{Use of generative AI tools.} OpenAI ChatGPT and Codex were used for language polishing and assistance with code drafting. All scientific decisions, analyses, numerical results, references, and final content were reviewed and verified by the authors.
 
+\noindent\textbf{Disclosure of Interests.} The authors have no competing interests to declare that are relevant to the content of this article.
+
 \bibliographystyle{venue/lncs/splncs04}
-\bibliography{final_references_v4_18_4_apsim}
+\bibliography{final_references_v4_18_5_submission}
 
 \end{document}

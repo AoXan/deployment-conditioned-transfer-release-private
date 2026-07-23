@@ -46,8 +46,8 @@ or licence review; it exits non-zero when asked to download them.
 The acquisition command verifies the checksum published in the Zenodo record
 and extracts the archive under `cybench/raw`. The adapter accepts the archive's
 own single-directory nesting when the six tables for each crop-country pair
-share a directory. Build the harmonised views with:
-two harmonised views used by the formal campaign with:
+share a directory. Build the two harmonised views used by the formal campaign
+with:
 
 ```bash
 python -m agritech_repro preprocess --data-root /path/to/authorised/data

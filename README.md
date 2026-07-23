@@ -43,6 +43,8 @@ See:
 
 - `docs/reproducibility/REPRODUCIBILITY.md` for end-to-end commands.
 - `docs/reproducibility/paper_code_traceability.md` for the paper-to-code matrix.
+- `docs/reproducibility/publication_reproducibility_audit_2026-07-23.md` for the
+  submission-package audit and repaired gaps.
 - `docs/reproducibility/data_access.md` for licences, schemas, and expected paths.
 - `docs/reproducibility/release_scope.md` for the public allowlist and exclusions.
 

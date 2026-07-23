@@ -198,7 +198,9 @@ def execute_workflow(args: argparse.Namespace) -> int:
         if args.fixture:
             metrics = fixture_metrics(root, output_root / args.command, not args.validate_only)
             return emit({"status": "PASS", "fixture": True, "workflow": args.command, "metrics": metrics})
-        if args.command in {"preprocess", "reproduce-primary", "reproduce-cases"}:
+        if args.command in {"preprocess", "reproduce-primary"} or (
+            args.command == "reproduce-cases" and not args.validate_only
+        ):
             require_data(rows, args.command)
         if args.command == "preprocess":
             native = root / config["workflows"]["reproduce-primary"]["native_config"]
@@ -316,7 +318,55 @@ def execute_workflow(args: argparse.Namespace) -> int:
                 )
             return emit({"status": "PASS", "entrypoint": script})
         if args.command == "reproduce-cases":
-            return emit({"status": "PASS", "mode": "validate-only", "datasets": rows})
+            workflow = config["workflows"][args.command]
+            case_sources = {
+                "roseworthy": root / workflow["validation_assets"]["roseworthy"],
+                "waite": root / workflow["validation_assets"]["waite"],
+                "rf_pi": root / workflow["validation_assets"]["rf_pi"],
+            }
+            entrypoints = [root / path for path in workflow["entrypoints"]]
+            missing = [
+                str(path.relative_to(root))
+                for path in [*case_sources.values(), *entrypoints]
+                if not path.is_file()
+            ]
+            if missing:
+                raise FileNotFoundError(f"missing case reproduction asset: {missing}")
+            exporter = root / workflow["exporter"]
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    str(exporter),
+                    "--output",
+                    str(root / "data_manifest/publication"),
+                    "--validate-only",
+                ],
+                cwd=root,
+                text=True,
+                capture_output=True,
+            )
+            if completed.returncode:
+                raise RuntimeError(completed.stderr or completed.stdout)
+            counts = {
+                "roseworthy_rows": len(pd.read_csv(case_sources["roseworthy"])),
+                "waite_rows": len(pd.read_csv(case_sources["waite"])),
+                "rf_pi_rows": len(pd.read_csv(case_sources["rf_pi"])),
+            }
+            if counts != {"roseworthy_rows": 36, "waite_rows": 6, "rf_pi_rows": 15}:
+                raise ValueError(f"unexpected case-source row counts: {counts}")
+            if not args.validate_only:
+                raise ValueError(
+                    "full case reruns use the exact authorised-data commands in "
+                    "docs/reproducibility/REPRODUCIBILITY.md; validation does not silently rerun training"
+                )
+            return emit(
+                {
+                    "status": "PASS",
+                    "mode": "frozen-output-validation",
+                    "case_sources": counts,
+                    "entrypoints": [str(path.relative_to(root)) for path in entrypoints],
+                }
+            )
         if args.command == "reproduce-apsim":
             required = [root / path for path in config["workflows"][args.command]["required_outputs"]]
             if args.validate_only:

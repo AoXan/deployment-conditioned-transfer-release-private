@@ -11,12 +11,89 @@ import pandas as pd
 
 
 ROUTE_ORDER = ["local_scratch", "supervised", "prediction_kd", "combined_kd", "representation_kd", "missing_aware"]
+CASE_ROUTE_ORDER = ["scratch", "supervised", "prediction_kd", "combined_kd", "representation_kd", "missing_aware"]
+
+
+def _summarise_roseworthy(source: pd.DataFrame) -> pd.DataFrame:
+    required = {"condition", "route", "seed", "n", "mae", "rmse", "r2"}
+    if not required.issubset(source.columns):
+        raise ValueError(f"Roseworthy source missing columns: {sorted(required - set(source.columns))}")
+    if len(source) != 36:
+        raise ValueError(f"expected 36 Roseworthy source rows, found {len(source)}")
+    rows = []
+    for condition in ("complete", "no_soil"):
+        scratch_mae = float(
+            source[source["condition"].eq(condition) & source["route"].eq("scratch")]["mae"].mean()
+        )
+        for route in CASE_ROUTE_ORDER:
+            cell = source[source["condition"].eq(condition) & source["route"].eq(route)]
+            if len(cell) != 3:
+                raise ValueError(f"expected three Roseworthy rows for {condition}/{route}, found {len(cell)}")
+            row: dict[str, object] = {
+                "condition": condition,
+                "route": route,
+                "runs": 3,
+                "n_per_run": int(cell["n"].iloc[0]),
+                "reference_status": "fixed reference" if route == "scratch" else "run-level",
+            }
+            for metric in ("mae", "rmse", "r2"):
+                row[metric] = float(cell[metric].mean())
+                row[f"{metric}_sd"] = 0.0 if route == "scratch" else float(cell[metric].std(ddof=1))
+            row["delta_mae_vs_condition_scratch"] = float(row["mae"]) - scratch_mae
+            rows.append(row)
+    return pd.DataFrame(rows)
+
+
+def _behavioural_diagnostics(root: Path) -> pd.DataFrame:
+    agreement = pd.read_csv(root / "figures/final_publication_v4_18/source_perturbation_agreement_disjoint.csv")
+    manifest = json.loads(
+        (root / "figures/final_publication_v4_18/evidence_build_manifest.json").read_text()
+    )
+    required = {"contract", "spearman_rho", "top_group_match"}
+    if not required.issubset(agreement.columns):
+        raise ValueError(f"behavioural source missing columns: {sorted(required - set(agreement.columns))}")
+    summary = manifest["summary"]
+    taylor = summary["taylor_gate"]
+    values = [
+        ("rank_agreement_mean", float(agreement["spearman_rho"].mean()), "-0.040"),
+        (
+            "rank_agreement_group",
+            float(agreement[agreement["contract"].eq("GROUP_complete")]["spearman_rho"].mean()),
+            "0.067",
+        ),
+        (
+            "rank_agreement_spatial",
+            float(agreement[agreement["contract"].eq("SPATIAL_complete")]["spearman_rho"].mean()),
+            "-0.147",
+        ),
+        ("top_group_match", float(agreement["top_group_match"].mean()), "30.0%"),
+        ("ig_completeness", float(summary["ig_pass_rate"]), "98.9%"),
+        (
+            "taylor_local_fidelity",
+            float(taylor["pass_rate"]),
+            f'{int(taylor["n_pass"])}/{int(taylor["n_eligible"])} ({100 * float(taylor["pass_rate"]):.1f}%)',
+        ),
+    ]
+    frame = pd.DataFrame(values, columns=["measure", "value", "display_value"])
+    expected = {
+        "rank_agreement_mean": -0.04,
+        "rank_agreement_group": 0.06666666666666667,
+        "rank_agreement_spatial": -0.14666666666666667,
+        "top_group_match": 0.3,
+    }
+    for measure, value in expected.items():
+        observed = float(frame.loc[frame["measure"].eq(measure), "value"].iloc[0])
+        if abs(observed - value) > 1e-12:
+            raise ValueError(f"behavioural diagnostic mismatch for {measure}: {observed}")
+    return frame
 
 
 def render(root: Path, output: Path, validate_only: bool) -> dict[str, object]:
     source = root / "figures/final_publication_v4_18/source_performance_landscape_seed.csv"
     apsim_source = root / "outputs/apsim_comparison/run_summary.csv"
     claim_source = root / "outputs/stage8_claim_resolution_v1/analysis/claim_gate_seed_results.csv"
+    roseworthy_source = root / "data_manifest/publication/roseworthy_run_metrics.csv"
+    waite_source = root / "data_manifest/publication/waite_run_metrics.csv"
     performance = pd.read_csv(source)
     required = {"contract", "method", "seed", "n", "mae", "rmse", "r2"}
     if not required.issubset(performance.columns):
@@ -82,9 +159,19 @@ def render(root: Path, output: Path, validate_only: bool) -> dict[str, object]:
                 }
             )
     case_metrics = pd.DataFrame(case_rows)
+    roseworthy_runs = pd.read_csv(roseworthy_source)
+    roseworthy_summary = _summarise_roseworthy(roseworthy_runs)
+    waite = pd.read_csv(waite_source)
+    if len(waite) != 6:
+        raise ValueError(f"expected six Waite publication rows, found {len(waite)}")
+    behavioural = _behavioural_diagnostics(root)
     products = {
         "table1_primary_performance.csv": summary,
+        "table2_roseworthy_run_metrics.csv": roseworthy_runs,
+        "table2_roseworthy_summary.csv": roseworthy_summary,
         "table2_rf_pi_run_metrics.csv": case_metrics,
+        "table2_waite_run_metrics.csv": waite,
+        "table2_behavioural_diagnostics.csv": behavioural,
         "table_s_apsim_common_comparison.csv": apsim_keep,
     }
     if not validate_only:
@@ -97,6 +184,10 @@ def render(root: Path, output: Path, validate_only: bool) -> dict[str, object]:
             "sources": [
                 str(source.relative_to(root)),
                 str(claim_source.relative_to(root)),
+                str(roseworthy_source.relative_to(root)),
+                str(waite_source.relative_to(root)),
+                "figures/final_publication_v4_18/source_perturbation_agreement_disjoint.csv",
+                "figures/final_publication_v4_18/evidence_build_manifest.json",
                 str(apsim_source.relative_to(root)),
             ],
         }

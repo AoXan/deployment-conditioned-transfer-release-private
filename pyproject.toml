@@ -3,9 +3,9 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "seabrook-stage1"
-version = "0.1.0"
-description = "Seabrook Stage-1 public-data modelling pipeline"
+name = "agritech-repro"
+version = "0.2.0"
+description = "Reproducibility workflows for deployment-conditioned crop-yield transfer"
 requires-python = ">=3.10"
 dependencies = [
   "matplotlib",

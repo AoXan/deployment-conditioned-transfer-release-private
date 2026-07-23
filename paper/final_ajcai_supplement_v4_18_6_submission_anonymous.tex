@@ -27,7 +27,7 @@
 
 This supplement provides reproducibility details, run-level prediction results, common-sample construction, explanation-quality checks, and additional agricultural cases. The main study concerns CY-Bench US-maize-to-Australian-wheat transfer under complete-input GROUP and SPATIAL contracts. Roseworthy E5 examines point-level modality availability; random forest (RF) and privileged-information studies compare training routes, and Waite compares temporal-forward and plot-group protocols. Each study uses its native sample unit and analysis setting.
 
-Source routes use knowledge distillation (KD). Predictive performance is reported as mean absolute error (MAE), root mean squared error (RMSE), and coefficient of determination ($R^2$), subject to the metrics available for each study.
+The evaluated source routes comprise supervised transfer and four knowledge-distillation (KD) variants. Predictive performance is reported as mean absolute error (MAE), root mean squared error (RMSE), and coefficient of determination ($R^2$), subject to the metrics available for each study.
 
 \section{Experiment Overview}
 
@@ -53,7 +53,7 @@ Common-sample behaviour & Australian-wheat sample clusters with four disjoint we
 Stress and explanation quality & The same target models under training-median group replacement, nearest-neighbour and 9D Ledoit--Wolf distance, Integrated Gradients (IG) completeness, and local Taylor reconstruction. & Compares stress and attribution rankings and establishes the valid range of the local diagnostics.\\
 Local missing-modality RF & Australian-wheat yield with weather and soil inputs under complete, random-missing, and no-weather conditions; joint-feature, branch-average, and single-modality RF controls. & Compares standard feature concatenation with branch-based local baselines under changing input availability.\\
 Privileged-information teacher--student & Weather-only Australian-wheat student with complete-input teacher under GROUP/no-soil; observed-target, pseudo-target, and fixed-blend controls. & Compares supervision combinations across runs; the blend has the lowest mean and wins both pairwise controls in S1.\\
-Roseworthy E5 & Within-paddock point-level yield; complete-input and soil-unavailable spatial settings with scratch and supervised source-initialised routes. & Relates transfer value to deployment-time modality availability at within-paddock scale.\\
+Roseworthy E5 & Within-paddock point-level yield; complete-input and soil-unavailable spatial settings with scratch, supervised source initialisation, and four KD-based source-initialised routes. & Relates transfer value to deployment-time modality availability at within-paddock scale.\\
 Waite historical case & Single-station historical trial setting with temporal-forward and plot-group protocols. & Relates observed performance to protocol choice when soil descriptors are constant or near-constant.\\
 \bottomrule
 \end{longtable}
@@ -275,7 +275,7 @@ The following tables present each modality comparison and agricultural setting s
 \begin{table}[htbp]
 \centering
 \small
-\caption{Roseworthy E5 within-paddock results. ``Sup. init.'' denotes supervised source-initialised fine-tuning. The upstream source dataset is not specified in the study documentation.}\label{tab:roseworthy-results}
+\caption{Roseworthy E5 within-paddock results. The transferred routes use source checkpoints trained on CY-Bench US maize; ``Sup. init.'' denotes supervised source-initialised fine-tuning.}\label{tab:roseworthy-results}
 \setlength{\tabcolsep}{3pt}
 \renewcommand{\arraystretch}{1.08}
 \textbf{(a) Complete-input spatial setting}\\[2pt]
@@ -399,8 +399,8 @@ Figure~\ref{fig:signed-feature} shows signed $\Delta\phi_{ij}^{r,c,s}$ after sam
 
 \begin{figure}[tb]
 \centering
-\includegraphics[width=.96\textwidth]{../figures/final_publication_v4_18/supplement_figure_s2.pdf}
-\caption{Signed feature-level Permutation-SHAP redistribution relative to supervised transfer. GROUP and SPATIAL use the same feature order and colour scale; values are sample-cluster means. The vertical divider separates observation-support from physical-content features.}
+\includegraphics[width=.96\textwidth]{../figures/final_submission_v4_18_5/supplement_figure_s2.pdf}
+\caption{Signed feature-level Permutation-SHAP redistribution relative to supervised transfer. GROUP and SPATIAL use the same feature order and colour scale; values are sample-cluster means. Cell symbols show direction: $+$ is positive and $-$ is negative route-minus-supervised mean change. The vertical divider separates observation-support from physical-content features.}
 \label{fig:signed-feature}
 \end{figure}
 
@@ -586,9 +586,7 @@ The blend has the lowest mean and beats both controls in S1. The ordering change
 
 \subsection{Roseworthy E5 within-paddock evidence}
 
-Roseworthy E5 is a point-level, within-paddock yield setting with 43,311 registered observations from 2007--2008. Specific public repository identifiers are withheld during anonymous review. The exact correspondence between the cleaned analysis file and the public repository records remains unresolved, so we describe the within-paddock comparison without assigning a public source record. The spatial comparison uses weather and soil for complete-input evaluation, then removes soil at deployment. Under complete inputs, scratch gives MAE 0.465, RMSE 0.637, and $R^2$ 0.131; supervised source-initialised fine-tuning gives 0.465, 0.637, and 0.133. Under no-soil deployment, scratch gives 0.499, 0.667, and 0.049, whereas the transferred model gives 0.465, 0.637, and 0.133. Prediction, representation, combined, and missing-aware routes are listed in Table~\ref{tab:roseworthy-results}. The transferred model remains stable when soil is removed, whereas the local scratch model degrades.
-
-The upstream source dataset, crop, and checkpoint are not specified. We therefore interpret this result as a within-paddock modality comparison rather than attributing it to a particular cross-crop source.
+Roseworthy E5 is a point-level, within-paddock yield setting with 43,311 registered observations from 2007--2008. The transferred routes use checkpoints trained on CY-Bench US maize before target adaptation. The exact correspondence between the analysed derivative and the public release remains unresolved. The spatial comparison uses weather and soil for complete-input evaluation, then removes soil at deployment. Under complete inputs, scratch gives MAE 0.465, RMSE 0.637, and $R^2$ 0.131; supervised source-initialised fine-tuning gives 0.465, 0.637, and 0.133. Under no-soil deployment, scratch gives 0.499, 0.667, and 0.049, whereas the transferred model gives 0.465, 0.637, and 0.133. Prediction, representation, combined, and missing-aware routes are listed in Table~\ref{tab:roseworthy-results}. The transferred model remains stable when soil is removed, whereas the local scratch model degrades.
 
 
 \subsection{Waite historical protocol comparison}
@@ -651,7 +649,9 @@ Configuration, parameter provenance, common-sample predictions, metrics, paired 
 
 Common-sample predictions, explanations, and quality measurements accompany the analysis in tabular form. The local scratch reference is trained only on the Australian target and therefore has no source checkpoint.
 
+\noindent\textbf{Disclosure of Interests.} The authors have no competing interests to declare that are relevant to the content of this article.
+
 \bibliographystyle{venue/lncs/splncs04}
-\bibliography{final_references_v4_18_4_apsim}
+\bibliography{final_references_v4_18_5_submission}
 
 \end{document}

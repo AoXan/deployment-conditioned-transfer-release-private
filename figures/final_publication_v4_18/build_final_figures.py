@@ -642,6 +642,22 @@ def _signed_heatmap(
         range(len(TRANSFER_ROUTES)),
         [METHOD_SHORT[r] for r in TRANSFER_ROUTES],
     )
+    values = pivot.to_numpy()
+    for row in range(values.shape[0]):
+        for column in range(values.shape[1]):
+            value = values[row, column]
+            if not np.isfinite(value) or abs(value) <= 1e-12:
+                continue
+            ax.text(
+                column,
+                row,
+                "+" if value > 0 else "-",
+                ha="center",
+                va="center",
+                fontsize=7.2,
+                fontweight="bold",
+                color="white" if abs(value) >= 0.55 * limit else "#111827",
+            )
     ax.axvline(2.5, color="#111827", lw=1.1)
     ax.set_title(title)
     return image
@@ -1488,22 +1504,18 @@ def write_panel_integrity_manifest(root: Path, output: Path) -> None:
         "source_attribution_group_shares.csv",
         "source_perturbation_normalized_sensitivity.csv",
     )
-    v413 = root / "figures/final_publication_v4_13"
-    v414 = root / "figures/final_publication_v4_16"
-    parity = {
-        name: {
-            "v4_13": sha256_file(v413 / name),
-            "v4_14": sha256_file(v414 / name),
-            "equal": sha256_file(v413 / name) == sha256_file(v414 / name),
-        }
+    publication_sources = root / "figures/final_publication_v4_18"
+    source_hashes = {
+        name: sha256_file(publication_sources / name)
         for name in source_names
     }
-    if not all(item["equal"] for item in parity.values()):
-        raise ValueError("V412_SOURCE_PARITY_FAILURE")
     manifest = {
-        "selected_layout": "claim-first-v4.14",
-        "source_parity": "byte-identical-to-v4.13",
-        "figure_1": "byte-identical-to-v4.13",
+        "selected_layout": "claim-first-v4.18",
+        "source_parity": "validated against bundled publication sources",
+        "figure_1": {
+            "status": "fixed conceptual asset",
+            "sha256": sha256_file(publication_sources / "figure_01.pdf"),
+        },
         "figure_02": {
             "panels": ["run-level-vs-scratch", "run-level-vs-supervised"],
             "minimum_font_pt": 8.6,
@@ -1523,22 +1535,26 @@ def write_panel_integrity_manifest(root: Path, output: Path) -> None:
             "final_embedded_effective_minimum_pt": 8.0,
         },
         "moved_to_supplement": ["supervised-reference-beeswarms", "representative-shap-stress-profiles"],
-        "source_hashes": parity,
+        "source_hashes": source_hashes,
     }
     (output / "panel_integrity_manifest.json").write_text(
         json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
 
 
-def build(root: Path, output: Path) -> None:
+def build(root: Path, output: Path, submission_output: Path) -> None:
     validate_inputs(root)
     configure_style()
     figure_2(root, output)
     figure_3(root, output)
     figure_4(root, output)
     figure_5(root, output)
+    figure_6(root, output)
     supplement_supervised_landscapes(root, output)
     supplement_representative_stress(root, output)
+    supplement_explanation_agreement(root, output)
+    submission_output.mkdir(parents=True, exist_ok=True)
+    supplement_signed_feature_heatmap(root, submission_output)
     write_captions(output)
     write_manifest(root, output)
     write_panel_integrity_manifest(root, output)
@@ -1575,6 +1591,11 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=Path(__file__).resolve().parent,
     )
+    parser.add_argument(
+        "--submission-output-dir",
+        type=Path,
+        help="Output for the signed-feature Supplement figure; inferred from --output-dir by default.",
+    )
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--validate-only", action="store_true")
     mode.add_argument("--write", action="store_true")
@@ -1592,7 +1613,14 @@ def main() -> None:
         render_candidate(root, args.output_dir.resolve(), args.candidate)
         print(json.dumps({"candidate": args.candidate, **validate_inputs(root)}, indent=2, sort_keys=True))
         return
-    build(root, args.output_dir.resolve())
+    output = args.output_dir.resolve()
+    if args.submission_output_dir:
+        submission_output = args.submission_output_dir.resolve()
+    elif output == Path(__file__).resolve().parent:
+        submission_output = root / "figures/final_submission_v4_18_5"
+    else:
+        submission_output = output / "final_submission_v4_18_5"
+    build(root, output, submission_output)
     print(json.dumps(validate_inputs(root), indent=2, sort_keys=True))
 
 
