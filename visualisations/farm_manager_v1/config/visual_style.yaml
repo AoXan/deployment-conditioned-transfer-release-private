@@ -1,0 +1,21 @@
+canvas:
+  width_inches: 13.333
+  height_inches: 7.5
+  dpi: 180
+palette:
+  ink: "#1E2B2A"
+  green: "#1F5A47"
+  sage: "#6E9278"
+  wheat: "#D5A33F"
+  sky: "#4B82A4"
+  rust: "#B85C43"
+  plum: "#765D78"
+  grey: "#9AA6A4"
+  pale: "#F3F4EF"
+  white: "#FFFFFF"
+semantics:
+  local_baseline: grey
+  transferred_model: green
+  supervised_transfer: sky
+  process_model: wheat
+  warning: rust

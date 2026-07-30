@@ -1,0 +1,155 @@
+{
+  "version": "1.0.0",
+  "outputs": [
+    {
+      "file": "exports/animation/v09_long_term_season_story.gif",
+      "sha256": "a670bd4a8f500f3b39f5fe0f0b083a7312d0785b69f4d4171b2d72e6bb944492",
+      "bytes": 732234
+    },
+    {
+      "file": "exports/farm_manager_visual_gallery.html",
+      "sha256": "f7329b224906c5fa288b10c6d73dc0149ef57ef0267983bd0b910e23aa50d995",
+      "bytes": 5914
+    },
+    {
+      "file": "exports/interactive/v10_interactive_3d_paddock_preview.html",
+      "sha256": "d1f3e4b1108504a80e6ad7276efd42aa9f60fd600e1a0af31bfeb17851546e75",
+      "bytes": 5497328
+    },
+    {
+      "file": "exports/pdf/v01_data_to_decision.pdf",
+      "sha256": "b9bd6c0460ce40f9eef5e81e3937ba41748935c45e778d7e2f499610011a3f5a",
+      "bytes": 30473
+    },
+    {
+      "file": "exports/pdf/v02_long_term_season_context.pdf",
+      "sha256": "62eb70a95f796b72dc25c1e6e0d97966f244b4e769db90b44e479439430fafae",
+      "bytes": 33249
+    },
+    {
+      "file": "exports/pdf/v03_deployment_contract_reversal.pdf",
+      "sha256": "59bc27f1607fd1e3e0866687c2f73ffb279ea34570dcb449ca59eec876a39b09",
+      "bytes": 31739
+    },
+    {
+      "file": "exports/pdf/v04_data_availability_value.pdf",
+      "sha256": "cf67aab449195ae3aa16e9b3338c9f9d9260e09fe0e974fb73a6c31fe82b3319",
+      "bytes": 32682
+    },
+    {
+      "file": "exports/pdf/v05_apsim_complementarity.pdf",
+      "sha256": "76c5abe727673198d2b8d010f0249c0676d158935182fcc46545ea4a5bea1831",
+      "bytes": 35261
+    },
+    {
+      "file": "exports/pdf/v06_model_trust_and_scope.pdf",
+      "sha256": "83b0a1af48963bba7611a3ac7459e9d2b5b6729510b0ce897780992a42765e4d",
+      "bytes": 32886
+    },
+    {
+      "file": "exports/pdf/v07_paddock_product_preview.pdf",
+      "sha256": "1e9aada6dba976e292f131decf7e293d474209d5f0e6c7bb0ccd49537acd1a61",
+      "bytes": 75567
+    },
+    {
+      "file": "exports/pdf/v08_data_partnership_ladder.pdf",
+      "sha256": "65f9590c5bcc3a0d8cfe41d69a912b3076df02f87acd8ff0b4451c8045336c20",
+      "bytes": 36048
+    },
+    {
+      "file": "exports/pdf/v10_3d_paddock_preview.pdf",
+      "sha256": "730f9e6dc7fe9258040edfa134bbf3cc4e99fab985ba00303709d951e72f8b93",
+      "bytes": 123660
+    },
+    {
+      "file": "exports/png/v01_data_to_decision.png",
+      "sha256": "4d6277ccff06ddc1ccef726d523f1adcf1aa29bd8c630ff574b502cf4734ab33",
+      "bytes": 177806
+    },
+    {
+      "file": "exports/png/v02_long_term_season_context.png",
+      "sha256": "b182a6532ed6b8784debcc91a633b9442b0741d367d73c2748a67d8147eff9a2",
+      "bytes": 255427
+    },
+    {
+      "file": "exports/png/v03_deployment_contract_reversal.png",
+      "sha256": "73ff7345eff22f1372ec04fd62982bfae22b87afd94cf665131ace361df4a7da",
+      "bytes": 197340
+    },
+    {
+      "file": "exports/png/v04_data_availability_value.png",
+      "sha256": "031d0e0009541da6e35a56be27a9fbed63acb50a8467424bbaffb7928dd0947e",
+      "bytes": 271662
+    },
+    {
+      "file": "exports/png/v05_apsim_complementarity.png",
+      "sha256": "7ceb4ea9e1615995abb10ba48ff287acedd0a6817dcec349636079031a2b0be6",
+      "bytes": 197289
+    },
+    {
+      "file": "exports/png/v06_model_trust_and_scope.png",
+      "sha256": "21ea9f32731c66189d3545eef0d01560a86b2c4cedfc09481bf901b04aea493f",
+      "bytes": 181847
+    },
+    {
+      "file": "exports/png/v07_paddock_product_preview.png",
+      "sha256": "6a16ce547e9d49898059ab700e730dffef77e9ae8cdf493879cd15e8ca25ac76",
+      "bytes": 290964
+    },
+    {
+      "file": "exports/png/v08_data_partnership_ladder.png",
+      "sha256": "e7c7e9043e4f8a97444684d197455b406a85ae6ee076dd6eb156c34afe4978ae",
+      "bytes": 211230
+    },
+    {
+      "file": "exports/png/v10_3d_paddock_preview.png",
+      "sha256": "3537b5edbbdf78a514bf406c2a36af3779a597d1944898832959164697819f54",
+      "bytes": 418451
+    },
+    {
+      "file": "exports/svg/v01_data_to_decision.svg",
+      "sha256": "7f49a8fe8e50b859228978312980b8c2d209c81c3069641725999e8b35aeb9a6",
+      "bytes": 17653
+    },
+    {
+      "file": "exports/svg/v02_long_term_season_context.svg",
+      "sha256": "21ef574619a6026be1234684208d66d941037c70af58122ef69bafe400cae161",
+      "bytes": 56546
+    },
+    {
+      "file": "exports/svg/v03_deployment_contract_reversal.svg",
+      "sha256": "f16f69a6b3d39e08845c27fcabb821bc7cc3a2665aa838592c0fa4a490458958",
+      "bytes": 22700
+    },
+    {
+      "file": "exports/svg/v04_data_availability_value.svg",
+      "sha256": "9926ad0533250684a35ee67c536a6790385fc2d6de002916aa71b8232d446605",
+      "bytes": 42232
+    },
+    {
+      "file": "exports/svg/v05_apsim_complementarity.svg",
+      "sha256": "bdae54ccdfbbac8210ca7dfec5929f32f7b6833560c2c00364e3cc3d73616761",
+      "bytes": 31532
+    },
+    {
+      "file": "exports/svg/v06_model_trust_and_scope.svg",
+      "sha256": "2d5b3224a544cc390413cc2a5de486a370456c20d3c3e154d55e5863ce9562e1",
+      "bytes": 31846
+    },
+    {
+      "file": "exports/svg/v07_paddock_product_preview.svg",
+      "sha256": "f6fbda8c8eda9881a29225e7cd5930b84bdcf13e3583b7fb2001d18b389946dd",
+      "bytes": 195971
+    },
+    {
+      "file": "exports/svg/v08_data_partnership_ladder.svg",
+      "sha256": "241b0b5ad7b0ec7042641f57bfd1ffdea33cb64f8dd1bf7d5089aa24c79760e9",
+      "bytes": 12975
+    },
+    {
+      "file": "exports/svg/v10_3d_paddock_preview.svg",
+      "sha256": "70e233490d83c0834f65e46a5fa0089e6f77ba7511de8075b83015e4583a199b",
+      "bytes": 399696
+    }
+  ]
+}

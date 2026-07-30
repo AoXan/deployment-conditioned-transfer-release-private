@@ -1,0 +1,184 @@
+{
+  "status": "PASS",
+  "numeric_checks": [
+    {
+      "cell": "GROUP_complete/local_scratch",
+      "actual": 0.7288950504638118,
+      "expected": 0.729
+    },
+    {
+      "cell": "GROUP_complete/prediction_kd",
+      "actual": 1.1566622304879761,
+      "expected": 1.157
+    },
+    {
+      "cell": "SPATIAL_complete/local_scratch",
+      "actual": 1.204211076404923,
+      "expected": 1.204
+    },
+    {
+      "cell": "SPATIAL_complete/prediction_kd",
+      "actual": 0.9541185513106725,
+      "expected": 0.954
+    },
+    {
+      "cell": "Roseworthy/complete/scratch",
+      "actual": 0.46535563715873113,
+      "expected": 0.465
+    },
+    {
+      "cell": "Roseworthy/no_soil/scratch",
+      "actual": 0.49862622812638274,
+      "expected": 0.499
+    },
+    {
+      "cell": "Roseworthy/no_soil/supervised",
+      "actual": 0.46506302751530165,
+      "expected": 0.465
+    },
+    {
+      "cell": "GROUP/data_driven/validation_selected_weather_transfer",
+      "actual": 0.8374079149002549,
+      "expected": 0.837
+    },
+    {
+      "cell": "GROUP/constrained_central/APSIM",
+      "actual": 0.9481747447970048,
+      "expected": 0.948
+    },
+    {
+      "cell": "SPATIAL/data_driven/validation_selected_weather_transfer",
+      "actual": 0.9896637218536868,
+      "expected": 0.99
+    },
+    {
+      "cell": "SPATIAL/constrained_central/APSIM",
+      "actual": 1.0567838140125163,
+      "expected": 1.057
+    },
+    {
+      "cell": "RF/complete/primary_mae",
+      "actual": 0.9435345797064346,
+      "expected": 0.944
+    },
+    {
+      "cell": "RF/complete/official_mae",
+      "actual": 1.0525898601292563,
+      "expected": 1.053
+    },
+    {
+      "cell": "RF/complete/secondary_mae",
+      "actual": 1.0240550145963931,
+      "expected": 1.024
+    },
+    {
+      "cell": "RF/synthetic_random_0_15/primary_mae",
+      "actual": 0.9195014787247797,
+      "expected": 0.92
+    },
+    {
+      "cell": "RF/synthetic_random_0_15/official_mae",
+      "actual": 1.0148431741284474,
+      "expected": 1.015
+    },
+    {
+      "cell": "RF/synthetic_random_0_15/secondary_mae",
+      "actual": 1.004291868402194,
+      "expected": 1.004
+    },
+    {
+      "cell": "RF/synthetic_no_weather/primary_mae",
+      "actual": 1.0240550145963931,
+      "expected": 1.024
+    },
+    {
+      "cell": "RF/synthetic_no_weather/official_mae",
+      "actual": 1.0240550145963934,
+      "expected": 1.024
+    },
+    {
+      "cell": "RF/synthetic_no_weather/secondary_mae",
+      "actual": 1.0240550145963931,
+      "expected": 1.024
+    }
+  ],
+  "asset_checks": [
+    {
+      "slug": "v01_data_to_decision",
+      "size": [
+        2219,
+        1283
+      ],
+      "variance": 1957.0974441822582
+    },
+    {
+      "slug": "v02_long_term_season_context",
+      "size": [
+        2289,
+        1283
+      ],
+      "variance": 1536.0310165863318
+    },
+    {
+      "slug": "v03_deployment_contract_reversal",
+      "size": [
+        2363,
+        1283
+      ],
+      "variance": 1538.6752230379882
+    },
+    {
+      "slug": "v04_data_availability_value",
+      "size": [
+        2436,
+        1283
+      ],
+      "variance": 1640.1742419505888
+    },
+    {
+      "slug": "v05_apsim_complementarity",
+      "size": [
+        2319,
+        1283
+      ],
+      "variance": 1492.782917891278
+    },
+    {
+      "slug": "v06_model_trust_and_scope",
+      "size": [
+        2510,
+        1283
+      ],
+      "variance": 2751.2494954088106
+    },
+    {
+      "slug": "v07_paddock_product_preview",
+      "size": [
+        2427,
+        1283
+      ],
+      "variance": 5641.531375247824
+    },
+    {
+      "slug": "v08_data_partnership_ladder",
+      "size": [
+        2219,
+        1283
+      ],
+      "variance": 1772.7433723675667
+    },
+    {
+      "slug": "v10_3d_paddock_preview",
+      "size": [
+        2219,
+        1282
+      ],
+      "variance": 1670.4065624849
+    },
+    {
+      "slug": "v09_long_term_season_story",
+      "frames": 48,
+      "bytes": 732234
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+-e ../..
+plotly>=6.0
+kaleido>=1.0
+imageio>=2.0

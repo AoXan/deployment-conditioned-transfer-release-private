@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Farm Manager Visual Evidence · v1.0.0</title>
+<style>
+  :root { --ink:#1E2B2A; --green:#1F5A47; --wheat:#D5A33F; --pale:#F3F4EF; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Arial,sans-serif; color:var(--ink); background:var(--pale); }
+  header { padding:52px max(5vw,28px) 34px; background:#fff; border-bottom:1px solid #d8dedb; }
+  h1 { margin:0 0 10px; font-size:clamp(30px,4vw,56px); font-weight:600; }
+  header p { margin:0; max-width:850px; font-size:18px; color:#52605c; }
+  main { width:min(1500px,94vw); margin:36px auto 80px; display:grid; grid-template-columns:repeat(auto-fit,minmax(420px,1fr)); gap:26px; }
+  article { background:#fff; padding:20px; border:1px solid #d8dedb; box-shadow:0 10px 28px rgba(30,43,42,.07); }
+  h2 { font-size:21px; font-weight:600; margin:7px 0 16px; }
+  .meta { color:var(--green); text-transform:uppercase; font-size:11px; font-weight:700; letter-spacing:.08em; }
+  img { display:block; width:100%; height:auto; border:1px solid #edf0ee; }
+  nav { display:flex; gap:16px; margin-top:14px; }
+  a { color:var(--green); font-weight:600; text-decoration:none; }
+  .wide { grid-column:1/-1; }
+  .wide img { max-height:560px; object-fit:contain; background:#fff; }
+  footer { padding:30px; text-align:center; color:#68736f; }
+  @media(max-width:520px) { main { grid-template-columns:1fr; } article { padding:12px; } }
+</style>
+</head>
+<body>
+<header><h1>Farm decision evidence</h1><p>Formal results, contextual history and clearly labelled product previews. Every asset is generated from versioned scripts and source manifests.</p></header>
+<main>
+
+            <article>
+              <div class="meta">Conceptual workflow</div>
+              <h2>From farm data to a decision product</h2>
+              <img src="png/v01_data_to_decision.png" alt="From farm data to a decision product">
+              <nav><a href="svg/v01_data_to_decision.svg">SVG</a><a href="pdf/v01_data_to_decision.pdf">PDF</a></nav>
+            </article>
+            
+            <article>
+              <div class="meta">Exploratory public context</div>
+              <h2>Long-term South Australian season context</h2>
+              <img src="png/v02_long_term_season_context.png" alt="Long-term South Australian season context">
+              <nav><a href="svg/v02_long_term_season_context.svg">SVG</a><a href="pdf/v02_long_term_season_context.pdf">PDF</a></nav>
+            </article>
+            
+            <article>
+              <div class="meta">Formal evidence</div>
+              <h2>Deployment-contract reversal</h2>
+              <img src="png/v03_deployment_contract_reversal.png" alt="Deployment-contract reversal">
+              <nav><a href="svg/v03_deployment_contract_reversal.svg">SVG</a><a href="pdf/v03_deployment_contract_reversal.pdf">PDF</a></nav>
+            </article>
+            
+            <article>
+              <div class="meta">Formal evidence</div>
+              <h2>The value of available inputs</h2>
+              <img src="png/v04_data_availability_value.png" alt="The value of available inputs">
+              <nav><a href="svg/v04_data_availability_value.svg">SVG</a><a href="pdf/v04_data_availability_value.pdf">PDF</a></nav>
+            </article>
+            
+            <article>
+              <div class="meta">Formal supplementary evidence</div>
+              <h2>APSIM and data-driven complementarity</h2>
+              <img src="png/v05_apsim_complementarity.png" alt="APSIM and data-driven complementarity">
+              <nav><a href="svg/v05_apsim_complementarity.svg">SVG</a><a href="pdf/v05_apsim_complementarity.pdf">PDF</a></nav>
+            </article>
+            
+            <article>
+              <div class="meta">Formal diagnostics</div>
+              <h2>Model behaviour and operating range</h2>
+              <img src="png/v06_model_trust_and_scope.png" alt="Model behaviour and operating range">
+              <nav><a href="svg/v06_model_trust_and_scope.svg">SVG</a><a href="pdf/v06_model_trust_and_scope.pdf">PDF</a></nav>
+            </article>
+            
+            <article>
+              <div class="meta">Illustrative preview</div>
+              <h2>2D paddock product preview</h2>
+              <img src="png/v07_paddock_product_preview.png" alt="2D paddock product preview">
+              <nav><a href="svg/v07_paddock_product_preview.svg">SVG</a><a href="pdf/v07_paddock_product_preview.pdf">PDF</a></nav>
+            </article>
+            
+            <article>
+              <div class="meta">Partnership proposal</div>
+              <h2>Staged data partnership</h2>
+              <img src="png/v08_data_partnership_ladder.png" alt="Staged data partnership">
+              <nav><a href="svg/v08_data_partnership_ladder.svg">SVG</a><a href="pdf/v08_data_partnership_ladder.pdf">PDF</a></nav>
+            </article>
+            
+            <article>
+              <div class="meta">Illustrative preview</div>
+              <h2>3D paddock product preview</h2>
+              <img src="png/v10_3d_paddock_preview.png" alt="3D paddock product preview">
+              <nav><a href="svg/v10_3d_paddock_preview.svg">SVG</a><a href="pdf/v10_3d_paddock_preview.pdf">PDF</a></nav>
+            </article>
+            
+<article class="wide"><div class="meta">Animation</div><h2>Long-term season story</h2><img src="animation/v09_long_term_season_story.gif" alt="Animated South Australian yield and rainfall history"></article>
+<article class="wide"><div class="meta">Interactive 3D preview</div><h2>Terrain, illustrative yield and confidence</h2><p><a href="interactive/v10_interactive_3d_paddock_preview.html">Open the self-contained interactive view</a></p></article>
+</main>
+<footer>Version 1.0.0 · Illustrative previews are not farm predictions.</footer>
+</body></html>

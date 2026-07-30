@@ -1,0 +1,60 @@
+{
+  "version": "1.0.0",
+  "sources": [
+    {
+      "file": "data/frozen_sources/apsim_paired_bootstrap.csv",
+      "sha256": "9ca6734a89485292c23d47e42f0f81f6bb4db8bcb6337691d35a153c1d78aa7b",
+      "bytes": 6503
+    },
+    {
+      "file": "data/frozen_sources/apsim_run_summary.csv",
+      "sha256": "69597ae06da5f0bf0b06d892b2836edb04532f34c5f33b2d384687e469481a5d",
+      "bytes": 5800
+    },
+    {
+      "file": "data/frozen_sources/apsim_sensitivity_range.csv",
+      "sha256": "786458067d1bfabc43bcee2183d6ebccae1f9cbfa60584040d504daa25d5f05e",
+      "bytes": 1105
+    },
+    {
+      "file": "data/frozen_sources/claim_gate_seed_results.csv",
+      "sha256": "40a95711384f9a1721a76e7cb77c83cef1463e319e4d2e4e29df1d413676f603",
+      "bytes": 3916
+    },
+    {
+      "file": "data/frozen_sources/roseworthy_run_metrics.csv",
+      "sha256": "89590944b257ccb1eaf1e7216462e1fec68b4a0b2459f355e15478ff4b12e9c2",
+      "bytes": 5214
+    },
+    {
+      "file": "data/frozen_sources/sa_deep_time_dataset.csv",
+      "sha256": "6a609d7c49bc39bc177aa51084c88729f82c475884aafdeea83bbdb70ef88e34",
+      "bytes": 14266
+    },
+    {
+      "file": "data/frozen_sources/source_ood_quality_9d.csv",
+      "sha256": "aab8727be53be2a83ab3d1fa3f96d7e516cd0058e8e79746aa5d905dc7320b30",
+      "bytes": 3670
+    },
+    {
+      "file": "data/frozen_sources/source_performance_landscape_seed.csv",
+      "sha256": "f6b348390d3ad50beabf32dfa528630137c453f82946832d23895ea1bdd58196",
+      "bytes": 6123
+    },
+    {
+      "file": "data/frozen_sources/source_perturbation_agreement_disjoint.csv",
+      "sha256": "04badd95e4f77a13c870875a8f672f51165156fe98706599b72899ff5e49281b",
+      "bytes": 2683
+    },
+    {
+      "file": "data/frozen_sources/source_support_delta_summary.csv",
+      "sha256": "06f64e0c4549d41f7b43c77b484ff2c41f641670a02256670faa1cb86d53c9bf",
+      "bytes": 1366
+    },
+    {
+      "file": "data/frozen_sources/source_three_view_route_pairs.csv",
+      "sha256": "89bb299a74f6e10ff1931f4104269401feac99e0d0a9a10491dd1f252e801458",
+      "bytes": 3338
+    }
+  ]
+}

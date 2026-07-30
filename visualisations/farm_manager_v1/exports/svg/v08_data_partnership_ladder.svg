@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="887.7816pt" height="513.241992pt" viewBox="0 0 887.7816 513.241992" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-07-30T14:08:34.709800</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 513.241992 
+L 887.7816 513.241992 
+L 887.7816 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 126.378198 394.0668 
+L 309.356442 394.0668 
+Q 322.745094 394.0668 322.745094 386.5824 
+L 322.745094 138.7656 
+Q 322.745094 131.2812 309.356442 131.2812 
+L 126.378198 131.2812 
+Q 112.989546 131.2812 112.989546 138.7656 
+L 112.989546 386.5824 
+Q 112.989546 394.0668 126.378198 394.0668 
+z
+" clip-path="url(#p822370f823)" style="fill: #6e9278; fill-opacity: 0.1; stroke: #6e9278; stroke-width: 1.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 364.398678 394.0668 
+L 547.376922 394.0668 
+Q 560.765574 394.0668 560.765574 386.5824 
+L 560.765574 138.7656 
+Q 560.765574 131.2812 547.376922 131.2812 
+L 364.398678 131.2812 
+Q 351.010026 131.2812 351.010026 138.7656 
+L 351.010026 386.5824 
+Q 351.010026 394.0668 364.398678 394.0668 
+z
+" clip-path="url(#p822370f823)" style="fill: #4b82a4; fill-opacity: 0.1; stroke: #4b82a4; stroke-width: 1.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 602.419158 394.0668 
+L 785.397402 394.0668 
+Q 798.786054 394.0668 798.786054 386.5824 
+L 798.786054 138.7656 
+Q 798.786054 131.2812 785.397402 131.2812 
+L 602.419158 131.2812 
+Q 589.030506 131.2812 589.030506 138.7656 
+L 589.030506 386.5824 
+Q 589.030506 394.0668 602.419158 394.0668 
+z
+" clip-path="url(#p822370f823)" style="fill: #1f5a47; fill-opacity: 0.1; stroke: #1f5a47; stroke-width: 1.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 139.76685 304.254 
+L 295.96779 304.254 
+" clip-path="url(#p822370f823)" style="fill: none; stroke: #6e9278; stroke-opacity: 0.45; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 377.78733 304.254 
+L 533.98827 304.254 
+" clip-path="url(#p822370f823)" style="fill: none; stroke: #4b82a4; stroke-opacity: 0.45; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 615.80781 304.254 
+L 772.00875 304.254 
+" clip-path="url(#p822370f823)" style="fill: none; stroke: #1f5a47; stroke-opacity: 0.45; stroke-linecap: square"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #6e9278" x="139.76685" y="165.561891" transform="rotate(-0 139.76685 165.561891)">STEP 1</text>
+   </g>
+   <g id="text_2">
+    <text style="font-weight: 700; font-size: 12.5px; font-family: 'DejaVu Sans'; fill: #1e2b2a" transform="translate(139.76685 184.187156)">Establish the local</text>
+    <text style="font-weight: 700; font-size: 12.5px; font-family: 'DejaVu Sans'; fill: #1e2b2a" transform="translate(139.76685 196.687156)">baseline</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #6e9278" x="139.76685" y="219.015" transform="rotate(-0 139.76685 219.015)">DATA PROVIDED</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #1e2b2a" x="143.48592" y="235.647" transform="rotate(-0 143.48592 235.647)">• Paddock boundaries</text>
+   </g>
+   <g id="text_5">
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #1e2b2a" x="143.48592" y="257.2686" transform="rotate(-0 143.48592 257.2686)">• Crop or pasture type</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #1e2b2a" x="143.48592" y="278.8902" transform="rotate(-0 143.48592 278.8902)">• Basic season history</text>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #6e9278" x="139.76685" y="318.807" transform="rotate(-0 139.76685 318.807)">DELIVERED BACK</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #1e2b2a" x="143.48592" y="335.439" transform="rotate(-0 143.48592 335.439)">• Season context</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #1e2b2a" x="143.48592" y="357.0606" transform="rotate(-0 143.48592 357.0606)">• Baseline forecast</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #1e2b2a" x="143.48592" y="378.6822" transform="rotate(-0 143.48592 378.6822)">• Data-gap map</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #4b82a4" x="377.78733" y="165.561891" transform="rotate(-0 377.78733 165.561891)">STEP 2</text>
+   </g>
+   <g id="text_12">
+    <text style="font-weight: 700; font-size: 12.5px; font-family: 'DejaVu Sans'; fill: #1e2b2a" transform="translate(377.78733 182.976219)">Resolve spatial</text>
+    <text style="font-weight: 700; font-size: 12.5px; font-family: 'DejaVu Sans'; fill: #1e2b2a" transform="translate(377.78733 196.687156)">differences</text>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #4b82a4" x="377.78733" y="219.015" transform="rotate(-0 377.78733 219.015)">DATA PROVIDED</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #1e2b2a" x="381.5064" y="235.647" transform="rotate(-0 381.5064 235.647)">• Yield or biomass observations</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #1e2b2a" x="381.5064" y="257.2686" transform="rotate(-0 381.5064 257.2686)">• Soil tests / EM38</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #1e2b2a" x="381.5064" y="278.8902" transform="rotate(-0 381.5064 278.8902)">• Terrain and local weather</text>
+   </g>
+   <g id="text_17">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #4b82a4" x="377.78733" y="318.807" transform="rotate(-0 377.78733 318.807)">DELIVERED BACK</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #1e2b2a" x="381.5064" y="335.439" transform="rotate(-0 381.5064 335.439)">• Paddock risk zones</text>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #1e2b2a" x="381.5064" y="357.0606" transform="rotate(-0 381.5064 357.0606)">• Confidence surface</text>
+   </g>
+   <g id="text_20">
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #1e2b2a" x="381.5064" y="378.6822" transform="rotate(-0 381.5064 378.6822)">• Targeted sampling</text>
+   </g>
+   <g id="text_21">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #1f5a47" x="615.80781" y="165.561891" transform="rotate(-0 615.80781 165.561891)">STEP 3</text>
+   </g>
+   <g id="text_22">
+    <text style="font-weight: 700; font-size: 12.5px; font-family: 'DejaVu Sans'; fill: #1e2b2a" transform="translate(615.80781 182.817039)">Connect management</text>
+    <text style="font-weight: 700; font-size: 12.5px; font-family: 'DejaVu Sans'; fill: #1e2b2a" transform="translate(615.80781 196.326805)">to outcomes</text>
+   </g>
+   <g id="text_23">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #1f5a47" x="615.80781" y="219.015" transform="rotate(-0 615.80781 219.015)">DATA PROVIDED</text>
+   </g>
+   <g id="text_24">
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #1e2b2a" x="619.52688" y="235.647" transform="rotate(-0 619.52688 235.647)">• Sowing and fertiliser</text>
+   </g>
+   <g id="text_25">
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #1e2b2a" x="619.52688" y="257.2686" transform="rotate(-0 619.52688 257.2686)">• Grazing and stocking</text>
+   </g>
+   <g id="text_26">
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #1e2b2a" x="619.52688" y="278.8902" transform="rotate(-0 619.52688 278.8902)">• Feed, weight and cost records</text>
+   </g>
+   <g id="text_27">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #1f5a47" x="615.80781" y="318.807" transform="rotate(-0 615.80781 318.807)">DELIVERED BACK</text>
+   </g>
+   <g id="text_28">
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #1e2b2a" x="619.52688" y="335.439" transform="rotate(-0 619.52688 335.439)">• Scenario comparison</text>
+   </g>
+   <g id="text_29">
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #1e2b2a" x="619.52688" y="357.0606" transform="rotate(-0 619.52688 357.0606)">• Feed-pressure outlook</text>
+   </g>
+   <g id="text_30">
+    <text style="font-size: 10.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #1e2b2a" x="619.52688" y="378.6822" transform="rotate(-0 619.52688 378.6822)">• Decision review</text>
+   </g>
+   <g id="patch_5">
+    <path d="M 324.742732 254.358 
+Q 340.968614 254.358 354.958428 254.358 
+" style="fill: none; stroke: #9aa6a4; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 350.158428 251.958 
+L 354.958428 254.358 
+L 350.158428 256.758 
+z
+" style="fill: #9aa6a4; stroke: #9aa6a4; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 562.763212 254.358 
+Q 578.989094 254.358 592.978908 254.358 
+" style="fill: none; stroke: #9aa6a4; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 588.178908 251.958 
+L 592.978908 254.358 
+L 588.178908 256.758 
+z
+" style="fill: #9aa6a4; stroke: #9aa6a4; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="text_31">
+    <text style="font-weight: 700; font-size: 15px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #1f5a47" x="455.8878" y="414.441" transform="rotate(-0 455.8878 414.441)">Farm data remain the basis for local validation—not a one-time input to a generic model.</text>
+   </g>
+  </g>
+  <g id="text_32">
+   <text style="font-weight: 700; font-size: 25px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #1e2b2a" x="7.2" y="26.196094" transform="rotate(-0 7.2 26.196094)">Start small. Add data when it changes a decision</text>
+  </g>
+  <g id="text_33">
+   <text style="font-size: 13px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #4f5c59" x="7.2" y="44.077969" transform="rotate(-0 7.2 44.077969)">A staged pilot reduces burden while making the value of each dataset visible.</text>
+  </g>
+  <g id="text_34">
+   <g id="patch_7">
+    <path d="M 768.052069 20.43 
+L 880.5816 20.43 
+Q 883.7316 20.43 883.7316 17.28 
+L 883.7316 8.28 
+Q 883.7316 5.13 880.5816 5.13 
+L 768.052069 5.13 
+Q 764.902069 5.13 764.902069 8.28 
+L 764.902069 17.28 
+Q 764.902069 20.43 768.052069 20.43 
+z
+" style="fill: #1f5a47"/>
+   </g>
+   <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #ffffff" x="880.5816" y="15.117891" transform="rotate(-0 880.5816 15.117891)">PARTNERSHIP PROPOSAL</text>
+  </g>
+  <g id="text_35">
+   <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #697571" x="7.2" y="501.958008" transform="rotate(-0 7.2 501.958008)">Recommended pilot structure. Scope and governance should be agreed before data transfer.</text>
+  </g>
+  <g id="text_36">
+   <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #697571" x="880.5816" y="504" transform="rotate(-0 880.5816 504)">Farm decision evidence · v1.0.0</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p822370f823">
+   <rect x="83.9808" y="42.3" width="743.814" height="415.8"/>
+  </clipPath>
+ </defs>
+</svg>
