@@ -1,17 +1,26 @@
 # Publication Reproducibility Guide
 
-## 1. Install and smoke-test
+## 1. Install and reproduce the camera-ready results
 
 ```bash
 python3 -m venv .venv
 . .venv/bin/activate
 python3 -m pip install --upgrade pip
 python3 -m pip install -e '.[publication,dev]'
-make smoke
+make reproduce-results
 ```
 
-The smoke path uses only the synthetic fixture and frozen publication source
-tables. It does not train, infer, attribute, perturb, or run APSIM.
+This command regenerates the publication figures, machine-readable tables, and
+reported statistics under `outputs/reproduced/`, then validates all frozen case
+rows and APSIM outputs. It is the camera-ready key-result reproduction path. It
+does not retrain models, rerun attribution, or execute APSIM. Use
+`make reproduce-smoke` for the faster interface and invariant check.
+
+`make reproduce-full` exits before starting work because the exact Roseworthy
+cleaned point files are not available from the cited public record. The
+following sections expose the individual full-run stages for researchers who
+hold authorised copies. This release does not claim that the full training
+pipeline was rerun during camera-ready preparation.
 
 ## 2. Audit external inputs
 
@@ -144,6 +153,21 @@ Local RF and privileged-information runs are included in the exact campaign in
 section 3. The case validator checks 36 Roseworthy rows, six Waite rows, and 15
 RF/PI gate rows without requiring restricted raw data. Full fitting always
 requires the authorised inputs and never runs silently in validation mode.
+
+The exact accepted preprocessing snapshots are preserved as:
+
+```text
+scripts/build_data_nursery_v1_accepted.py
+scripts/build_data_nursery_v1_reconciliation_patch_accepted.py
+scripts/build_stage7_waite_slga_unified_nursery_accepted.py
+```
+
+Their SHA-256 values are enforced by the test suite. The first script builds
+the 43,311-row Roseworthy view from the two cleaned point files, SILO weather,
+and the recorded APSoil match. The latter two parse the Waite workbook and
+construct the 2,415-row environmental proxy view before the frozen Stage 7
+experiment. These are immutable scientific-lineage snapshots, not refactored
+reimplementations.
 
 ## 6. APSIM comparison
 

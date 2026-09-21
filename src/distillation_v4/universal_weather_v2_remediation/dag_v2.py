@@ -750,7 +750,10 @@ def _job_kind_totals(by_family: dict[str, dict[str, Any]]) -> dict[str, int]:
     return totals
 
 
-def _legacy_build_formal_preapproval_manifest_v2(repository_root: Path) -> dict[str, Any]:
+def _legacy_build_formal_preapproval_manifest_v2(
+    repository_root: Path,
+    output_root: Path,
+) -> dict[str, Any]:
     eligibility = build_final_eligibility(repository_root)
     coverage = build_handler_coverage_registry()
     blockers = []

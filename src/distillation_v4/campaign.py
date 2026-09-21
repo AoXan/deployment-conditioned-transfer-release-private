@@ -1626,8 +1626,8 @@ def run_explanations(config: CampaignConfig, output: Path) -> dict[str, Any]:
             x_background=np.asarray(preprocess.transform(train[features]),dtype=np.float32)
             x_test=np.asarray(preprocess.transform(test[features]),dtype=np.float32)
             hidden=int(checkpoint["state_dict"]["encoder.0.weight"].shape[0]); student=Student(x_test.shape[1],hidden=hidden); student.load_state_dict(checkpoint["state_dict"]); student.eval()
-            def predict_student(values: np.ndarray) -> np.ndarray:
-                with torch.no_grad(): prediction,_=student(torch.tensor(values,dtype=torch.float32))
+            def predict_student(values: np.ndarray, _student=student) -> np.ndarray:
+                with torch.no_grad(): prediction,_=_student(torch.tensor(values,dtype=torch.float32))
                 return prediction.numpy()
             student_shap=grouped_interventional_shap(predict_student,x_test,x_background,{"deployable_weather":list(range(x_test.shape[1]))})
             explanation=pd.DataFrame({"sample_id":test.sample_id.astype(str).to_numpy(),"base_value":student_shap["base_value"],"prediction":student_shap["prediction"],"shap_deployable_weather":student_shap["deployable_weather"]})
@@ -1635,8 +1635,8 @@ def run_explanations(config: CampaignConfig, output: Path) -> dict[str, Any]:
             summary={"dataset":dataset,"route":route["route"],"fold":f"test_{year}","seed":101,"method":"EXACT_GROUPED_INTERVENTIONAL_SHAP","selection_role":"POST_FREEZE_MODEL_RELIANCE_DIAGNOSTIC_ONLY","rows":len(explanation),"student_mean_abs_shap":{"deployable_weather":float(np.mean(np.abs(student_shap["deployable_weather"])))}}
             if route["route"]=="prediction_kd" and (root/"prediction_teacher.joblib").is_file():
                 teacher=joblib.load(root/"prediction_teacher.joblib"); teacher_features=[column for column in frame if column.startswith("weather_") or (column.startswith("soil_") and not column.endswith("__missing"))]; raw_background=train[teacher_features].to_numpy(dtype=float); raw_test=test[teacher_features].to_numpy(dtype=float); weather_indices=[index for index,name in enumerate(teacher_features) if name.startswith("weather_")]; soil_indices=[index for index,name in enumerate(teacher_features) if name.startswith("soil_")]
-                def predict_teacher(values: np.ndarray) -> np.ndarray:
-                    return teacher.predict(pd.DataFrame(values,columns=teacher_features))
+                def predict_teacher(values: np.ndarray, _teacher=teacher, _teacher_features=teacher_features) -> np.ndarray:
+                    return _teacher.predict(pd.DataFrame(values,columns=_teacher_features))
                 teacher_shap=grouped_interventional_shap(predict_teacher,raw_test,raw_background,{"weather":weather_indices,"static_soil":soil_indices})
                 pd.DataFrame({"sample_id":test.sample_id.astype(str).to_numpy(),"base_value":teacher_shap["base_value"],"prediction":teacher_shap["prediction"],"shap_weather":teacher_shap["weather"],"shap_static_soil":teacher_shap["static_soil"]}).to_csv(explanation_root/"teacher_grouped_shap.csv",index=False)
                 summary["teacher_mean_abs_shap"]={"weather":float(np.mean(np.abs(teacher_shap["weather"]))),"static_soil":float(np.mean(np.abs(teacher_shap["static_soil"])))}

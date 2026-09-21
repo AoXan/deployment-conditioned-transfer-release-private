@@ -11,6 +11,9 @@ include:
   - scripts/run_privileged_ablation.py
   - scripts/run_publication_evaluation.py
   - scripts/run_stage7_unified_nursery_experiments.py
+  - scripts/build_data_nursery_v1_accepted.py
+  - scripts/build_data_nursery_v1_reconciliation_patch_accepted.py
+  - scripts/build_stage7_waite_slga_unified_nursery_accepted.py
   - configs/stage7_all_experiments.yaml
   - scripts/materialize_publication_config.py
   - scripts/prepare_publication_views.py
@@ -83,6 +86,8 @@ exclude:
   - '*.pyc'
   - '*.log'
 notes:
-  - Restricted source data and checkpoints are never included.
+  - Restricted or provenance-unresolved source data and checkpoints are not included.
+  - The Waite workbook is openly licensed under CC BY 4.0 and is acquired from the official CSIRO record rather than vendored.
+  - The exact accepted Roseworthy and Waite preprocessing script snapshots are included with immutable hashes.
   - The APSIM runtime is fetched from its pinned upstream source by the bootstrap command.
   - Derived publication source tables are included only where redistribution is permitted.

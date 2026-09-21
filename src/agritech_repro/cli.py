@@ -51,7 +51,9 @@ def parser() -> argparse.ArgumentParser:
         item.add_argument("--output-root", type=Path, default=Path("outputs/publication_repro"))
         item.add_argument("--fixture", action="store_true", help="Use the redistributable synthetic fixture.")
         item.add_argument("--dry-run", action="store_true", help="Print the resolved action without executing it.")
-        item.add_argument("--validate-only", action="store_true", help="Validate inputs without executing the workflow.")
+        item.add_argument(
+            "--validate-only", action="store_true", help="Validate inputs without executing the workflow."
+        )
         item.add_argument(
             "--confirm-full-campaign",
             help="Exact plan fingerprint required before a full primary campaign is started.",
@@ -72,8 +74,7 @@ def load_context(args: argparse.Namespace) -> tuple[Path, dict[str, Any], Path, 
     config = yaml.safe_load(config_path.read_text())
     data_root = (args.data_root or Path(os.environ.get("AGRITECH_DATA_ROOT", root / "data/external"))).resolve()
     checkpoint_root = (
-        args.checkpoint_root
-        or Path(os.environ.get("AGRITECH_CHECKPOINT_ROOT", root / "artifacts/checkpoints"))
+        args.checkpoint_root or Path(os.environ.get("AGRITECH_CHECKPOINT_ROOT", root / "artifacts/checkpoints"))
     ).resolve()
     output_root = args.output_root if args.output_root.is_absolute() else root / args.output_root
     return root, config, data_root, checkpoint_root, output_root
@@ -227,14 +228,27 @@ def execute_workflow(args: argparse.Namespace) -> int:
             if args.validate_only:
                 command.append("--validate-only")
             run_checked(command, root, publication_environment(data_root, checkpoint_root, output_root))
-            return emit({"status": "PASS", "mode": "validate-only" if args.validate_only else "materialised", "config": resolved})
+            return emit(
+                {
+                    "status": "PASS",
+                    "mode": "validate-only" if args.validate_only else "materialised",
+                    "config": resolved,
+                }
+            )
         if args.command == "reproduce-primary":
             workflow = config["workflows"][args.command]
             native = root / workflow["native_config"]
             resolved = output_root / "configs/stage8_v4_australian.resolved.yaml"
             env = publication_environment(data_root, checkpoint_root, output_root)
             run_checked(
-                [sys.executable, str(root / "scripts/materialize_publication_config.py"), "--input", str(native), "--output", str(resolved)],
+                [
+                    sys.executable,
+                    str(root / "scripts/materialize_publication_config.py"),
+                    "--input",
+                    str(native),
+                    "--output",
+                    str(resolved),
+                ],
                 root,
                 env,
             )
@@ -266,7 +280,9 @@ def execute_workflow(args: argparse.Namespace) -> int:
             missing = [str(path) for path in (lineage, replay) if not path.is_file()]
             if missing:
                 raise FileNotFoundError(f"missing checkpoint evaluation assets: {missing}")
-            return emit({"status": "PASS", "lineage_rows": len(pd.read_csv(lineage)), "replay_rows": len(pd.read_csv(replay))})
+            return emit(
+                {"status": "PASS", "lineage_rows": len(pd.read_csv(lineage)), "replay_rows": len(pd.read_csv(replay))}
+            )
         if args.command == "reproduce-diagnostics":
             workflow = config["workflows"][args.command]
             script = root / workflow["entrypoint"]
@@ -275,7 +291,9 @@ def execute_workflow(args: argparse.Namespace) -> int:
                 missing = [str(path) for path in required if not path.is_file()]
                 if missing:
                     raise FileNotFoundError(f"missing frozen diagnostic output: {missing}")
-                counts = {str(path.relative_to(root)): len(pd.read_csv(path)) for path in required if path.suffix == ".csv"}
+                counts = {
+                    str(path.relative_to(root)): len(pd.read_csv(path)) for path in required if path.suffix == ".csv"
+                }
                 return emit({"status": "PASS", "mode": "frozen-output-validation", "rows": counts})
             else:
                 replay_root = os.environ.get("AGRITECH_FORMAL_REPLAY_ROOT")
@@ -326,9 +344,7 @@ def execute_workflow(args: argparse.Namespace) -> int:
             }
             entrypoints = [root / path for path in workflow["entrypoints"]]
             missing = [
-                str(path.relative_to(root))
-                for path in [*case_sources.values(), *entrypoints]
-                if not path.is_file()
+                str(path.relative_to(root)) for path in [*case_sources.values(), *entrypoints] if not path.is_file()
             ]
             if missing:
                 raise FileNotFoundError(f"missing case reproduction asset: {missing}")
@@ -375,13 +391,19 @@ def execute_workflow(args: argparse.Namespace) -> int:
                     raise FileNotFoundError(f"missing APSIM outputs: {missing}")
             else:
                 for script in config["workflows"][args.command]["commands"]:
-                    run_checked([sys.executable, str(root / script)] if script.endswith(".py") else [str(root / script)], root)
+                    run_checked(
+                        [sys.executable, str(root / script)] if script.endswith(".py") else [str(root / script)], root
+                    )
             return emit({"status": "PASS", "workflow": args.command})
         if args.command == "render-paper-assets":
             script = root / config["workflows"][args.command]["entrypoint"]
             flag = "--validate-only" if args.validate_only else "--write"
-            run_checked([sys.executable, str(script), "--root", str(root), flag], root)
-            return emit({"status": "PASS", "entrypoint": script})
+            command = [sys.executable, str(script), "--root", str(root)]
+            if not args.validate_only:
+                command.extend(["--output-dir", str(output_root / "figures")])
+            command.append(flag)
+            run_checked(command, root)
+            return emit({"status": "PASS", "entrypoint": script, "output": output_root / "figures"})
         if args.command == "render-paper-tables":
             script = root / config["workflows"][args.command]["entrypoint"]
             command = [sys.executable, str(script), "--root", str(root), "--output", str(output_root / "tables")]
@@ -389,11 +411,20 @@ def execute_workflow(args: argparse.Namespace) -> int:
                 command.append("--validate-only")
             run_checked(command, root)
             if not args.validate_only:
-                run_checked([sys.executable, str(root / "experiments/apsim_comparison/render_supplement_tables.py")], root)
+                run_checked(
+                    [sys.executable, str(root / "experiments/apsim_comparison/render_supplement_tables.py")], root
+                )
             return emit({"status": "PASS", "entrypoint": script, "output": output_root / "tables"})
         if args.command == "numeric-integrity":
             script = root / config["workflows"][args.command]["entrypoint"]
-            command = [sys.executable, str(script), "--root", str(root), "--output", str(output_root / "numeric_integrity.json")]
+            command = [
+                sys.executable,
+                str(script),
+                "--root",
+                str(root),
+                "--output",
+                str(output_root / "numeric_integrity.json"),
+            ]
             if args.validate_only:
                 command.append("--validate-only")
             completed = subprocess.run(command, cwd=root, text=True, capture_output=True)
@@ -404,8 +435,26 @@ def execute_workflow(args: argparse.Namespace) -> int:
             validation = validate_repository(root, config, False)
             figure_script = root / config["workflows"]["render-paper-assets"]["entrypoint"]
             run_checked([sys.executable, str(figure_script), "--root", str(root), "--validate-only"], root)
-            run_checked([sys.executable, str(root / "scripts/render_publication_tables.py"), "--root", str(root), "--validate-only"], root)
-            run_checked([sys.executable, str(root / "scripts/verify_publication_numbers.py"), "--root", str(root), "--validate-only"], root)
+            run_checked(
+                [
+                    sys.executable,
+                    str(root / "scripts/render_publication_tables.py"),
+                    "--root",
+                    str(root),
+                    "--validate-only",
+                ],
+                root,
+            )
+            run_checked(
+                [
+                    sys.executable,
+                    str(root / "scripts/verify_publication_numbers.py"),
+                    "--root",
+                    str(root),
+                    "--validate-only",
+                ],
+                root,
+            )
             required = [root / path for path in config["publication_assets"]["verification_files"]]
             missing = [str(path) for path in required if not path.is_file()]
             status = "PASS" if validation["status"] == "PASS" and not missing else "BLOCKED"

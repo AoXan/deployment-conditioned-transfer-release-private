@@ -597,8 +597,6 @@ def validate_v4_4(root: Path) -> dict[str, object]:
 def validate(root: Path, profile: str = "v1") -> dict[str, object]:
     if profile == "v2":
         return validate_v2(root)
-    if profile == "v3":
-        return validate_v3(root)
     if profile == "v4":
         return validate_v4(root)
     if profile == "v4_2":
@@ -734,7 +732,7 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=Path(__file__).resolve().parents[3],
     )
-    parser.add_argument("--profile", choices=("v1", "v2", "v3", "v4", "v4_2", "v4_4"), default="v1")
+    parser.add_argument("--profile", choices=("v1", "v2", "v4", "v4_2", "v4_4"), default="v1")
     return parser.parse_args()
 
 

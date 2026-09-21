@@ -38,16 +38,26 @@ datasets:
     expected_path: roseworthy/roseworthy_e5_point_yield.csv.gz
     paper_role: within-paddock complete-input/no-soil comparison
     sample_unit: yield-monitor point-year
-    redistribution: cleaned analysis file is not redistributed because correspondence and licence remain unresolved
-    acquisition: obtain an authorised source copy and reproduce the documented preprocessing
+    redistribution: the two cleaned point files are not redistributed because they are absent from the cited Figshare v1/v2 inventories
+    acquisition: obtain the exact cleaned point files from an authorised project or custodian copy and verify the documented SHA-256 values
+    accepted_preprocessing: scripts/build_data_nursery_v1_accepted.py
+    accepted_input_sha256:
+      E5_2007_cleaned_elev_moisture_yield_xy.csv: eb0613052d02510ef81093f2c21751f24be00e726b9d856516f78794091201a9
+      E5_2008_cleaned_elev_moisture_yield_xy.csv: 53c24da8d42655c23da2ee5afc67de523cc93b48446d4bac30dba563a5c7e513
+    accepted_derived_sha256: 5ec4f0a21ef3c61dfd6109e1bb70de9b410ab139526d1f4a4ed2919bf89f108a
   waite:
     formal_name: Waite Permanent Rotation Trial
     source: https://doi.org/10.4225/08/55E5165EC0D29
     expected_path: waite/waite_full_environment_proxy.csv.gz
     paper_role: historical temporal-forward/plot-group comparison
     sample_unit: trial plot-year
-    redistribution: source workbook is not redistributed
-    acquisition: obtain from the custodian under the source terms
+    redistribution: permitted by the official CC BY 4.0 licence; downloaded from CSIRO rather than vendored
+    acquisition: python3 scripts/acquire_publication_data.py --dataset waite --download
+    accepted_preprocessing:
+      - scripts/build_data_nursery_v1_reconciliation_patch_accepted.py
+      - scripts/build_stage7_waite_slga_unified_nursery_accepted.py
+    accepted_raw_sha256: a5b1b7f4c943a6533917e3b7c4fe51eaa030c77b9777cd34c0864ca3c8961c29
+    accepted_derived_sha256: 0c0874815e3b7b2354a64ad4d8f9bc2ab9022aecb567963d30a0fcee7f8811a0
   apsim:
     formal_name: APSIM Next Generation
     source: https://github.com/APSIMInitiative/ApsimX.git

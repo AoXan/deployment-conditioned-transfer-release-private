@@ -13,7 +13,7 @@ from pathlib import Path
 import yaml
 
 
-IDENTITY_MARKERS = (b"/Users/", b"OneDrive", b"Adelaide", b"AIML")
+IDENTITY_MARKERS = (b"/Users/", b"/OneDrive/", b"\\OneDrive\\", b"Adelaide", b"AIML")
 SECRET_PATTERNS = {
     "private key": re.compile(rb"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
     "AWS access key": re.compile(rb"\bAKIA[0-9A-Z]{16}\b"),
@@ -25,7 +25,10 @@ SENSITIVE_FILENAMES = {".env", "id_rsa", "id_ed25519", "credentials.json"}
 
 def excluded(relative: Path, patterns: list[str]) -> bool:
     text = relative.as_posix()
-    return any(fnmatch.fnmatch(text, pattern) or text == pattern or text.startswith(pattern.rstrip("/") + "/") for pattern in patterns)
+    return any(
+        fnmatch.fnmatch(text, pattern) or text == pattern or text.startswith(pattern.rstrip("/") + "/")
+        for pattern in patterns
+    )
 
 
 def sources(root: Path, patterns: list[str], excludes: list[str]) -> list[Path]:
@@ -66,7 +69,18 @@ def main() -> int:
         relative = path.relative_to(root)
         if path.name in SENSITIVE_FILENAMES:
             findings.append(f"sensitive filename: {relative}")
-        if relative not in detector_documents and path.suffix.lower() in {".py", ".sh", ".yaml", ".yml", ".json", ".md", ".tex", ".bib", ".txt", ".csv"}:
+        if relative not in detector_documents and path.suffix.lower() in {
+            ".py",
+            ".sh",
+            ".yaml",
+            ".yml",
+            ".json",
+            ".md",
+            ".tex",
+            ".bib",
+            ".txt",
+            ".csv",
+        }:
             payload = path.read_bytes()
             for marker in IDENTITY_MARKERS:
                 if marker in payload:
@@ -84,7 +98,11 @@ def main() -> int:
             destination = output / source.relative_to(root)
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(source, destination)
-    print(json.dumps({"status": "PASS", "files": len(files), "output": str(output), "written": not args.validate_only}, indent=2))
+    print(
+        json.dumps(
+            {"status": "PASS", "files": len(files), "output": str(output), "written": not args.validate_only}, indent=2
+        )
+    )
     return 0
 
 

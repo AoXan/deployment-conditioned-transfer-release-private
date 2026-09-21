@@ -1263,15 +1263,15 @@ def main() -> None:
                     feature_names,
                 )
 
-                predictor = lambda raw: predict_raw(
-                    model,
+                predictor = lambda raw, _model=model, _split_data=split_data: predict_raw(
+                    _model,
                     raw,
                     feature_names,
-                    split_data[
+                    _split_data[
                         "imputer_statistics"
                     ],
-                    split_data["scaler_mean"],
-                    split_data["scaler_scale"],
+                    _split_data["scaler_mean"],
+                    _split_data["scaler_scale"],
                 )
 
                 replay_raw = predictor(

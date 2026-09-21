@@ -10,11 +10,11 @@ datasets:
     required_for: [reproduce-primary, reproduce-cases]
   roseworthy:
     relative_path: roseworthy
-    redistribution: prohibited_until_cleaned-file_licence_is_confirmed
+    redistribution: exact_cleaned_point_files_not_redistributed_because_public_record_correspondence_is_unresolved
     required_for: [reproduce-primary, reproduce-cases]
   waite:
     relative_path: waite
-    redistribution: do_not_redistribute_source_workbook
+    redistribution: permitted_cc_by_4_0
     required_for: [reproduce-primary, reproduce-cases]
 publication_assets:
   required_files:
@@ -27,6 +27,9 @@ publication_assets:
     - scripts/run_stage8_formal_adapter.py
     - scripts/run_universal_weather_v2_remediation.py
     - scripts/run_stage7_unified_nursery_experiments.py
+    - scripts/build_data_nursery_v1_accepted.py
+    - scripts/build_data_nursery_v1_reconciliation_patch_accepted.py
+    - scripts/build_stage7_waite_slga_unified_nursery_accepted.py
     - scripts/run_privileged_ablation.py
     - src/phase3/run_g2f_route1_pilot_fixed.py
     - scripts/analysis/common_sample_attribution_v1/run_analysis.py

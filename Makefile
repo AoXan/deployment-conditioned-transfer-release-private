@@ -1,7 +1,7 @@
 PYTHON ?= python3
 REPRO = PYTHONPATH=src $(PYTHON) -m agritech_repro
 
-.PHONY: help setup validate data-audit preprocess primary-preflight checkpoints diagnostics cases apsim-validate figures tables numeric-integrity verify smoke test
+.PHONY: help setup validate data-audit preprocess primary-preflight checkpoints diagnostics cases apsim-validate figures tables numeric-integrity verify smoke test reproduce-results reproduce-smoke reproduce-full
 
 help:
 	@printf '%s\n' 'Publication reproducibility targets:' \
@@ -18,7 +18,10 @@ help:
 	  '  tables             validate publication table sources' \
 	  '  numeric-integrity  verify frozen headline and APSIM values' \
 	  '  verify             run publication-level validation' \
-	  '  smoke              run fixture, numeric, figure, table, and focused tests'
+	  '  smoke              run fixture, numeric, figure, table, and focused tests' \
+	  '  reproduce-results  regenerate paper figures, tables, and reported statistics' \
+	  '  reproduce-smoke    fast alias for the clean-clone smoke validation' \
+	  '  reproduce-full     explain and enforce the authorised-data full-rerun boundary'
 
 setup:
 	$(PYTHON) -m pip install -e '.[publication,dev]'
@@ -63,3 +66,20 @@ test:
 	PYTHONPATH=src $(PYTHON) -m pytest -q tests/test_publication_repro_cli.py experiments/apsim_comparison/tests
 
 smoke: validate numeric-integrity figures tables apsim-validate test
+
+reproduce-results:
+	$(REPRO) reproduce-cases --validate-only
+	$(REPRO) render-paper-assets --output-root outputs/reproduced
+	$(REPRO) render-paper-tables --output-root outputs/reproduced
+	$(REPRO) numeric-integrity --output-root outputs/reproduced
+	$(REPRO) reproduce-apsim --validate-only
+	$(REPRO) verify-publication --validate-only
+
+reproduce-smoke: smoke
+
+reproduce-full:
+	@printf '%s\n' \
+	  'A single unattended full rerun is not available because the exact Roseworthy cleaned point files are not in the cited public record.' \
+	  'The accepted preprocessing, training, evaluation, diagnostic, Waite, and APSIM entry points are preserved.' \
+	  'Follow docs/reproducibility/REPRODUCIBILITY.md with authorised inputs; this target exits before starting expensive work.'
+	@exit 2

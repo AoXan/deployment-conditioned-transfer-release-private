@@ -22,9 +22,7 @@ def _summarise_roseworthy(source: pd.DataFrame) -> pd.DataFrame:
         raise ValueError(f"expected 36 Roseworthy source rows, found {len(source)}")
     rows = []
     for condition in ("complete", "no_soil"):
-        scratch_mae = float(
-            source[source["condition"].eq(condition) & source["route"].eq("scratch")]["mae"].mean()
-        )
+        scratch_mae = float(source[source["condition"].eq(condition) & source["route"].eq("scratch")]["mae"].mean())
         for route in CASE_ROUTE_ORDER:
             cell = source[source["condition"].eq(condition) & source["route"].eq(route)]
             if len(cell) != 3:
@@ -39,16 +37,14 @@ def _summarise_roseworthy(source: pd.DataFrame) -> pd.DataFrame:
             for metric in ("mae", "rmse", "r2"):
                 row[metric] = float(cell[metric].mean())
                 row[f"{metric}_sd"] = 0.0 if route == "scratch" else float(cell[metric].std(ddof=1))
-            row["delta_mae_vs_condition_scratch"] = float(row["mae"]) - scratch_mae
+            row["delta_mae_vs_condition_scratch"] = float(cell["mae"].mean()) - scratch_mae
             rows.append(row)
     return pd.DataFrame(rows)
 
 
 def _behavioural_diagnostics(root: Path) -> pd.DataFrame:
     agreement = pd.read_csv(root / "figures/final_publication_v4_18/source_perturbation_agreement_disjoint.csv")
-    manifest = json.loads(
-        (root / "figures/final_publication_v4_18/evidence_build_manifest.json").read_text()
-    )
+    manifest = json.loads((root / "figures/final_publication_v4_18/evidence_build_manifest.json").read_text())
     required = {"contract", "spearman_rho", "top_group_match"}
     if not required.issubset(agreement.columns):
         raise ValueError(f"behavioural source missing columns: {sorted(required - set(agreement.columns))}")
@@ -71,7 +67,7 @@ def _behavioural_diagnostics(root: Path) -> pd.DataFrame:
         (
             "taylor_local_fidelity",
             float(taylor["pass_rate"]),
-            f'{int(taylor["n_pass"])}/{int(taylor["n_eligible"])} ({100 * float(taylor["pass_rate"]):.1f}%)',
+            f"{int(taylor['n_pass'])}/{int(taylor['n_eligible'])} ({100 * float(taylor['pass_rate']):.1f}%)",
         ),
     ]
     frame = pd.DataFrame(values, columns=["measure", "value", "display_value"])
@@ -107,15 +103,19 @@ def render(root: Path, output: Path, validate_only: bool) -> dict[str, object]:
             row = {"contract": contract.replace("_complete", ""), "route": route, "runs": 3}
             for metric in ("mae", "rmse", "r2"):
                 row[f"{metric}_mean"] = float(cell[metric].mean())
-                row[f"{metric}_sd"] = 0.0 if contract.startswith("SPATIAL") and route == "local_scratch" else float(cell[metric].std(ddof=1))
-            row["reference_status"] = "fixed reference" if contract.startswith("SPATIAL") and route == "local_scratch" else "run-level"
+                row[f"{metric}_sd"] = (
+                    0.0
+                    if contract.startswith("SPATIAL") and route == "local_scratch"
+                    else float(cell[metric].std(ddof=1))
+                )
+            row["reference_status"] = (
+                "fixed reference" if contract.startswith("SPATIAL") and route == "local_scratch" else "run-level"
+            )
             summary_rows.append(row)
     summary = pd.DataFrame(summary_rows)
 
     apsim = pd.read_csv(apsim_source)
-    apsim_keep = apsim[
-        apsim["condition"].isin(["constrained_central", "available_central", "data_driven"])
-    ].copy()
+    apsim_keep = apsim[apsim["condition"].isin(["constrained_central", "available_central", "data_driven"])].copy()
     claims = pd.read_csv(claim_source)
     case_rows = []
     rf = claims[claims["gate"].eq("late_fusion")]

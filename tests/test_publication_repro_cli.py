@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import subprocess
@@ -144,8 +145,10 @@ def test_latest_tex_sources_have_all_local_dependencies() -> None:
         text = source.read_text()
         for command, value in re.findall(r"\\(includegraphics|input)\{([^}]+)\}", text):
             candidate = source.parent / value
-            choices = (candidate,) if candidate.suffix else tuple(
-                candidate.with_suffix(suffix) for suffix in (".tex", ".pdf", ".png")
+            choices = (
+                (candidate,)
+                if candidate.suffix
+                else tuple(candidate.with_suffix(suffix) for suffix in (".tex", ".pdf", ".png"))
             )
             assert any(choice.is_file() for choice in choices), (
                 source.name,
@@ -203,13 +206,11 @@ def test_table_builder_reconstructs_every_main_table2_block(tmp_path: Path) -> N
         "combined_kd",
         "missing_aware",
     }
-    supervised_no_soil = roseworthy[
-        roseworthy["condition"].eq("no_soil") & roseworthy["route"].eq("supervised")
-    ].iloc[0]
+    supervised_no_soil = roseworthy[roseworthy["condition"].eq("no_soil") & roseworthy["route"].eq("supervised")].iloc[
+        0
+    ]
     assert round(float(supervised_no_soil["mae"]), 3) == 0.465
-    scratch_no_soil = roseworthy[
-        roseworthy["condition"].eq("no_soil") & roseworthy["route"].eq("scratch")
-    ].iloc[0]
+    scratch_no_soil = roseworthy[roseworthy["condition"].eq("no_soil") & roseworthy["route"].eq("scratch")].iloc[0]
     assert round(float(scratch_no_soil["mae"]), 3) == 0.499
     assert waite["mae"].round(3).tolist() == [0.691, 0.698, 0.685, 0.502, 0.477, 0.499]
     assert dict(zip(behaviour["measure"], behaviour["display_value"])) == {
@@ -295,3 +296,41 @@ def test_direct_publication_scripts_have_nonexecuting_help() -> None:
         )
         assert result.returncode == 0, (script, result.stderr, result.stdout)
         assert "usage:" in result.stdout.lower()
+
+
+def test_makefile_exposes_tiered_reproduction_entrypoints() -> None:
+    makefile = (ROOT / "Makefile").read_text()
+    assert "reproduce-results:" in makefile
+    assert "reproduce-smoke:" in makefile
+    assert "reproduce-full:" in makefile
+    dry_run = subprocess.run(
+        ["make", "-n", "reproduce-results"],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    assert dry_run.returncode == 0, dry_run.stderr + dry_run.stdout
+    assert "render-paper-assets" in dry_run.stdout
+    assert "render-paper-tables" in dry_run.stdout
+    assert "numeric-integrity" in dry_run.stdout
+    assert "verify-publication" in dry_run.stdout
+
+
+def test_accepted_case_preprocessing_snapshots_are_immutable() -> None:
+    expected = {
+        "scripts/build_data_nursery_v1_accepted.py": "8d03d7453095f546b84b7e7fa4c710c973de7e51983f4047e4b703fdb1ae3574",
+        "scripts/build_data_nursery_v1_reconciliation_patch_accepted.py": "9c1b343dd6b01da8ec4dc92fe3a4038fd0b92fb3c90e7da71f0b3bbb075426d5",
+        "scripts/build_stage7_waite_slga_unified_nursery_accepted.py": "f18dd8d316c6b6165ba58f6426fec77f8f2f12e4dee808c6fdd1ea0865d065c0",
+    }
+    for relative, digest in expected.items():
+        path = ROOT / relative
+        assert path.is_file(), relative
+        assert hashlib.sha256(path.read_bytes()).hexdigest() == digest
+
+
+def test_waite_acquisition_is_public_and_checksum_locked() -> None:
+    source = (ROOT / "scripts/acquire_publication_data.py").read_text()
+    assert "https://data.csiro.au/dap/ws/v2/collections/39878" in source
+    assert "Creative Commons Attribution 4.0 International Licence" in source
+    assert "a5b1b7f4c943a6533917e3b7c4fe51eaa030c77b9777cd34c0864ca3c8961c29" in source

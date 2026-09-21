@@ -85,12 +85,12 @@ def verify(root: Path) -> dict[str, object]:
     checks: list[dict[str, object]] = []
 
     for (contract, method, metric), expected in EXPECTED_PRIMARY.items():
-        values = primary.loc[
-            primary["contract"].eq(contract) & primary["method"].eq(method), metric
-        ]
+        values = primary.loc[primary["contract"].eq(contract) & primary["method"].eq(method), metric]
         if values.empty:
             raise ValueError(f"missing primary cell: {contract}/{method}/{metric}")
-        actual = float(values.iloc[0] if method == "local_scratch" and contract.startswith("SPATIAL") else values.mean())
+        actual = float(
+            values.iloc[0] if method == "local_scratch" and contract.startswith("SPATIAL") else values.mean()
+        )
         checks.append({"cell": f"{contract}/{method}/{metric}", "actual": actual, "expected": expected})
         if not close_displayed(actual, expected):
             raise ValueError(f"primary mismatch for {contract}/{method}/{metric}: {actual} != {expected}")
@@ -104,9 +104,7 @@ def verify(root: Path) -> dict[str, object]:
 
     for (contract, condition, model, metric), expected in EXPECTED_APSIM.items():
         values = apsim.loc[
-            apsim["contract"].eq(contract)
-            & apsim["condition"].eq(condition)
-            & apsim["model"].eq(model),
+            apsim["contract"].eq(contract) & apsim["condition"].eq(condition) & apsim["model"].eq(model),
             metric,
         ]
         if len(values) != 1:
@@ -118,9 +116,7 @@ def verify(root: Path) -> dict[str, object]:
 
     for (gate, split, condition, metric), expected in EXPECTED_CASE_MEANS.items():
         values = cases.loc[
-            cases["gate"].eq(gate)
-            & cases["split_id"].eq(split)
-            & cases["condition"].eq(condition),
+            cases["gate"].eq(gate) & cases["split_id"].eq(split) & cases["condition"].eq(condition),
             metric,
         ]
         if len(values) != 3:
@@ -154,20 +150,14 @@ def verify(root: Path) -> dict[str, object]:
         if not close_displayed(actual, expected):
             raise ValueError(f"Waite mismatch for {protocol}/{seed}: {actual} != {expected}")
 
-    agreement = pd.read_csv(
-        root / "figures/final_publication_v4_18/source_perturbation_agreement_disjoint.csv"
-    )
-    evidence = json.loads(
-        (root / "figures/final_publication_v4_18/evidence_build_manifest.json").read_text()
-    )["summary"]
+    agreement = pd.read_csv(root / "figures/final_publication_v4_18/source_perturbation_agreement_disjoint.csv")
+    evidence = json.loads((root / "figures/final_publication_v4_18/evidence_build_manifest.json").read_text())[
+        "summary"
+    ]
     observed_behaviour = {
         "rank_agreement_mean": float(agreement["spearman_rho"].mean()),
-        "rank_agreement_group": float(
-            agreement[agreement["contract"].eq("GROUP_complete")]["spearman_rho"].mean()
-        ),
-        "rank_agreement_spatial": float(
-            agreement[agreement["contract"].eq("SPATIAL_complete")]["spearman_rho"].mean()
-        ),
+        "rank_agreement_group": float(agreement[agreement["contract"].eq("GROUP_complete")]["spearman_rho"].mean()),
+        "rank_agreement_spatial": float(agreement[agreement["contract"].eq("SPATIAL_complete")]["spearman_rho"].mean()),
         "top_group_match": float(agreement["top_group_match"].mean()),
         "ig_completeness": float(evidence["ig_pass_rate"]),
         "taylor_local_fidelity": float(evidence["taylor_gate"]["pass_rate"]),

@@ -29,6 +29,7 @@ data/external/
   roseworthy/
     roseworthy_e5_point_yield.csv.gz
   waite/
+    Waite_Trial_Data.xls
     waite_full_environment_proxy.csv.gz
 ```
 
@@ -40,8 +41,8 @@ python3 scripts/acquire_publication_data.py --dataset cybench --validate-only
 ```
 
 Add `--download` only after checking the record terms. The command does not
-download G2F, Roseworthy, or Waite. Those sources require file-specific access
-or licence review; it exits non-zero when asked to download them.
+download G2F or Roseworthy. Those sources require file-specific access or
+provenance review; it exits non-zero when asked to download them.
 
 The acquisition command verifies the checksum published in the Zenodo record
 and extracts the archive under `cybench/raw`. The adapter accepts the archive's
@@ -60,11 +61,24 @@ above, and materialises a path-resolved copy of the exact campaign config under
 files and the resolved config without writing views.
 
 The G2F citation is DOI `10.1186/s13104-020-4922-8`. The Roseworthy public record
-is DOI `10.25909/19158419.v2`, but the exact correspondence of the cleaned E5
-analysis file remains unresolved, so the cleaned file is not redistributed.
-The Waite source is DOI `10.4225/08/55E5165EC0D29`; its source workbook is not
-redistributed. These restrictions affect data packaging, not publication of the
-preprocessing, split, modelling, or evaluation code.
+is DOI `10.25909/19158419.v2`, but neither of the two cleaned point files used by
+the accepted study appears in the official v1 or v2 file inventory. They are
+therefore not redistributed. An authorised copy must match SHA-256
+`eb0613052d02510ef81093f2c21751f24be00e726b9d856516f78794091201a9` and
+`53c24da8d42655c23da2ee5afc67de523cc93b48446d4bac30dba563a5c7e513`.
+
+The Waite source is DOI `10.4225/08/55E5165EC0D29`. The official CSIRO version
+4 API reports `Waite_Trial_Data.xls` as publicly accessible under the Creative
+Commons Attribution 4.0 International Licence. Acquire and checksum it with:
+
+```bash
+python3 scripts/acquire_publication_data.py --dataset waite --validate-only
+python3 scripts/acquire_publication_data.py --dataset waite --download
+```
+
+The accepted workbook SHA-256 is
+`a5b1b7f4c943a6533917e3b7c4fe51eaa030c77b9777cd34c0864ca3c8961c29`.
+The downloader fails if the DOI, licence, filename, or checksum changes.
 
 For exact checkpoint replay, unpack the authorised bundle under a directory and
 set:

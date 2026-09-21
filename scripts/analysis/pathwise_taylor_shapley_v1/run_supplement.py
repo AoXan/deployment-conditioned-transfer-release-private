@@ -1103,20 +1103,22 @@ def main() -> None:
 
             def predictor(
                 raw_values: np.ndarray,
+                _model=model,
+                _split_data=split_data,
             ) -> np.ndarray:
                 scaled = transform_raw(
                     raw_values,
-                    split_data["imputer"],
-                    split_data[
+                    _split_data["imputer"],
+                    _split_data[
                         "scaler_mean"
                     ],
-                    split_data[
+                    _split_data[
                         "scaler_scale"
                     ],
                 )
 
                 return predict_scaled(
-                    model,
+                    _model,
                     scaled,
                     feature_names,
                 )
