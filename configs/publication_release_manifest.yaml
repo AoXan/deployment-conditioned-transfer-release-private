@@ -30,8 +30,8 @@ include:
   - scripts/analysis/exact_raw_weather_shap_taylor_v3
   - scripts/analysis/pathwise_taylor_shapley_v1
   - scripts/analysis/representation_support_v1
-  - scripts/analysis/final_codex_synthesis/build_evidence_v4_4.py
-  - scripts/analysis/final_codex_synthesis/validate_final_package_v4_4.py
+  - scripts/analysis/final_evidence_synthesis/build_evidence_v4_4.py
+  - scripts/analysis/final_evidence_synthesis/validate_final_package_v4_4.py
   - configs/publication
   - configs/publication_repro.yaml
   - configs/publication_release_manifest.yaml

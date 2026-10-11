@@ -18,7 +18,7 @@ SECRET_PATTERNS = {
     "private key": re.compile(rb"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
     "AWS access key": re.compile(rb"\bAKIA[0-9A-Z]{16}\b"),
     "GitHub token": re.compile(rb"\bgh[pousr]_[A-Za-z0-9_]{30,}\b"),
-    "OpenAI key": re.compile(rb"\bsk-(?:proj-)?[A-Za-z0-9_-]{20,}\b"),
+    "API credential": re.compile(rb"\bsk-(?:proj-)?[A-Za-z0-9_-]{20,}\b"),
 }
 SENSITIVE_FILENAMES = {".env", "id_rsa", "id_ed25519", "credentials.json"}
 

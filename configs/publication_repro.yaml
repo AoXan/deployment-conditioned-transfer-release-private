@@ -33,7 +33,7 @@ publication_assets:
     - scripts/run_privileged_ablation.py
     - src/phase3/run_g2f_route1_pilot_fixed.py
     - scripts/analysis/common_sample_attribution_v1/run_analysis.py
-    - scripts/analysis/final_codex_synthesis/build_evidence_v4_4.py
+    - scripts/analysis/final_evidence_synthesis/build_evidence_v4_4.py
     - figures/final_publication_v4_18/build_final_figures.py
     - experiments/apsim_comparison/build_experiment.py
     - experiments/apsim_comparison/analyse_results.py

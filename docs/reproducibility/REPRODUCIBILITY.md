@@ -1,6 +1,6 @@
 # Publication Reproducibility Guide
 
-## 1. Install and reproduce the camera-ready results
+## 1. Historical camera-ready result validation
 
 ```bash
 python3 -m venv .venv
@@ -16,11 +16,10 @@ rows and APSIM outputs. It is the camera-ready key-result reproduction path. It
 does not retrain models, rerun attribution, or execute APSIM. Use
 `make reproduce-smoke` for the faster interface and invariant check.
 
-`make reproduce-full` exits before starting work because the exact Roseworthy
-cleaned point files are not available from the cited public record. The
-following sections expose the individual full-run stages for researchers who
-hold authorised copies. This release does not claim that the full training
-pipeline was rerun during camera-ready preparation.
+`make reproduce-full` now executes authorised preprocessing and formal primary training.
+It requires the exact source inputs and original plan fingerprint. For a public
+real-data training check, use `python3.12 bootstrap.py --smoke` from the root README.
+Missing exact Roseworthy or historical checkpoint inputs remain explicit conditions.
 
 ## 2. Audit external inputs
 

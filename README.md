@@ -1,66 +1,81 @@
-> 实际训练/计算命令与已完成测试见 [ACTUAL_EXECUTION_QUICKSTART.md](ACTUAL_EXECUTION_QUICKSTART.md)。
-
-> 2026-10-11 independent repair release: read [REPRODUCIBILITY_REPAIR.md](REPRODUCIBILITY_REPAIR.md) and `VERIFICATION_REPORT.md` for actual execution scope and limitations. Historical checks below are not new experiments.
-
 # Deployment-Conditioned Crop-Yield Transfer
 
-This repository contains the code and publication assets for the AJCAI study of
-US-maize-to-Australian-wheat transfer under GROUP and SPATIAL deployment
-contracts. It covers the primary distillation routes, matched behavioural
-diagnostics, agricultural case studies, and the supplementary APSIM comparison.
+Reproduction code for *When Transfer Accuracy Is Not Enough: Deployment-Conditioned
+Behavioural Diagnostics for Knowledge Transfer*. The accepted paper and evidence
+remain unchanged. Full reproduction is conditional on authorised farm inputs,
+historical checkpoint access and a lawful APSIM runtime.
 
-The publication interface is deliberately separate from historical research
-scripts. The camera-ready verification entry point needs no restricted data
-and regenerates the paper figures, machine-readable tables, and reported
-summary statistics from the frozen publication outputs:
+## Actual public-data training from a clean environment
 
-```bash
-python3 -m venv .venv
-. .venv/bin/activate
-python3 -m pip install -e '.[publication,dev]'
-make reproduce-results
+Use Python 3.12, Git and an internet connection. The bootstrap creates an
+isolated virtual environment with no system site packages, installs
+`requirements-verified.lock`, installs this checkout without changing the
+pinned dependencies, and runs `pip check`. Commands, installed versions and
+return codes are saved in `.venv_setup_logs/`. No old experiment results or
+trained checkpoints are reused. Dependency download caches are optional.
+
+The commands below use a POSIX shell. On Windows replace `.venv/bin/python`
+with `.venv\\Scripts\\python.exe`. macOS ARM64 is verified; other systems need
+their own validation. Graphviz is required for native graph visualisation;
+XGBoost on macOS also requires the OpenMP runtime. Install system components
+using their official installers or package manager.
+
+An authorised account is required for this private repository. A legally supplied
+source ZIP can be extracted instead.
+
+```sh
+git clone https://github.com/AoXan/deployment-conditioned-transfer-release-private.git
+cd deployment-conditioned-transfer-release-private
+python3.12 bootstrap.py --smoke
 ```
 
-`make reproduce-smoke` is the shorter interface and code-path check.
-`make reproduce-full` deliberately stops before expensive execution and points
-to the authorised-data instructions. A fully unattended public-data rerun is
-not claimed because the exact cleaned Roseworthy point files used by the
-accepted study are absent from the cited Figshare v1/v2 file inventories. The
-exact Waite workbook is publicly obtainable from CSIRO under CC BY 4.0.
+This acquires six authentic CY-Bench Australian-wheat tables, checks ZIP member
+CRCs and records hashes, preprocesses real records and trains all five original
+components on a reduced split. New checkpoints, preprocessors, predictions,
+SHAP/Integrated Gradients, metrics and figures are written to
+`outputs/public_smoke/`. This verifies computation; it does not reproduce the
+accepted full US-to-Australia performance.
 
-Use `python -m agritech_repro <command> --help` for every workflow. The main
-entry points are:
+In a fresh checkout, `python3.12 bootstrap.py` installs only the environment.
+The separate public commands are:
 
-```bash
-python -m agritech_repro validate --fixture
-python -m agritech_repro data-audit
-python -m agritech_repro preprocess --data-root /path/to/authorised/data --validate-only
-python -m agritech_repro reproduce-primary --validate-only
-python -m agritech_repro evaluate-checkpoints --validate-only
-python -m agritech_repro reproduce-diagnostics --validate-only
-python -m agritech_repro reproduce-cases --validate-only
-python -m agritech_repro reproduce-apsim --validate-only
-python -m agritech_repro render-paper-assets --validate-only
-python -m agritech_repro render-paper-tables --validate-only
-python -m agritech_repro numeric-integrity --validate-only
-python -m agritech_repro verify-publication --validate-only
+```sh
+.venv/bin/python scripts/acquire_cybench_subset.py --output-root data/external/cybench/raw --pair wheat_AU
+.venv/bin/python scripts/run_real_data_smoke.py --raw-root data/external/cybench/raw --output outputs/new_training
+.venv/bin/python scripts/render_new_experiment_assets.py --source outputs/new_training --output outputs/new_training/tables
 ```
 
-Full reruns require the authorised datasets and, for exact replay, the frozen
-checkpoint/prediction bundle. Paths are supplied through `--data-root`,
-`--checkpoint-root`, `AGRITECH_DATA_ROOT`, `AGRITECH_CHECKPOINT_ROOT`,
-`AGRITECH_PREDICTION_ROOT`, and `AGRITECH_CYBENCH_ROOT`; no personal path is
-required. Provenance-unresolved raw data are never downloaded automatically;
-the openly licensed Waite workbook has a checksum-locked acquisition command.
+Use new acquisition and output directories; existing inputs are preserved.
 
-See:
+## Conditional full experiments
 
-- `docs/reproducibility/REPRODUCIBILITY.md` for end-to-end commands.
-- `docs/reproducibility/paper_code_traceability.md` for the paper-to-code matrix.
-- `docs/reproducibility/publication_reproducibility_audit_2026-07-23.md` for the
-  submission-package audit and repaired gaps.
-- `docs/reproducibility/data_access.md` for licences, schemas, and expected paths.
-- `docs/reproducibility/release_scope.md` for the public allowlist and exclusions.
+[DATA_ACQUISITION_GUIDE.md](DATA_ACQUISITION_GUIDE.md) lists exact files,
+official sources, terms and placement. [EXPERIMENT_EXECUTION_GUIDE.md](EXPERIMENT_EXECUTION_GUIDE.md)
+covers Stage 7/8, Roseworthy, Waite, G2F, GROUP/SPATIAL training, statistics,
+attribution, fresh assets and APSIM.
 
-The code is released under the MIT licence. Dataset and APSIM terms remain those
-of their respective providers.
+`run_primary_source_target_smoke.py` trains a new US source model, screens and
+qualifies it, then trains an AU target. `run_apsim_real_data_smoke.py` executes
+the external runtime and compares new simulator reports with current predictions.
+`make reproduce-full` performs authorised preprocessing and formal primary
+training with the original plan fingerprint. `make reproduce-cases` executes
+the conditional case pipeline; `make smoke-real` runs the public real-data chain.
+
+## Historical publication checks and limits
+
+`make reproduce-results` renders accepted frozen outputs. `make smoke` and
+`make reproduce-smoke` are fixture/interface checks. These commands do not train
+models. For current predictions use
+`render_publication_tables.py --fresh-results NEW_RUN --output NEW_ASSETS`.
+
+Real preprocessing, five training components, SHAP/IG, source-to-target training
+and eleven APSIM scenarios have run. Exact Roseworthy cleaned 2007/2008 inputs
+and some historical attribution bundles remain unavailable. Waite/G2F full cases
+and accepted-scale numerical equality remain unverified. See
+[VERIFICATION_REPORT.md](VERIFICATION_REPORT.md),
+[PAPER_TO_EXPERIMENT_MATRIX.md](PAPER_TO_EXPERIMENT_MATRIX.md) and
+[REPRODUCIBILITY_REPAIR.md](REPRODUCIBILITY_REPAIR.md).
+Code is MIT-licensed; data, checkpoint and APSIM terms remain separate.
+
+The current documentation, installation and verification review is in
+[RELEASE_REVIEW.md](RELEASE_REVIEW.md).

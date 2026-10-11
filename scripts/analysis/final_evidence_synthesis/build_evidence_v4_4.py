@@ -2368,7 +2368,7 @@ def run(
             )
             docs = None
         else:
-            docs = destination / "docs/final_codex_synthesis"
+            docs = destination / "docs/final_evidence_synthesis"
             figures = destination / "figures/final_publication"
             docs.mkdir(parents=True, exist_ok=True)
         figures.mkdir(parents=True, exist_ok=True)
@@ -2396,9 +2396,9 @@ def run(
             frame.to_csv(figures / filename, index=False)
         manifest = {
             "schema_version": (
-                f"final_codex_synthesis_evidence_{profile}"
+                f"final_evidence_synthesis_evidence_{profile}"
                 if profile in {"v2", "v3", "v4", "v4_1", "v4_2", "v4_4"}
-                else "final_codex_synthesis_evidence_v1"
+                else "final_evidence_synthesis_evidence_v1"
             ),
             "summary": summary,
             "inputs": {

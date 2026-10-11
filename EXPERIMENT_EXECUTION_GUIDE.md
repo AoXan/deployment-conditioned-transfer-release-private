@@ -5,7 +5,7 @@ All commands require the isolated environment. Use `DATA` and `RAW` as external 
 ## Public real-data chain actually tested
 
 ```sh
-python scripts/acquire_cybench_subset.py --output DATA/cybench/raw
+python scripts/acquire_cybench_subset.py --output-root DATA/cybench/raw
 python scripts/run_real_data_smoke.py --raw-root DATA/cybench/raw --output OUT/regional_smoke
 python scripts/render_publication_tables.py --fresh-results OUT/regional_smoke --output OUT/fresh_assets
 python figures/final_publication_v4_18/build_final_figures.py --fresh-results OUT/regional_smoke --output-dir OUT/fresh_figures --write
@@ -43,7 +43,7 @@ Set the three `AGRITECH_*` lineage/manifest/preprocessor variables, then `python
 ## APSIM
 
 ```sh
-python scripts/acquire_cybench_subset.py --output DATA/cybench/raw --pair wheat_AU --apsim
+python scripts/acquire_cybench_subset.py --output-root DATA/cybench/raw --pair wheat_AU --apsim
 python scripts/run_apsim_real_data_smoke.py --raw-root DATA/cybench/raw --prediction OUT/regional_smoke/models/supervised/predictions.csv --runtime /licensed/Models.dll --output OUT/apsim_smoke
 ```
 

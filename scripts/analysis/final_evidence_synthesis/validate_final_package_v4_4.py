@@ -11,10 +11,10 @@ import pandas as pd
 
 
 REQUIRED = (
-    "docs/final_codex_synthesis/scientific_story_and_novelty.md",
-    "docs/final_codex_synthesis/evidence_and_method_registry.csv",
-    "docs/final_codex_synthesis/literature_and_citation_audit.csv",
-    "docs/final_codex_synthesis/final_acceptance_audit.md",
+    "docs/final_evidence_synthesis/scientific_story_and_novelty.md",
+    "docs/final_evidence_synthesis/evidence_and_method_registry.csv",
+    "docs/final_evidence_synthesis/literature_and_citation_audit.csv",
+    "docs/final_evidence_synthesis/final_acceptance_audit.md",
     "paper/final_ajcai_manuscript.tex",
     "paper/final_ajcai_manuscript.pdf",
     "paper/final_ajcai_supplement.tex",
@@ -36,8 +36,8 @@ FORBIDDEN_MAIN = (
     "proves that",
 )
 REQUIRED_V2 = (
-    "docs/final_codex_synthesis_v2/final_revision_summary.md",
-    "docs/final_codex_synthesis_v2/final_acceptance_audit.md",
+    "docs/final_evidence_synthesis_v2/final_revision_summary.md",
+    "docs/final_evidence_synthesis_v2/final_acceptance_audit.md",
     "paper/final_ajcai_manuscript_v2.tex",
     "paper/final_ajcai_manuscript_v2.pdf",
     "paper/final_ajcai_supplement_v2.tex",
@@ -671,14 +671,14 @@ def validate(root: Path, profile: str = "v1") -> dict[str, object]:
     ):
         errors.append("PI_VARIABILITY_NOT_DISCLOSED")
     registry = pd.read_csv(
-        root / "docs/final_codex_synthesis/evidence_and_method_registry.csv"
+        root / "docs/final_evidence_synthesis/evidence_and_method_registry.csv"
     )
     if registry["verification_status"].isin(
         ["SUMMARY_ONLY", "NOT_FOUND", "CONFLICTING"]
     ).any():
         errors.append("UNVERIFIED_FACT_IN_FINAL_REGISTRY")
     literature = pd.read_csv(
-        root / "docs/final_codex_synthesis/literature_and_citation_audit.csv"
+        root / "docs/final_evidence_synthesis/literature_and_citation_audit.csv"
     )
     missing_literature_keys = sorted(
         set(literature["citation_key"]).difference(bib_keys)

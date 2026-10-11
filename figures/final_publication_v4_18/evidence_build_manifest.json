@@ -60,7 +60,7 @@
     "water_balance",
     "radiation"
   ],
-  "schema_version": "final_codex_synthesis_evidence_v4_4",
+  "schema_version": "final_evidence_synthesis_evidence_v4_4",
   "statistical_unit": "sample_id clusters after contract-route-seed matching",
   "summary": {
     "agreement_cell_rows": 44,
