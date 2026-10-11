@@ -47,7 +47,7 @@ validation-only or `make reproduce-results` inspect frozen comparison evidence.
 ## Verification scope and access conditions
 
 The public preprocessing/training/attribution/export chain is **PIPELINE_VERIFIED**.
-Reduced native US-to-AU GROUP transfer and eleven real APSIM scenarios have also
+Reduced native US-to-AU GROUP transfer and twelve real APSIM scenarios have also
 executed. Full accepted numerical identity is not claimed. The overall project
 is **CONDITIONALLY_REPRODUCIBLE**: exact Roseworthy cleaned files, compatible
 historical attribution lineage and some case inputs require authorised access;

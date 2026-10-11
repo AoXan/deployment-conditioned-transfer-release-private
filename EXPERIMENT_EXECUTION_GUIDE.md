@@ -47,7 +47,7 @@ python scripts/acquire_cybench_subset.py --output-root DATA/cybench/raw --pair w
 python scripts/run_apsim_real_data_smoke.py --raw-root DATA/cybench/raw --prediction OUT/regional_smoke/models/supervised/predictions.csv --runtime /licensed/Models.dll --output OUT/apsim_smoke
 ```
 
-This calls the original scenario builder and actual runtime, writes new weather/configs/databases, and exports SQLite reports. Tested one real region-year, all 11 scenarios; it does not assert complete accepted APSIM comparison parity. The full original scripts in `experiments/apsim_comparison/` require their exact common sample cohort, raw data and runtime; never use locked SQLite/CSV as new simulator output.
+This calls the original scenario builder and actual runtime, writes new weather/configs/databases, and exports SQLite reports. Tested one real region-year, all 12 scenarios; it does not assert complete accepted APSIM comparison parity. The full original scripts in `experiments/apsim_comparison/` require their exact common sample cohort, raw data and runtime; never use locked SQLite/CSV as new simulator output.
 
 ## Commands that inspect frozen evidence
 
