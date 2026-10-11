@@ -9,8 +9,8 @@ paper link will be added when available. Manuscript files are not distributed he
 Install Python 3.12 and Git. With an internet connection:
 
 ```sh
-git clone https://github.com/AoXan/when-transfer-accuracy-is-not-enough.git
-cd when-transfer-accuracy-is-not-enough
+git clone https://github.com/AoXan/deployment-conditioned-transfer-release-private.git
+cd deployment-conditioned-transfer-release-private
 python3.12 bootstrap.py --smoke
 ```
 
