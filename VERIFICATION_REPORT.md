@@ -1,0 +1,13 @@
+# Verification report
+
+Overall scope: **CONDITIONALLY_REPRODUCIBLE**. Focused final checks: 23 passed. Each result below was generated in a new output directory; failed earlier attempts remain in the maintenance log directory and are not evidence of success. Full numerical paper reproduction has not been claimed.
+
+- `/Users/a3222110/Developer/_maintenance/four_paper_repro_20261011/evidence/ajcai_run_02`: new execution artifacts. Corresponding logs: `/Users/a3222110/Developer/_maintenance/four_paper_repro_20261011/logs/ajcai_run_02.log` (or the run-specific final log inventory).
+- `/Users/a3222110/Developer/_maintenance/four_paper_repro_20261011/evidence/ajcai_us_source_view_01`: new execution artifacts. Corresponding logs: `/Users/a3222110/Developer/_maintenance/four_paper_repro_20261011/logs/ajcai_us_source_view_01.log` (or the run-specific final log inventory).
+- `/Users/a3222110/Developer/_maintenance/four_paper_repro_20261011/evidence/ajcai_primary_source_target_run_01`: new execution artifacts. Corresponding logs: `/Users/a3222110/Developer/_maintenance/four_paper_repro_20261011/logs/ajcai_primary_source_target_run_01.log` (or the run-specific final log inventory).
+- `/Users/a3222110/Developer/_maintenance/four_paper_repro_20261011/evidence/ajcai_apsim_run_01`: new execution artifacts. Corresponding logs: `/Users/a3222110/Developer/_maintenance/four_paper_repro_20261011/logs/ajcai_apsim_run_01.log` (or the run-specific final log inventory).
+- `/Users/a3222110/Developer/_maintenance/four_paper_repro_20261011/evidence/ajcai_fresh_assets_01`: new execution artifacts. Corresponding logs: `/Users/a3222110/Developer/_maintenance/four_paper_repro_20261011/logs/ajcai_fresh_assets_01.log` (or the run-specific final log inventory).
+
+Run commands and the exact scientific scope are in `EXPERIMENT_EXECUTION_GUIDE.md` (ICLR/AJCAI), `REPRODUCIBILITY.md` (ICPM) and the matrix. The delivery includes run command/return-state/hash indexes and safe aggregate evidence. Original raw inputs/native sources and agricultural Checkpoints remain at external paths.
+
+Public raw490region-year AU data ->405train/22validation/20test ->5original trained components ->new predictions, SHAP/IG/replay, metrics and plots. Separate native source/target run trained and screened a real US-maize Checkpoint then trained AU GROUP transfer. Source validation R2 was -82.30 in the reduced smoke, explicitly not accepted performance. APSIM actual11scenario return codes were0 and new23reportrows produced. Missing exact Roseworthy cleaned inputs and historical30cell bundle; Waite/G2F/accepted full diagnosis and full APSIM cohort not re-run. Conditional pathways are documented and original ETL recovered without synthetic replacements.

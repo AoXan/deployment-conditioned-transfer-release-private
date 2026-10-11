@@ -1,4 +1,8 @@
 PYTHON ?= python3
+DATA_ROOT ?= data/external
+OUTPUT_ROOT ?= outputs/fresh_reproduction
+PLAN_FINGERPRINT ?=
+DATASET ?= roseworthy
 REPRO = PYTHONPATH=src $(PYTHON) -m agritech_repro
 
 .PHONY: help setup validate data-audit preprocess primary-preflight checkpoints diagnostics cases apsim-validate figures tables numeric-integrity verify smoke test reproduce-results reproduce-smoke reproduce-full
@@ -19,9 +23,9 @@ help:
 	  '  numeric-integrity  verify frozen headline and APSIM values' \
 	  '  verify             run publication-level validation' \
 	  '  smoke              run fixture, numeric, figure, table, and focused tests' \
-	  '  reproduce-results  regenerate paper figures, tables, and reported statistics' \
+	  '  reproduce-results  validate/render frozen outputs; no training' \
 	  '  reproduce-smoke    fast alias for the clean-clone smoke validation' \
-	  '  reproduce-full     explain and enforce the authorised-data full-rerun boundary'
+	  '  reproduce-full     execute authorised preprocessing and formal training'
 
 setup:
 	$(PYTHON) -m pip install -e '.[publication,dev]'
@@ -77,9 +81,14 @@ reproduce-results:
 
 reproduce-smoke: smoke
 
+# Real execution; authorised raw inputs and the original plan are required.
 reproduce-full:
-	@printf '%s\n' \
-	  'A single unattended full rerun is not available because the exact Roseworthy cleaned point files are not in the cited public record.' \
-	  'The accepted preprocessing, training, evaluation, diagnostic, Waite, and APSIM entry points are preserved.' \
-	  'Follow docs/reproducibility/REPRODUCIBILITY.md with authorised inputs; this target exits before starting expensive work.'
-	@exit 2
+	$(REPRO) preprocess --data-root "$(DATA_ROOT)" --output-root "$(OUTPUT_ROOT)"
+	$(REPRO) reproduce-primary --data-root "$(DATA_ROOT)" --output-root "$(OUTPUT_ROOT)" --confirm-full-campaign "$(PLAN_FINGERPRINT)"
+
+reproduce-cases:
+	$(REPRO) reproduce-cases --data-root "$(DATA_ROOT)" --output-root "$(OUTPUT_ROOT)" --dataset "$(DATASET)"
+
+smoke-real:
+	$(PYTHON) scripts/run_real_data_smoke.py --raw-root "$(DATA_ROOT)/cybench/raw" --output "$(OUTPUT_ROOT)"
+
