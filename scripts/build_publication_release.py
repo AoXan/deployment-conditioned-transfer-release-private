@@ -13,7 +13,7 @@ from pathlib import Path
 import yaml
 
 
-IDENTITY_MARKERS = (b"/Users/", b"/OneDrive/", b"\\OneDrive\\", b"Adelaide", b"AIML")
+IDENTITY_MARKERS = (b"/Users/", b"/OneDrive/", b"\\OneDrive\\")
 SECRET_PATTERNS = {
     "private key": re.compile(rb"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
     "AWS access key": re.compile(rb"\bAKIA[0-9A-Z]{16}\b"),

@@ -1,81 +1,56 @@
-# Deployment-Conditioned Crop-Yield Transfer
+# When Transfer Accuracy Is Not Enough
 
-Reproduction code for *When Transfer Accuracy Is Not Enough: Deployment-Conditioned
-Behavioural Diagnostics for Knowledge Transfer*. The accepted paper and evidence
-remain unchanged. Full reproduction is conditional on authorised farm inputs,
-historical checkpoint access and a lawful APSIM runtime.
+Code for *When Transfer Accuracy Is Not Enough: Deployment-Conditioned
+Behavioural Diagnostics for Knowledge Transfer*. Accepted at AJCAI; the public
+paper link will be added when available. Manuscript files are not distributed here.
 
-## Actual public-data training from a clean environment
+## Real public-data execution from a clean environment
 
-Use Python 3.12, Git and an internet connection. The bootstrap creates an
-isolated virtual environment with no system site packages, installs
-`requirements-verified.lock`, installs this checkout without changing the
-pinned dependencies, and runs `pip check`. Commands, installed versions and
-return codes are saved in `.venv_setup_logs/`. No old experiment results or
-trained checkpoints are reused. Dependency download caches are optional.
-
-The commands below use a POSIX shell. On Windows replace `.venv/bin/python`
-with `.venv\\Scripts\\python.exe`. macOS ARM64 is verified; other systems need
-their own validation. Graphviz is required for native graph visualisation;
-XGBoost on macOS also requires the OpenMP runtime. Install system components
-using their official installers or package manager.
-
-An authorised account is required for this private repository. A legally supplied
-source ZIP can be extracted instead.
+Install Python 3.12 and Git. With an internet connection:
 
 ```sh
-git clone https://github.com/AoXan/deployment-conditioned-transfer-release-private.git
-cd deployment-conditioned-transfer-release-private
+git clone https://github.com/AoXan/when-transfer-accuracy-is-not-enough.git
+cd when-transfer-accuracy-is-not-enough
 python3.12 bootstrap.py --smoke
 ```
 
-This acquires six authentic CY-Bench Australian-wheat tables, checks ZIP member
-CRCs and records hashes, preprocesses real records and trains all five original
-components on a reduced split. New checkpoints, preprocessors, predictions,
-SHAP/Integrated Gradients, metrics and figures are written to
-`outputs/public_smoke/`. This verifies computation; it does not reproduce the
-accepted full US-to-Australia performance.
+The bootstrap creates `.venv`, installs `requirements-verified.lock`, checks
+dependencies and downloads six authentic CY-Bench wheat-AU source tables.
+Original preprocessing and split construction feed five actual model components:
+supervised learning, prediction KD, representation KD, combined KD and a
+HistGradientBoosting reference. New checkpoints, preprocessors, predictions,
+metrics, SHAP/IG arrays and tables/figures are written to `outputs/public_smoke/`.
+This engineering regional test verifies the calculation chain; it does not
+replace the accepted GROUP/SPATIAL experiment protocol.
 
-In a fresh checkout, `python3.12 bootstrap.py` installs only the environment.
-The separate public commands are:
+## Formal primary, case and diagnostic experiments
+
+`python3.12 bootstrap.py` installs the environment only. Follow
+[DATA_ACQUISITION_GUIDE.md](DATA_ACQUISITION_GUIDE.md) for exact filenames, access
+terms and external input placement; then use
+[EXPERIMENT_EXECUTION_GUIDE.md](EXPERIMENT_EXECUTION_GUIDE.md) for source/target
+training, Stage 7/8, Roseworthy, Waite, G2F, common-sample SHAP/IG, statistical
+tests and APSIM commands.
 
 ```sh
-.venv/bin/python scripts/acquire_cybench_subset.py --output-root data/external/cybench/raw --pair wheat_AU
-.venv/bin/python scripts/run_real_data_smoke.py --raw-root data/external/cybench/raw --output outputs/new_training
-.venv/bin/python scripts/render_new_experiment_assets.py --source outputs/new_training --output outputs/new_training/tables
+PYTHONPATH=src .venv/bin/python -m agritech_repro preprocess --data-root DATA --output-root OUT
+PYTHONPATH=src .venv/bin/python -m agritech_repro reproduce-primary --validate-only --data-root DATA --output-root OUT
+make reproduce-full PYTHON=.venv/bin/python DATA_ROOT=DATA OUTPUT_ROOT=OUT PLAN_FINGERPRINT=VALUE
 ```
 
-Use new acquisition and output directories; existing inputs are preserved.
+Use the fingerprint returned by preflight. The full dispatcher trains/screens
+source models and qualifies teachers before target training. Outputs use a new
+external experiment directory; checkpoints and restricted inputs are not bundled.
+Fresh-table commands use `--fresh-results OUT`. Commands explicitly labelled
+validation-only or `make reproduce-results` inspect frozen comparison evidence.
 
-## Conditional full experiments
+## Verification scope and access conditions
 
-[DATA_ACQUISITION_GUIDE.md](DATA_ACQUISITION_GUIDE.md) lists exact files,
-official sources, terms and placement. [EXPERIMENT_EXECUTION_GUIDE.md](EXPERIMENT_EXECUTION_GUIDE.md)
-covers Stage 7/8, Roseworthy, Waite, G2F, GROUP/SPATIAL training, statistics,
-attribution, fresh assets and APSIM.
-
-`run_primary_source_target_smoke.py` trains a new US source model, screens and
-qualifies it, then trains an AU target. `run_apsim_real_data_smoke.py` executes
-the external runtime and compares new simulator reports with current predictions.
-`make reproduce-full` performs authorised preprocessing and formal primary
-training with the original plan fingerprint. `make reproduce-cases` executes
-the conditional case pipeline; `make smoke-real` runs the public real-data chain.
-
-## Historical publication checks and limits
-
-`make reproduce-results` renders accepted frozen outputs. `make smoke` and
-`make reproduce-smoke` are fixture/interface checks. These commands do not train
-models. For current predictions use
-`render_publication_tables.py --fresh-results NEW_RUN --output NEW_ASSETS`.
-
-Real preprocessing, five training components, SHAP/IG, source-to-target training
-and eleven APSIM scenarios have run. Exact Roseworthy cleaned 2007/2008 inputs
-and some historical attribution bundles remain unavailable. Waite/G2F full cases
-and accepted-scale numerical equality remain unverified. See
-[VERIFICATION_REPORT.md](VERIFICATION_REPORT.md),
-[PAPER_TO_EXPERIMENT_MATRIX.md](PAPER_TO_EXPERIMENT_MATRIX.md) and
-[REPRODUCIBILITY_REPAIR.md](REPRODUCIBILITY_REPAIR.md).
-Code is MIT-licensed; data, checkpoint and APSIM terms remain separate.
-
-The current documentation, installation and verification review is in
-[RELEASE_REVIEW.md](RELEASE_REVIEW.md).
+The public preprocessing/training/attribution/export chain is **PIPELINE_VERIFIED**.
+Reduced native US-to-AU GROUP transfer and eleven real APSIM scenarios have also
+executed. Full accepted numerical identity is not claimed. The overall project
+is **CONDITIONALLY_REPRODUCIBLE**: exact Roseworthy cleaned files, compatible
+historical attribution lineage and some case inputs require authorised access;
+APSIM requires a lawful external runtime. See
+[PAPER_TO_EXPERIMENT_MATRIX.md](PAPER_TO_EXPERIMENT_MATRIX.md) for every main and
+supplementary path. Dataset and software licences remain those of their providers.

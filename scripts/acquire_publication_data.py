@@ -124,7 +124,7 @@ def main() -> int:
         return 0
     message = (
         f"{args.dataset} requires source-specific access or licence review; this command never downloads it. "
-        "Follow docs/reproducibility/data_access.md and place an authorised copy under --output-root."
+        "Follow DATA_ACQUISITION_GUIDE.md and place an authorised copy under --output-root."
     )
     print(json.dumps({"dataset": args.dataset, "status": "MANUAL_ACCESS_REQUIRED", "message": message}, indent=2))
     return 2 if args.download else 0

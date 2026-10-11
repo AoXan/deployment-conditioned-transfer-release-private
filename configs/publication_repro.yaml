@@ -18,11 +18,6 @@ datasets:
     required_for: [reproduce-primary, reproduce-cases]
 publication_assets:
   required_files:
-    - paper/final_ajcai_manuscript_v4_18_6_submission_anonymous.tex
-    - paper/final_ajcai_supplement_v4_18_6_submission_anonymous.tex
-    - paper/final_references_v4_18_5_submission.bib
-    - paper/venue/lncs/llncs.cls
-    - paper/venue/lncs/splncs04.bst
     - scripts/run_stage8_v4_australian.py
     - scripts/run_stage8_formal_adapter.py
     - scripts/run_universal_weather_v2_remediation.py

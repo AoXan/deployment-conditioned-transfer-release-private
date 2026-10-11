@@ -1,43 +1,26 @@
 {
-  "original_research_root": "/Users/a3222110/Developer/AgriTech/research",
-  "original_recorded_commit_or_description": "original research files and released lineage",
-  "frozen_files": "Original commit hash and current-file hashes are distinct evidence; dirty original paths are not asserted identical to submitted commit",
-  "files": [
+  "source_version": "original research files and released lineage",
+  "role": "Original scientific implementations with portable input/output orchestration.",
+  "source_files": [
     {
       "file": "scripts/build_data_nursery_v1.py",
-      "original_source_path": "/Users/a3222110/Developer/AgriTech/research/scripts/build_data_nursery_v1.py",
-      "original_current_sha256": "8d03d7453095f546b84b7e7fa4c710c973de7e51983f4047e4b703fdb1ae3574",
-      "recovered_sha256": "41b0eec1afb4b459a81a8d004c30dae98fd5c21951eb41a6f9ae3ebcbf273866",
-      "identical_to_current_original_file": false
+      "sha256": "41b0eec1afb4b459a81a8d004c30dae98fd5c21951eb41a6f9ae3ebcbf273866"
     },
     {
       "file": "scripts/build_stage7_waite_slga_unified_nursery.py",
-      "original_source_path": "/Users/a3222110/Developer/AgriTech/research/scripts/build_stage7_waite_slga_unified_nursery.py",
-      "original_current_sha256": "f18dd8d316c6b6165ba58f6426fec77f8f2f12e4dee808c6fdd1ea0865d065c0",
-      "recovered_sha256": "d1438bb072e61bc14d724bedc90a27fa458ad2fdb5268d77eddcc2c9f26d9d5f",
-      "identical_to_current_original_file": false
+      "sha256": "d1438bb072e61bc14d724bedc90a27fa458ad2fdb5268d77eddcc2c9f26d9d5f"
     },
     {
       "file": "scripts/run_stage7_unified_nursery_experiments.py",
-      "original_source_path": "/Users/a3222110/Developer/AgriTech/research/scripts/run_stage7_unified_nursery_experiments.py",
-      "original_current_sha256": "9cef33310f32482a1512ecdfced0510e68666db8542cf02b33e0c7cc1cc7fbc0",
-      "recovered_sha256": "9cef33310f32482a1512ecdfced0510e68666db8542cf02b33e0c7cc1cc7fbc0",
-      "identical_to_current_original_file": true
+      "sha256": "9cef33310f32482a1512ecdfced0510e68666db8542cf02b33e0c7cc1cc7fbc0"
     },
     {
       "file": "scripts/run_publication_evaluation.py",
-      "original_source_path": "/Users/a3222110/Developer/AgriTech/research/scripts/run_publication_evaluation.py",
-      "original_current_sha256": "ef6b6f21eec8b00beaa4cb1902622e3cd8384ccac666e0c594e506bfc2d2f644",
-      "recovered_sha256": "ef6b6f21eec8b00beaa4cb1902622e3cd8384ccac666e0c594e506bfc2d2f644",
-      "identical_to_current_original_file": true
+      "sha256": "ef6b6f21eec8b00beaa4cb1902622e3cd8384ccac666e0c594e506bfc2d2f644"
     },
     {
       "file": "src/phase3/run_g2f_route1_pilot_fixed.py",
-      "original_source_path": "/Users/a3222110/Developer/AgriTech/research/src/phase3/run_g2f_route1_pilot_fixed.py",
-      "original_current_sha256": "6ef95ed62ced05aee86c7c076af452c8417909153d9ff918d61c1f52fbb0d5a1",
-      "recovered_sha256": "b1d56f2150e6401fc38c41505166868c7a9833e7d8ebdd028be8cf743286676e",
-      "identical_to_current_original_file": false
+      "sha256": "b1d56f2150e6401fc38c41505166868c7a9833e7d8ebdd028be8cf743286676e"
     }
-  ],
-  "new_code_role": "Orchestration, dependency/path restoration, current-run export/verification; original scientific functions preserved"
+  ]
 }

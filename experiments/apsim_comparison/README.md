@@ -36,7 +36,7 @@ model. Frozen predictions are selected using existing validation MSE, joined to 
 immutable sample manifest, and compared on region-year units.
 
 `build_experiment.py` requires an authorised CY-Bench checkout and the frozen
-prediction bundle described in `docs/reproducibility/data_access.md`. Set
+prediction bundle described in `DATA_ACQUISITION_GUIDE.md`. Set
 `AGRITECH_CYBENCH_ROOT` and `AGRITECH_PREDICTION_ROOT` rather than editing paths.
 The APSIM source checkout under `experiments/apsim_comparison/runtime/` is ignored
 by the publication release and is recreated by the pinned bootstrap command.

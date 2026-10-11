@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-import re
 import subprocess
 import sys
 from pathlib import Path
@@ -128,36 +127,20 @@ def test_numeric_integrity_replays_frozen_publication_summaries() -> None:
     assert payload["checks"] >= 10
 
 
-def test_release_tracks_the_desktop_submission_snapshot() -> None:
+def test_release_requires_executable_code_without_manuscripts() -> None:
     config = yaml.safe_load((ROOT / "configs/publication_repro.yaml").read_text())
-    required = set(config["publication_assets"]["required_files"])
-    assert "paper/final_ajcai_manuscript_v4_18_6_submission_anonymous.tex" in required
-    assert "paper/final_ajcai_supplement_v4_18_6_submission_anonymous.tex" in required
-    assert not any("v4_18_4" in path for path in required)
+    required = config["publication_assets"]["required_files"]
+    assert "scripts/run_stage8_v4_australian.py" in required
+    assert "scripts/run_universal_weather_v2_remediation.py" in required
+    assert not any(path.startswith("paper/") for path in required)
+    assert all((ROOT / path).is_file() for path in required)
 
 
-def test_latest_tex_sources_have_all_local_dependencies() -> None:
-    sources = (
-        ROOT / "paper/final_ajcai_manuscript_v4_18_6_submission_anonymous.tex",
-        ROOT / "paper/final_ajcai_supplement_v4_18_6_submission_anonymous.tex",
-    )
-    for source in sources:
-        text = source.read_text()
-        for command, value in re.findall(r"\\(includegraphics|input)\{([^}]+)\}", text):
-            candidate = source.parent / value
-            choices = (
-                (candidate,)
-                if candidate.suffix
-                else tuple(candidate.with_suffix(suffix) for suffix in (".tex", ".pdf", ".png"))
-            )
-            assert any(choice.is_file() for choice in choices), (
-                source.name,
-                command,
-                value,
-            )
-        bibliography = re.search(r"\\bibliography\{([^}]+)\}", text)
-        assert bibliography
-        assert (source.parent / f"{bibliography.group(1)}.bib").is_file()
+def test_source_release_excludes_manuscripts_and_runtime_bundles() -> None:
+    config = yaml.safe_load((ROOT / "configs/publication_release_manifest.yaml").read_text())
+    assert not any(path.startswith("paper/") for path in config["include"])
+    assert "experiments/apsim_comparison/runtime" in config["exclude"]
+    assert "*.log" in config["exclude"]
 
 
 def test_case_validation_replays_publication_sources_without_restricted_data() -> None:

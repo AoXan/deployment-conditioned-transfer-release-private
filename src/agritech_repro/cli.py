@@ -395,7 +395,7 @@ def execute_workflow(args: argparse.Namespace) -> int:
             if not args.validate_only:
                 raise ValueError(
                     "full case reruns use the exact authorised-data commands in "
-                    "docs/reproducibility/REPRODUCIBILITY.md; validation does not silently rerun training"
+                    "EXPERIMENT_EXECUTION_GUIDE.md; validation does not silently rerun training"
                 )
             return emit(
                 {
