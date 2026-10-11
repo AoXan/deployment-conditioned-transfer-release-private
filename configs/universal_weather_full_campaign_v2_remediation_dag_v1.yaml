@@ -1,0 +1,54 @@
+schema_version: universal_weather_v2_remediation_dag_v1
+output_root: outputs/distillation_program/stage8_v4_australian_narrative_v1/universal_weather_full_campaign_v2_remediation_dag_v1
+source_datasets:
+- PRIMARY_CYBENCH_MAIZE_US
+- PRIMARY_G2F_MAIZE
+primary_source_routes:
+- supervised
+- prediction_kd
+- representation_kd
+- combined_kd
+- missing_aware
+secondary_source_routes:
+- multimodal_pretrain_finetune
+diagnostic_source_routes:
+- soil_direct
+transfer_strategies:
+- source_only
+- ordinary_transfer
+- harmonised_transfer
+- pooled_source_target
+- target_scratch
+target_context_count: 13
+counting_denominators:
+- structural_ceiling
+- eligible_after_contracts
+- released_by_gates
+- executed
+budget_policy:
+  budget_is_assertion_not_truncation: true
+  ceiling_overflow_action: BUDGET_ASSERTION_FAILED
+  silent_truncation_allowed: false
+formal_execution:
+  requires_user_second_approval: true
+  requires_exact_plan_fingerprint: true
+  executed_this_round: 0
+execution_config: configs/publication/universal_weather_full_campaign_v2_remediation_v1.yaml
+execution_schema: schemas/universal_weather_full_campaign_v2_remediation_v1.schema.json
+approved_target_contexts:
+- CYBENCH_WHEAT_AU_RANDOM
+- CYBENCH_WHEAT_AU_GROUP
+- CYBENCH_WHEAT_AU_SPATIAL
+- WAITE_ROLLING_1991
+- ROSEWORTHY_E5_SPATIAL
+- ROSEWORTHY_HISTORICAL_GRAIN_ROLLING_2018
+- ROSEWORTHY_HISTORICAL_GRAIN_ROLLING_2019
+- ROSEWORTHY_HISTORICAL_GRAIN_ROLLING_2020
+- ROSEWORTHY_HISTORICAL_GRAIN_ROLLING_2021
+- ROSEWORTHY_HISTORICAL_GRAIN_ROLLING_2022
+- ROSEWORTHY_HISTORICAL_GRAIN_ROLLING_2023
+- ROSEWORTHY_HISTORICAL_GRAIN_ROLLING_2024
+gate_policy:
+  few_shot_in_core_manifest: false
+  gate1_released: false
+  gate2_released: false

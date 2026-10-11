@@ -200,7 +200,11 @@ def main() -> int:
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
     parser.add_argument("--output", type=Path, default=Path("outputs/publication_repro/tables"))
     parser.add_argument("--validate-only", action="store_true")
+    parser.add_argument("--fresh-results",type=Path,help="Render newly executed predictions without frozen numeric assertions")
     args = parser.parse_args()
+    if args.fresh_results:
+        from render_new_experiment_assets import render as render_fresh
+        print(json.dumps(render_fresh(args.fresh_results,args.output),indent=2));return 0
     root = args.root.resolve()
     output = args.output if args.output.is_absolute() else root / args.output
     print(json.dumps(render(root, output, args.validate_only), indent=2))

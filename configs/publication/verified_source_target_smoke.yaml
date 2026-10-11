@@ -1,0 +1,110 @@
+schema_version: universal_weather_v2_remediation_v1
+output_root: outputs/distillation_program/stage8_v4_australian_narrative_v1/universal_weather_full_campaign_v2_remediation_v1
+sources:
+- PRIMARY_CYBENCH_MAIZE_US
+source_routes:
+- supervised
+- prediction_kd
+- representation_kd
+- combined_kd
+- missing_aware
+transfer_strategies:
+- source_only
+- ordinary_transfer
+- harmonised_transfer
+- pooled_source_target
+- target_scratch
+adaptation_modes:
+- no_adaptation
+- full_adaptation
+- few_shot_adaptation
+adaptation_fractions:
+- 0.01
+- 0.05
+- 0.1
+- 0.2
+missing_modality_methods:
+- imputation
+- missing_indicators
+- late_fusion
+- teacher_student_m2
+- missing_aware
+deployment_conditions:
+- complete
+- natural
+- synthetic_no_soil
+- synthetic_no_weather
+- synthetic_random_0_15
+seeds:
+- 101
+model_contract: UNIVERSAL_WEATHER_V2_REMEDIATION
+eligibility:
+  minimum_train_rows: 20
+  minimum_validation_rows: 5
+  minimum_test_rows: 5
+  minimum_adaptation_rows: 5
+  minimum_unique_train_targets: 3
+source_datasets:
+  PRIMARY_CYBENCH_MAIZE_US:
+    path: ${AGRITECH_DATA_ROOT}/cybench/PRIMARY_CYBENCH_MAIZE_US.csv.gz
+    sample_id_column: sample_id
+    sample_unit: ADMIN_REGION_HARVEST_YEAR
+    target_column: target_yield
+    target_unit: tonne_ha
+    year_column: year
+    modalities:
+    - weather
+    - soil
+    natural_missingness: true
+    weather_columns:
+    - weather_observed_days
+    - weather_expected_days
+    - weather_coverage
+    - weather_tmin_mean
+    - weather_tmax_mean
+    - weather_prec_sum
+    - weather_rad_sum
+    - weather_et0_sum
+    - weather_vpd_mean
+    - weather_cwb_sum
+    soil_columns:
+    - privileged_soil_awc
+    - privileged_soil_bulk_density
+    - privileged_soil_drainage_class
+    splits:
+    - EXISTING_STAGE8_SPLIT
+datasets:
+  CY-Bench_wheat_AU:
+    path: ${AGRITECH_DATA_ROOT}/cybench/CY-Bench_wheat_AU.csv.gz
+    sample_id_column: sample_id
+    sample_unit: ADMIN_REGION_HARVEST_YEAR
+    target_column: target_yield
+    target_unit: tonne_ha
+    year_column: year
+    years: 23
+    group_column: adm_id
+    latitude_column: context_latitude
+    longitude_column: context_longitude
+    modalities:
+    - weather
+    - soil
+    natural_missingness: true
+    weather_columns:
+    - weather_observed_days
+    - weather_expected_days
+    - weather_coverage
+    - weather_tmin_mean
+    - weather_tmax_mean
+    - weather_prec_sum
+    - weather_rad_sum
+    - weather_et0_sum
+    - weather_vpd_mean
+    - weather_cwb_sum
+    soil_columns:
+    - privileged_soil_awc
+    - privileged_soil_bulk_density
+    - privileged_soil_drainage_class
+    splits:
+    - RANDOM
+    - GROUP
+    - SPATIAL

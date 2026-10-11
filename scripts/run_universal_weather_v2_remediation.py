@@ -184,6 +184,14 @@ def main() -> int:
     if args.dry_run:
         print(json.dumps({"formal_run_ready": True, "candidate_count": len(cells), "executable_jobs": len(plan["jobs"]), "executed_jobs": 0, "plan_fingerprint": fingerprint}, sort_keys=True)); return 0
     if args.run_formal:
+        if not args.smoke:
+            from src.distillation_v4.universal_weather_v2_remediation.formal_dispatcher import run_formal_campaign
+            selected_jobs=[job for job in plan['jobs'] if not args.job or job['candidate_id']==args.job]
+            if not selected_jobs:
+                raise ValueError('No executable target selected by the frozen plan')
+            result=run_formal_campaign(config=config,repository_root=ROOT,output_root=output,plan_fingerprint=fingerprint,resume=args.resume,jobs_override=selected_jobs)
+            print(json.dumps(result,sort_keys=True,default=str))
+            return 0 if result.get("status")=="COMPLETED" and not result.get("failed",0) else 2
         selected = [job for job in plan["jobs"] if not args.job or job["candidate_id"] == args.job]
         if args.job and not selected:
             print(f"UNKNOWN_JOB:{args.job}", file=sys.stderr); return 2

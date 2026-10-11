@@ -52,6 +52,7 @@ def parser() -> argparse.ArgumentParser:
         item.add_argument("--fixture", action="store_true", help="Use the redistributable synthetic fixture.")
         item.add_argument("--dry-run", action="store_true", help="Print the resolved action without executing it.")
         item.add_argument("--validate-only", action="store_true", help="Validate inputs without executing the workflow.")
+        item.add_argument("--dataset", choices=["roseworthy", "waite", "g2f"], help="Select a real agricultural case for execution.")
         item.add_argument(
             "--confirm-full-campaign",
             help="Exact plan fingerprint required before a full primary campaign is started.",
@@ -201,7 +202,8 @@ def execute_workflow(args: argparse.Namespace) -> int:
         if args.command in {"preprocess", "reproduce-primary"} or (
             args.command == "reproduce-cases" and not args.validate_only
         ):
-            require_data(rows, args.command)
+            selected_rows = [row for row in rows if row['dataset']==args.dataset] if args.command=='reproduce-cases' and args.dataset else rows
+            require_data(selected_rows, args.command)
         if args.command == "preprocess":
             native = root / config["workflows"]["reproduce-primary"]["native_config"]
             resolved = output_root / "configs/stage8_v4_australian.resolved.yaml"
@@ -318,6 +320,23 @@ def execute_workflow(args: argparse.Namespace) -> int:
                 )
             return emit({"status": "PASS", "entrypoint": script})
         if args.command == "reproduce-cases":
+            if not args.validate_only:
+                env = publication_environment(data_root, checkpoint_root, output_root)
+                if args.dataset == 'g2f':
+                    source = data_root / 'g2f/g2f_native_hybrid_env.csv.gz'
+                    if not source.is_file():
+                        raise FileNotFoundError(f'Authorised G2F view required: {source}')
+                    env['AGRITECH_G2F_VIEW'] = str(source)
+                    command = [sys.executable, str(root/'scripts/run_stage8_formal_adapter.py'), '--route', 'T1', '--config', str(root/'configs/publication/stage8_v4_australian.yaml'), '--output-root', str(output_root/'cases/g2f')]
+                else:
+                    native = root/'configs/publication/stage8_v4_australian.yaml'
+                    resolved = output_root/'configs/cases.resolved.yaml'
+                    run_checked([sys.executable, str(root/'scripts/materialize_publication_config.py'), '--input', str(native), '--output', str(resolved)], root, env)
+                    command = [sys.executable, str(root/'scripts/run_stage8_v4_australian.py'), '--config', str(resolved), '--output-root', str(output_root/'cases'), '--run-formal']
+                    if args.dataset:
+                        command.extend(['--dataset', args.dataset])
+                run_checked(command, root, env)
+                return emit({'status':'EXECUTED', 'mode':'REAL_TRAINING', 'dataset':args.dataset, 'output':output_root/'cases', 'publication_numeric_parity':'NOT_VERIFIED'})
             workflow = config["workflows"][args.command]
             case_sources = {
                 "roseworthy": root / workflow["validation_assets"]["roseworthy"],

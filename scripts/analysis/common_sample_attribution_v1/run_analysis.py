@@ -304,8 +304,8 @@ def parse_args():
 
 def load_cells(worktree: Path):
     """Load the 30-cell grid from existing outputs."""
-    lineage = pd.read_csv(worktree / "outputs/stage8_representation_support_v1/checkpoint_lineage.csv")
-    manifest = pd.read_csv(worktree / "outputs/stage8_representation_support_v1/embedding_manifest.csv")
+    lineage = pd.read_csv(Path(os.environ.get('AGRITECH_LINEAGE_CSV', worktree / "outputs/stage8_representation_support_v1/checkpoint_lineage.csv")))
+    manifest = pd.read_csv(Path(os.environ.get('AGRITECH_EMBEDDING_MANIFEST', worktree / "outputs/stage8_representation_support_v1/embedding_manifest.csv")))
 
     # Get unique cells: one per (contract, route, seed)
     cells_raw = (
@@ -339,7 +339,7 @@ def load_cells(worktree: Path):
 def load_preprocessor(worktree: Path):
     """Load formal preprocessor parameters."""
     return pd.read_csv(
-        worktree / "outputs/exact_raw_weather_shap_taylor_v3/run_20260708_181605/formal_preprocessor_parameters.csv"
+        Path(os.environ.get('AGRITECH_PREPROCESSOR_PARAMETERS', worktree / "outputs/exact_raw_weather_shap_taylor_v3/run_20260708_181605/formal_preprocessor_parameters.csv"))
     )
 
 

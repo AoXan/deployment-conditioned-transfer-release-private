@@ -1,4 +1,8 @@
 PYTHON ?= python3
+DATA_ROOT ?= data/external
+OUTPUT_ROOT ?= outputs/fresh_reproduction
+PLAN_FINGERPRINT ?=
+DATASET ?= roseworthy
 REPRO = PYTHONPATH=src $(PYTHON) -m agritech_repro
 
 .PHONY: help setup validate data-audit preprocess primary-preflight checkpoints diagnostics cases apsim-validate figures tables numeric-integrity verify smoke test
@@ -63,3 +67,16 @@ test:
 	PYTHONPATH=src $(PYTHON) -m pytest -q tests/test_publication_repro_cli.py experiments/apsim_comparison/tests
 
 smoke: validate numeric-integrity figures tables apsim-validate test
+
+reproduce-results:
+	$(REPRO) verify-publication --validate-only
+
+reproduce-full:
+	$(REPRO) preprocess --data-root "$(DATA_ROOT)" --output-root "$(OUTPUT_ROOT)"
+	$(REPRO) reproduce-primary --data-root "$(DATA_ROOT)" --output-root "$(OUTPUT_ROOT)" --confirm-full-campaign "$(PLAN_FINGERPRINT)"
+
+reproduce-cases:
+	$(REPRO) reproduce-cases --data-root "$(DATA_ROOT)" --output-root "$(OUTPUT_ROOT)" --dataset "$(DATASET)"
+
+smoke-real:
+	$(PYTHON) scripts/run_real_data_smoke.py --raw-root "$(DATA_ROOT)/cybench/raw" --output "$(OUTPUT_ROOT)"

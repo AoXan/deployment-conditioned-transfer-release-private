@@ -1,3 +1,5 @@
+> 2026-10-11 independent repair release: read [REPRODUCIBILITY_REPAIR.md](REPRODUCIBILITY_REPAIR.md) and `VERIFICATION_REPORT.md` for actual execution scope and limitations. Historical checks below are not new experiments.
+
 # Deployment-Conditioned Crop-Yield Transfer
 
 This repository contains the code and publication assets for the AJCAI study of

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import sys
 import csv
 import hashlib
 import json
@@ -1596,6 +1597,7 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         help="Output for the signed-feature Supplement figure; inferred from --output-dir by default.",
     )
+    parser.add_argument("--fresh-results",type=Path,help="Render current-run model predictions rather than accepted frozen figure sources")
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--validate-only", action="store_true")
     mode.add_argument("--write", action="store_true")
@@ -1605,6 +1607,10 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
+    if args.fresh_results:
+        sys.path.insert(0,str(Path(__file__).resolve().parents[2]/"scripts"))
+        from render_new_experiment_assets import render
+        print(json.dumps(render(args.fresh_results,args.output_dir),indent=2));return
     root = args.root.resolve()
     if args.validate_only:
         print(json.dumps(validate_inputs(root), indent=2, sort_keys=True))

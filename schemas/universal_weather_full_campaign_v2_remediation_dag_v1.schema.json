@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "approved_target_contexts": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 12,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "budget_policy": {
+      "additionalProperties": false,
+      "properties": {
+        "budget_is_assertion_not_truncation": {
+          "const": true
+        },
+        "ceiling_overflow_action": {
+          "const": "BUDGET_ASSERTION_FAILED"
+        },
+        "silent_truncation_allowed": {
+          "const": false
+        }
+      },
+      "required": [
+        "budget_is_assertion_not_truncation",
+        "ceiling_overflow_action",
+        "silent_truncation_allowed"
+      ],
+      "type": "object"
+    },
+    "counting_denominators": {
+      "items": {
+        "enum": [
+          "structural_ceiling",
+          "eligible_after_contracts",
+          "released_by_gates",
+          "executed"
+        ]
+      },
+      "maxItems": 4,
+      "minItems": 4,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "diagnostic_source_routes": {
+      "items": {
+        "const": "soil_direct"
+      },
+      "maxItems": 1,
+      "minItems": 1,
+      "type": "array"
+    },
+    "execution_config": {
+      "const": "configs/universal_weather_full_campaign_v2_remediation_v1.yaml",
+      "type": "string"
+    },
+    "execution_schema": {
+      "const": "schemas/universal_weather_full_campaign_v2_remediation_v1.schema.json",
+      "type": "string"
+    },
+    "formal_execution": {
+      "additionalProperties": false,
+      "properties": {
+        "executed_this_round": {
+          "const": 0
+        },
+        "requires_exact_plan_fingerprint": {
+          "const": true
+        },
+        "requires_user_second_approval": {
+          "const": true
+        }
+      },
+      "required": [
+        "requires_user_second_approval",
+        "requires_exact_plan_fingerprint",
+        "executed_this_round"
+      ],
+      "type": "object"
+    },
+    "gate_policy": {
+      "additionalProperties": false,
+      "properties": {
+        "few_shot_in_core_manifest": {
+          "const": false
+        },
+        "gate1_released": {
+          "type": "boolean"
+        },
+        "gate2_released": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "few_shot_in_core_manifest",
+        "gate1_released",
+        "gate2_released"
+      ],
+      "type": "object"
+    },
+    "output_root": {
+      "pattern": "universal_weather_full_campaign_v2_remediation_dag_v1$",
+      "type": "string"
+    },
+    "primary_source_routes": {
+      "items": {
+        "enum": [
+          "supervised",
+          "prediction_kd",
+          "representation_kd",
+          "combined_kd",
+          "missing_aware"
+        ]
+      },
+      "maxItems": 5,
+      "minItems": 5,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "schema_version": {
+      "const": "universal_weather_v2_remediation_dag_v1"
+    },
+    "secondary_source_routes": {
+      "items": {
+        "const": "multimodal_pretrain_finetune"
+      },
+      "maxItems": 1,
+      "minItems": 1,
+      "type": "array"
+    },
+    "source_datasets": {
+      "items": {
+        "enum": [
+          "PRIMARY_CYBENCH_MAIZE_US",
+          "PRIMARY_G2F_MAIZE"
+        ]
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "target_context_count": {
+      "const": 13
+    },
+    "transfer_strategies": {
+      "items": {
+        "enum": [
+          "source_only",
+          "ordinary_transfer",
+          "harmonised_transfer",
+          "pooled_source_target",
+          "target_scratch"
+        ]
+      },
+      "maxItems": 5,
+      "minItems": 5,
+      "type": "array",
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "schema_version",
+    "output_root",
+    "source_datasets",
+    "primary_source_routes",
+    "secondary_source_routes",
+    "diagnostic_source_routes",
+    "transfer_strategies",
+    "target_context_count",
+    "counting_denominators",
+    "budget_policy",
+    "formal_execution",
+    "execution_config",
+    "execution_schema",
+    "approved_target_contexts",
+    "gate_policy"
+  ],
+  "title": "Universal Weather V2 remediation DAG v1",
+  "type": "object"
+}
