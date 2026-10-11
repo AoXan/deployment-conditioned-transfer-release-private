@@ -7,3 +7,13 @@ data/external/
 outputs/fresh*/
 *.pt
 *.joblib
+paper/
+outputs/
+*_setup_logs/
+*.log
+.tools/
+.setup/
+data/raw/
+data/derived/
+artifacts/checkpoints/
+experiments/apsim_comparison/runtime/
